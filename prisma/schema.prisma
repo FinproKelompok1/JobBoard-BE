@@ -132,11 +132,11 @@ model Job {
 }
 
 model CurriculumVitae {
-  id        Int    @id @default(autoincrement())
-  userId    Int
-  summary   String
-  experince String
-  skill     String
+  id         Int    @id @default(autoincrement())
+  userId     Int
+  summary    String
+  experience String
+  skill      String
 
   user User @relation(fields: [userId], references: [id])
 }
