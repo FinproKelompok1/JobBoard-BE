@@ -1,0 +1,261 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Gender {
+  l
+  p
+}
+
+enum LastEdu {
+  bachelor
+  diploma
+  doctor
+  master
+}
+
+enum JobCategory {
+  Technology
+  Sales
+  Marketing
+  Engineering
+  Accounting
+}
+
+enum SubscriptionCategory {
+  standard
+  professional
+}
+
+enum JobApplicationStatus {
+  rejected
+  accepted
+  processed
+  interviewed
+}
+
+enum JobApplicationOffering {
+  rejected
+  accepted
+}
+
+enum ReviewEstimatedSalary {
+  low
+  medium
+  high
+}
+
+enum TransactionStatus {
+  pending
+  settlement
+  cancel
+}
+
+enum UserAssessmentStatus {
+  failed
+  passed
+}
+
+model User {
+  id              Int               @id @default(autoincrement())
+  username        String            @unique @db.VarChar(255)
+  fullname        String?           @db.VarChar(255)
+  email           String            @unique @db.VarChar(255)
+  password        String
+  isVerified      Boolean           @default(false)
+  avatar          String            @default("https://res.cloudinary.com/dozmme9hc/image/upload/v1734232945/Default_idtsln.png")
+  gender          Gender?
+  dob             DateTime?
+  lastEdu         LastEdu?
+  domicileId      Int?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  CurriculumVitae CurriculumVitae[]
+
+  location       Location?        @relation(fields: [domicileId], references: [id])
+  Subscription   Subscription[]
+  JobApplication JobApplication[]
+}
+
+model Admin {
+  id          Int      @id @default(autoincrement())
+  companyName String   @db.VarChar(255)
+  email       String   @unique @db.VarChar(255)
+  password    String
+  noHandphone String   @db.VarChar(255)
+  description String
+  isVerified  Boolean  @default(false)
+  logo        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Job         Job[]
+}
+
+model Developer {
+  id       Int    @id @default(autoincrement())
+  email    String @unique @db.VarChar(255)
+  password String
+}
+
+model Job {
+  id           String      @id @default(uuid())
+  title        String      @db.VarChar(255)
+  adminId      Int
+  banner       String?
+  category     JobCategory
+  role         String
+  salary       Int?
+  description  String
+  endDate      DateTime
+  isPublished  Boolean     @default(true)
+  isTestActive Boolean     @default(false)
+  tags         String[]
+  locationId   Int
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  admin            Admin              @relation(fields: [adminId], references: [id])
+  location         Location           @relation(fields: [locationId], references: [id])
+  PreSelectionTest PreSelectionTest[]
+  JobApplication   JobApplication[]
+}
+
+model CurriculumVitae {
+  id        Int    @id @default(autoincrement())
+  userId    Int
+  summary   String
+  experince String
+  skill     String
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Location {
+  id              Int    @id @default(autoincrement())
+  city            String @unique
+  displayLocation String
+  latitude        Float
+  longitude       Float
+  User            User[]
+  Job             Job[]
+}
+
+model Subscription {
+  id       Int                  @id @default(autoincrement())
+  userId   Int
+  category SubscriptionCategory
+  endDate  DateTime
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model PreSelectionTest {
+  id          Int    @id @default(autoincrement())
+  title       String @db.VarChar(255)
+  description String
+  jobId       String
+
+  job                   Job                     @relation(fields: [jobId], references: [id])
+  SelectionTestQuestion SelectionTestQuestion[]
+}
+
+model SelectionTestQuestion {
+  id                 Int      @id @default(autoincrement())
+  preSelectionTestId Int
+  question           String
+  options            String[]
+  correctAnswer      Int
+
+  preSelectionTest PreSelectionTest @relation(fields: [preSelectionTestId], references: [id])
+}
+
+model JobApplication {
+  userId              Int
+  jobId               String
+  resume              String
+  expectedSalary      Int
+  status              JobApplicationStatus?
+  offering            JobApplicationOffering?
+  rejectedReview      String?
+  interviewDate       DateTime?
+  selectionTestResult Int?
+  createdAt           DateTime                @default(now())
+  user                User                    @relation(fields: [userId], references: [id])
+  job                 Job                     @relation(fields: [jobId], references: [id])
+
+  @@id([userId, jobId])
+}
+
+model Interview {
+  userId    Int
+  jobId     String
+  date      DateTime
+  startTime DateTime
+  endTime   DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([userId, jobId])
+}
+
+model Review {
+  userId          Int
+  jobId           String
+  rating          Int
+  comment         String
+  estimatedSalary ReviewEstimatedSalary
+  createdAt       DateTime              @default(now())
+
+  @@id([userId, jobId])
+}
+
+model Transaction {
+  id     Int               @id @default(autoincrement())
+  userId Int
+  price  Int
+  status TransactionStatus
+}
+
+model Assessment {
+  id                 Int                  @id @default(autoincrement())
+  title              String               @db.VarChar(255)
+  description        String
+  developerId        Int
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  AssessmentQuestion AssessmentQuestion[]
+}
+
+model UserAssessment {
+  userId         Int
+  assessmentId   Int
+  score          Int                   @default(0)
+  urlCertificate String?
+  badgeName      String?
+  badgeIcon      String?
+  status         UserAssessmentStatus?
+  endTime        DateTime
+
+  @@id([userId, assessmentId])
+}
+
+model AssessmentQuestion {
+  id            Int      @id @default(autoincrement())
+  assessmentId  Int
+  question      String
+  options       String[]
+  correctAnswer Int
+
+  assessment Assessment @relation(fields: [assessmentId], references: [id])
+}
