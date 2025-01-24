@@ -158,10 +158,11 @@ model Subscription {
 }
 
 model PreSelectionTest {
-  id          Int    @id @default(autoincrement())
-  title       String @db.VarChar(255)
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
   description String
   jobId       String
+  createdAt   DateTime @default(now())
 
   job                   Job                     @relation(fields: [jobId], references: [id])
   SelectionTestQuestion SelectionTestQuestion[]
@@ -236,7 +237,6 @@ model Assessment {
   title              String               @db.VarChar(255)
   description        String
   createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
   AssessmentQuestion AssessmentQuestion[]
 }
 
