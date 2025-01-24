@@ -235,7 +235,6 @@ model Assessment {
   id                 Int                  @id @default(autoincrement())
   title              String               @db.VarChar(255)
   description        String
-  developerId        Int
   createdAt          DateTime             @default(now())
   updatedAt          DateTime             @updatedAt
   AssessmentQuestion AssessmentQuestion[]
