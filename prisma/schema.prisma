@@ -217,10 +217,12 @@ model Review {
 }
 
 model Transaction {
-  id     Int               @id @default(autoincrement())
-  userId Int
-  price  Int
-  status TransactionStatus
+  id        Int               @id @default(autoincrement())
+  userId    Int
+  price     Int
+  status    TransactionStatus
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
 
   user         User           @relation(fields: [userId], references: [id])
   Subscription Subscription[]
