@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/api", (req: Request, res: Response) => {
-  res.status(200).send("Server Connected");
+  res.status(200).send("Server Connected Serves API");
 });
 
 app.listen(PORT, () =>
