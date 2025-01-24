@@ -73,9 +73,10 @@ model User {
   updatedAt       DateTime          @updatedAt
   CurriculumVitae CurriculumVitae[]
 
-  location       Location?        @relation(fields: [domicileId], references: [id])
-  JobApplication JobApplication[]
-  Transaction    Transaction[]
+  location         Location?          @relation(fields: [domicileId], references: [id])
+  JobApplication   JobApplication[]
+  Transaction      Transaction[]
+  UserSubscription UserSubscription[]
 }
 
 model Admin {
@@ -145,15 +146,15 @@ model Location {
 }
 
 model Subscription {
-  id              Int                  @id @default(autoincrement())
-  transactionId   Int
-  category        SubscriptionCategory
-  assessmentCount Int
-  startDate       DateTime
-  endDate         DateTime
-  isActive        Boolean              @default(true)
+  id        Int                  @id @default(autoincrement())
+  category  SubscriptionCategory
+  price     Int
+  feature   String               @db.VarChar(255)
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
 
-  transaction Transaction @relation(fields: [transactionId], references: [id])
+  Transaction      Transaction[]
+  UserSubscription UserSubscription[]
 }
 
 model PreSelectionTest {
@@ -217,15 +218,17 @@ model Review {
 }
 
 model Transaction {
-  id        Int               @id @default(autoincrement())
-  userId    Int
-  price     Int
-  status    TransactionStatus
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
+  userId         Int
+  subscriptionId Int
+  amount         Int
+  status         TransactionStatus
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
 
-  user         User           @relation(fields: [userId], references: [id])
-  Subscription Subscription[]
+  user         User         @relation(fields: [userId], references: [id])
+  subscription Subscription @relation(fields: [subscriptionId], references: [id])
+
+  @@id([userId, subscriptionId])
 }
 
 model Assessment {
@@ -268,4 +271,20 @@ model Certificate {
   badgeIcon      String
   createdAt      DateTime         @default(now())
   UserAssessment UserAssessment[]
+}
+
+model UserSubscription {
+  userId          Int
+  subscriptionId  Int
+  startDate       DateTime
+  endDate         DateTime
+  isActive        Boolean  @default(true)
+  assessmentCount Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user         User         @relation(fields: [userId], references: [id])
+  subscription Subscription @relation(fields: [subscriptionId], references: [id])
+
+  @@id([userId, subscriptionId])
 }
