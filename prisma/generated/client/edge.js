@@ -362,7 +362,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\purwadhika\\finpro\\finpro-backend\\prisma\\generated\\client",
+      "value": "C:\\Final Project\\JobBoard-BE\\prisma\\generated\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -376,12 +376,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\purwadhika\\finpro\\finpro-backend\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Final Project\\JobBoard-BE\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../..",
   "clientVersion": "6.2.1",
@@ -390,6 +389,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
