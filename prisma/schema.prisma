@@ -14,8 +14,8 @@ datasource db {
 }
 
 enum Gender {
-  l
-  p
+  male
+  female
 }
 
 enum LastEdu {
@@ -82,10 +82,12 @@ model User {
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   CurriculumVitae CurriculumVitae[]
+  Subscription    Subscription[]
+  JobApplication  JobApplication[]
+  Review          Review[]
+  UserAssessment  UserAssessment[]
 
-  location       Location?        @relation(fields: [domicileId], references: [id])
-  Subscription   Subscription[]
-  JobApplication JobApplication[]
+  domicile Location? @relation(fields: [domicileId], references: [id])
 }
 
 model Admin {
@@ -93,7 +95,7 @@ model Admin {
   companyName String   @db.VarChar(255)
   email       String   @unique @db.VarChar(255)
   password    String
-  noHandphone String   @db.VarChar(255)
+  phoneNumber String   @db.VarChar(255)
   description String
   isVerified  Boolean  @default(false)
   logo        String?
@@ -153,10 +155,12 @@ model Location {
 }
 
 model Subscription {
-  id       Int                  @id @default(autoincrement())
-  userId   Int
-  category SubscriptionCategory
-  endDate  DateTime
+  id            Int                  @id @default(autoincrement())
+  userId        Int
+  category      SubscriptionCategory
+  paymentStatus TransactionStatus
+  startDate     DateTime
+  endDate       DateTime
 
   user User @relation(fields: [userId], references: [id])
 }
@@ -213,10 +217,14 @@ model Interview {
 model Review {
   userId          Int
   jobId           String
-  rating          Int
-  comment         String
-  estimatedSalary ReviewEstimatedSalary
+  review          String
+  cultureRating   Int
+  workLifeBalance Int
+  facilityRating  Int
+  careerRating    Int
+  salary          ReviewEstimatedSalary
   createdAt       DateTime              @default(now())
+  User            User                  @relation(fields: [userId], references: [id])
 
   @@id([userId, jobId])
 }
@@ -247,6 +255,7 @@ model UserAssessment {
   badgeIcon      String?
   status         UserAssessmentStatus?
   endTime        DateTime
+  User           User                  @relation(fields: [userId], references: [id])
 
   @@id([userId, assessmentId])
 }
