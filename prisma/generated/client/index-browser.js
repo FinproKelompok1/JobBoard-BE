@@ -247,6 +247,7 @@ exports.Prisma.ReviewScalarFieldEnum = {
 };
 
 exports.Prisma.TransactionScalarFieldEnum = {
+  id: 'id',
   userId: 'userId',
   subscriptionId: 'subscriptionId',
   amount: 'amount',

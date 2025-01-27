@@ -222,6 +222,7 @@ model Review {
 }
 
 model Transaction {
+  id             String            @id @default(uuid())
   userId         Int
   subscriptionId Int
   amount         Int
@@ -231,8 +232,6 @@ model Transaction {
 
   user         User         @relation(fields: [userId], references: [id])
   subscription Subscription @relation(fields: [subscriptionId], references: [id])
-
-  @@id([userId, subscriptionId])
 }
 
 model Assessment {

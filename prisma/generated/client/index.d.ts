@@ -16563,6 +16563,7 @@ export namespace Prisma {
   }
 
   export type TransactionMinAggregateOutputType = {
+    id: string | null
     userId: number | null
     subscriptionId: number | null
     amount: number | null
@@ -16572,6 +16573,7 @@ export namespace Prisma {
   }
 
   export type TransactionMaxAggregateOutputType = {
+    id: string | null
     userId: number | null
     subscriptionId: number | null
     amount: number | null
@@ -16581,6 +16583,7 @@ export namespace Prisma {
   }
 
   export type TransactionCountAggregateOutputType = {
+    id: number
     userId: number
     subscriptionId: number
     amount: number
@@ -16604,6 +16607,7 @@ export namespace Prisma {
   }
 
   export type TransactionMinAggregateInputType = {
+    id?: true
     userId?: true
     subscriptionId?: true
     amount?: true
@@ -16613,6 +16617,7 @@ export namespace Prisma {
   }
 
   export type TransactionMaxAggregateInputType = {
+    id?: true
     userId?: true
     subscriptionId?: true
     amount?: true
@@ -16622,6 +16627,7 @@ export namespace Prisma {
   }
 
   export type TransactionCountAggregateInputType = {
+    id?: true
     userId?: true
     subscriptionId?: true
     amount?: true
@@ -16718,6 +16724,7 @@ export namespace Prisma {
   }
 
   export type TransactionGroupByOutputType = {
+    id: string
     userId: number
     subscriptionId: number
     amount: number
@@ -16746,6 +16753,7 @@ export namespace Prisma {
 
 
   export type TransactionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     userId?: boolean
     subscriptionId?: boolean
     amount?: boolean
@@ -16757,6 +16765,7 @@ export namespace Prisma {
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     userId?: boolean
     subscriptionId?: boolean
     amount?: boolean
@@ -16768,6 +16777,7 @@ export namespace Prisma {
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     userId?: boolean
     subscriptionId?: boolean
     amount?: boolean
@@ -16779,6 +16789,7 @@ export namespace Prisma {
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectScalar = {
+    id?: boolean
     userId?: boolean
     subscriptionId?: boolean
     amount?: boolean
@@ -16787,7 +16798,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type TransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "subscriptionId" | "amount" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["transaction"]>
+  export type TransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "subscriptionId" | "amount" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["transaction"]>
   export type TransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
@@ -16808,6 +16819,7 @@ export namespace Prisma {
       subscription: Prisma.$SubscriptionPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
+      id: string
       userId: number
       subscriptionId: number
       amount: number
@@ -16897,8 +16909,8 @@ export namespace Prisma {
      * // Get first 10 Transactions
      * const transactions = await prisma.transaction.findMany({ take: 10 })
      * 
-     * // Only select the `userId`
-     * const transactionWithUserIdOnly = await prisma.transaction.findMany({ select: { userId: true } })
+     * // Only select the `id`
+     * const transactionWithIdOnly = await prisma.transaction.findMany({ select: { id: true } })
      * 
      */
     findMany<T extends TransactionFindManyArgs>(args?: SelectSubset<T, TransactionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", ClientOptions>>
@@ -16942,9 +16954,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Transactions and only return the `userId`
-     * const transactionWithUserIdOnly = await prisma.transaction.createManyAndReturn({
-     *   select: { userId: true },
+     * // Create many Transactions and only return the `id`
+     * const transactionWithIdOnly = await prisma.transaction.createManyAndReturn({
+     *   select: { id: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -17033,9 +17045,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Transactions and only return the `userId`
-     * const transactionWithUserIdOnly = await prisma.transaction.updateManyAndReturn({
-     *   select: { userId: true },
+     * // Update zero or more Transactions and only return the `id`
+     * const transactionWithIdOnly = await prisma.transaction.updateManyAndReturn({
+     *   select: { id: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -17239,6 +17251,7 @@ export namespace Prisma {
    * Fields of the Transaction model
    */ 
   interface TransactionFieldRefs {
+    readonly id: FieldRef<"Transaction", 'String'>
     readonly userId: FieldRef<"Transaction", 'Int'>
     readonly subscriptionId: FieldRef<"Transaction", 'Int'>
     readonly amount: FieldRef<"Transaction", 'Int'>
@@ -23330,6 +23343,7 @@ export namespace Prisma {
 
 
   export const TransactionScalarFieldEnum: {
+    id: 'id',
     userId: 'userId',
     subscriptionId: 'subscriptionId',
     amount: 'amount',
@@ -24481,6 +24495,7 @@ export namespace Prisma {
     AND?: TransactionWhereInput | TransactionWhereInput[]
     OR?: TransactionWhereInput[]
     NOT?: TransactionWhereInput | TransactionWhereInput[]
+    id?: StringFilter<"Transaction"> | string
     userId?: IntFilter<"Transaction"> | number
     subscriptionId?: IntFilter<"Transaction"> | number
     amount?: IntFilter<"Transaction"> | number
@@ -24492,6 +24507,7 @@ export namespace Prisma {
   }
 
   export type TransactionOrderByWithRelationInput = {
+    id?: SortOrder
     userId?: SortOrder
     subscriptionId?: SortOrder
     amount?: SortOrder
@@ -24503,7 +24519,7 @@ export namespace Prisma {
   }
 
   export type TransactionWhereUniqueInput = Prisma.AtLeast<{
-    userId_subscriptionId?: TransactionUserIdSubscriptionIdCompoundUniqueInput
+    id?: string
     AND?: TransactionWhereInput | TransactionWhereInput[]
     OR?: TransactionWhereInput[]
     NOT?: TransactionWhereInput | TransactionWhereInput[]
@@ -24515,9 +24531,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Transaction"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     subscription?: XOR<SubscriptionScalarRelationFilter, SubscriptionWhereInput>
-  }, "userId_subscriptionId">
+  }, "id">
 
   export type TransactionOrderByWithAggregationInput = {
+    id?: SortOrder
     userId?: SortOrder
     subscriptionId?: SortOrder
     amount?: SortOrder
@@ -24535,6 +24552,7 @@ export namespace Prisma {
     AND?: TransactionScalarWhereWithAggregatesInput | TransactionScalarWhereWithAggregatesInput[]
     OR?: TransactionScalarWhereWithAggregatesInput[]
     NOT?: TransactionScalarWhereWithAggregatesInput | TransactionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Transaction"> | string
     userId?: IntWithAggregatesFilter<"Transaction"> | number
     subscriptionId?: IntWithAggregatesFilter<"Transaction"> | number
     amount?: IntWithAggregatesFilter<"Transaction"> | number
@@ -25778,6 +25796,7 @@ export namespace Prisma {
   }
 
   export type TransactionCreateInput = {
+    id?: string
     amount: number
     status: $Enums.TransactionStatus
     createdAt?: Date | string
@@ -25787,6 +25806,7 @@ export namespace Prisma {
   }
 
   export type TransactionUncheckedCreateInput = {
+    id?: string
     userId: number
     subscriptionId: number
     amount: number
@@ -25796,6 +25816,7 @@ export namespace Prisma {
   }
 
   export type TransactionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
     status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25805,6 +25826,7 @@ export namespace Prisma {
   }
 
   export type TransactionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     subscriptionId?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
@@ -25814,6 +25836,7 @@ export namespace Prisma {
   }
 
   export type TransactionCreateManyInput = {
+    id?: string
     userId: number
     subscriptionId: number
     amount: number
@@ -25823,6 +25846,7 @@ export namespace Prisma {
   }
 
   export type TransactionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
     status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25830,6 +25854,7 @@ export namespace Prisma {
   }
 
   export type TransactionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     subscriptionId?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
@@ -27109,12 +27134,8 @@ export namespace Prisma {
     isNot?: SubscriptionWhereInput
   }
 
-  export type TransactionUserIdSubscriptionIdCompoundUniqueInput = {
-    userId: number
-    subscriptionId: number
-  }
-
   export type TransactionCountOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     subscriptionId?: SortOrder
     amount?: SortOrder
@@ -27130,6 +27151,7 @@ export namespace Prisma {
   }
 
   export type TransactionMaxOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     subscriptionId?: SortOrder
     amount?: SortOrder
@@ -27139,6 +27161,7 @@ export namespace Prisma {
   }
 
   export type TransactionMinOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     subscriptionId?: SortOrder
     amount?: SortOrder
@@ -28866,6 +28889,7 @@ export namespace Prisma {
   }
 
   export type TransactionCreateWithoutUserInput = {
+    id?: string
     amount: number
     status: $Enums.TransactionStatus
     createdAt?: Date | string
@@ -28874,6 +28898,7 @@ export namespace Prisma {
   }
 
   export type TransactionUncheckedCreateWithoutUserInput = {
+    id?: string
     subscriptionId: number
     amount: number
     status: $Enums.TransactionStatus
@@ -29089,6 +29114,7 @@ export namespace Prisma {
     AND?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
     OR?: TransactionScalarWhereInput[]
     NOT?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+    id?: StringFilter<"Transaction"> | string
     userId?: IntFilter<"Transaction"> | number
     subscriptionId?: IntFilter<"Transaction"> | number
     amount?: IntFilter<"Transaction"> | number
@@ -29677,6 +29703,7 @@ export namespace Prisma {
   }
 
   export type TransactionCreateWithoutSubscriptionInput = {
+    id?: string
     amount: number
     status: $Enums.TransactionStatus
     createdAt?: Date | string
@@ -29685,6 +29712,7 @@ export namespace Prisma {
   }
 
   export type TransactionUncheckedCreateWithoutSubscriptionInput = {
+    id?: string
     userId: number
     amount: number
     status: $Enums.TransactionStatus
@@ -30863,6 +30891,7 @@ export namespace Prisma {
   }
 
   export type TransactionCreateManyUserInput = {
+    id?: string
     subscriptionId: number
     amount: number
     status: $Enums.TransactionStatus
@@ -31000,6 +31029,7 @@ export namespace Prisma {
   }
 
   export type TransactionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
     status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31008,6 +31038,7 @@ export namespace Prisma {
   }
 
   export type TransactionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
     subscriptionId?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
     status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
@@ -31016,6 +31047,7 @@ export namespace Prisma {
   }
 
   export type TransactionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
     subscriptionId?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
     status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
@@ -31342,6 +31374,7 @@ export namespace Prisma {
   }
 
   export type TransactionCreateManySubscriptionInput = {
+    id?: string
     userId: number
     amount: number
     status: $Enums.TransactionStatus
@@ -31360,6 +31393,7 @@ export namespace Prisma {
   }
 
   export type TransactionUpdateWithoutSubscriptionInput = {
+    id?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
     status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31368,6 +31402,7 @@ export namespace Prisma {
   }
 
   export type TransactionUncheckedUpdateWithoutSubscriptionInput = {
+    id?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
     status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
@@ -31376,6 +31411,7 @@ export namespace Prisma {
   }
 
   export type TransactionUncheckedUpdateManyWithoutSubscriptionInput = {
+    id?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
     status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus

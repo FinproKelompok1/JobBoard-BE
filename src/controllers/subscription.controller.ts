@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "../prisma";
+import { SubscriptionCategory } from "prisma/generated/client";
 
 export class SubscriptionController {
   async createSubscription(req: Request, res: Response) {
@@ -42,18 +43,11 @@ export class SubscriptionController {
         select: { id: true, category: true, price: true, feature: true },
       });
 
-      if (!subscription) {
-        res
-          .status(404)
-          .send({ message: `No subscription found with ID ${id}` });
-        return;
-      }
-
       res.status(200).send({ subscription });
     } catch (error) {
       console.error("Error retrieving subscription by ID:", error);
       res.status(500).send({
-        message: "Server error: Unable to retrieve subscription.",
+        message: "Server error: Unable to retrieve subscription by ID.",
       });
     }
   }
@@ -61,18 +55,52 @@ export class SubscriptionController {
   async editSubscription(req: Request, res: Response) {
     try {
       const id = req.params.id;
-      const { price } = req.body;
+      const { category, price, feature } = req.body;
+
+      const data: {
+        category?: SubscriptionCategory;
+        price?: number;
+        feature?: string;
+      } = {};
+
+      if (category !== undefined) data.category = category;
+      if (price !== undefined) data.price = price;
+      if (feature !== undefined) data.feature = feature;
+
+      if (Object.keys(data).length === 0) {
+        res.status(400).send({ message: "No fields to update provided" });
+        return;
+      }
 
       await prisma.subscription.update({
         where: { id: +id },
-        data: { price },
+        data,
       });
 
-      res.status(200).send({ message: "Subscription updated successfully" });
+      res
+        .status(200)
+        .send({ message: `Subscription ID ${id} updated successfully` });
     } catch (error) {
       console.error("Error updating subscription:", error);
       res.status(500).send({
         message: "Server error: Unable to update subscription.",
+      });
+    }
+  }
+
+  async deleteSubcription(req: Request, res: Response) {
+    try {
+      const id = req.params.id;
+
+      await prisma.subscription.delete({ where: { id: +id } });
+
+      res
+        .status(200)
+        .send({ message: `Subscription ID ${id} deleted successfully` });
+    } catch (error) {
+      console.error("Error deleting subscription:", error);
+      res.status(500).send({
+        message: "Server error: Unable to delete subscription.",
       });
     }
   }

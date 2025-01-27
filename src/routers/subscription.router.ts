@@ -17,6 +17,7 @@ export class SubscriptionRouter {
 
     this.router.get("/:id", this.subscriptionController.getSubscriptionById);
     this.router.patch("/:id", this.subscriptionController.editSubscription);
+    this.router.delete("/:id", this.subscriptionController.deleteSubcription);
   }
 
   getRouter(): Router {
