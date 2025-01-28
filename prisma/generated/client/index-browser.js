@@ -138,12 +138,12 @@ exports.Prisma.AdminScalarFieldEnum = {
   companyName: 'companyName',
   email: 'email',
   password: 'password',
-  noHandphone: 'noHandphone',
   description: 'description',
   isVerified: 'isVerified',
   logo: 'logo',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  phoneNumber: 'phoneNumber'
 };
 
 exports.Prisma.DeveloperScalarFieldEnum = {
@@ -252,7 +252,8 @@ exports.Prisma.TransactionScalarFieldEnum = {
   amount: 'amount',
   status: 'status',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  id: 'id'
 };
 
 exports.Prisma.AssessmentScalarFieldEnum = {

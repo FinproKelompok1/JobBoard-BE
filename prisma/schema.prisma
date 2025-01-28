@@ -9,6 +9,230 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+model User {
+  id               Int                @id @default(autoincrement())
+  username         String             @unique @db.VarChar(255)
+  fullname         String?            @db.VarChar(255)
+  email            String             @unique @db.VarChar(255)
+  password         String
+  isVerified       Boolean            @default(false)
+  avatar           String             @default("https://res.cloudinary.com/dozmme9hc/image/upload/v1734232945/Default_idtsln.png")
+  gender           Gender?
+  dob              DateTime?
+  lastEdu          LastEdu?
+  domicileId       Int?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  CurriculumVitae  CurriculumVitae[]
+  JobApplication   JobApplication[]
+  Review           Review[]
+  Transaction      Transaction[]
+  location         Location?          @relation(fields: [domicileId], references: [id])
+  UserAssessment   UserAssessment[]
+  UserSubscription UserSubscription[]
+}
+
+model Admin {
+  id          Int      @id @default(autoincrement())
+  companyName String   @db.VarChar(255)
+  email       String   @unique @db.VarChar(255)
+  password    String
+  description String
+  isVerified  Boolean  @default(false)
+  logo        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  phoneNumber String   @db.VarChar(255)
+  Job         Job[]
+}
+
+model Developer {
+  id       Int    @id @default(autoincrement())
+  email    String @unique @db.VarChar(255)
+  password String
+}
+
+model Job {
+  id               String             @id @default(uuid())
+  title            String             @db.VarChar(255)
+  adminId          Int
+  banner           String?
+  category         JobCategory
+  role             String
+  salary           Int?
+  description      String
+  endDate          DateTime
+  isPublished      Boolean            @default(true)
+  isTestActive     Boolean            @default(false)
+  tags             String[]
+  locationId       Int
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  admin            Admin              @relation(fields: [adminId], references: [id])
+  location         Location           @relation(fields: [locationId], references: [id])
+  JobApplication   JobApplication[]
+  PreSelectionTest PreSelectionTest[]
+}
+
+model CurriculumVitae {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  summary    String
+  experience String
+  skill      String
+  education  String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id])
+}
+
+model Location {
+  id              Int    @id @default(autoincrement())
+  location        String @unique
+  displayLocation String
+  latitude        Float
+  longitude       Float
+  Job             Job[]
+  User            User[]
+}
+
+model Subscription {
+  id               Int                  @id @default(autoincrement())
+  category         SubscriptionCategory
+  price            Int
+  feature          String               @db.VarChar(255)
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+  Transaction      Transaction[]
+  UserSubscription UserSubscription[]
+}
+
+model PreSelectionTest {
+  id                    Int                     @id @default(autoincrement())
+  title                 String                  @db.VarChar(255)
+  description           String
+  jobId                 String
+  createdAt             DateTime                @default(now())
+  job                   Job                     @relation(fields: [jobId], references: [id])
+  SelectionTestQuestion SelectionTestQuestion[]
+}
+
+model SelectionTestQuestion {
+  id                 Int              @id @default(autoincrement())
+  preSelectionTestId Int
+  question           String
+  options            String[]
+  correctAnswer      Int
+  preSelectionTest   PreSelectionTest @relation(fields: [preSelectionTestId], references: [id])
+}
+
+model JobApplication {
+  userId              Int
+  jobId               String
+  resume              String
+  expectedSalary      Int
+  status              JobApplicationStatus @default(processed)
+  isTaken             Boolean
+  rejectedReview      String?
+  selectionTestResult Int?
+  createdAt           DateTime             @default(now())
+  job                 Job                  @relation(fields: [jobId], references: [id])
+  user                User                 @relation(fields: [userId], references: [id])
+
+  @@id([userId, jobId])
+}
+
+model Interview {
+  userId    Int
+  jobId     String
+  startTime DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([userId, jobId])
+}
+
+model Review {
+  userId         Int
+  jobId          String
+  review         String
+  CultureRating  Int
+  balanceRating  Int
+  facilityRating Int
+  careerRating   Int
+  salary         Int
+  createdAt      DateTime @default(now())
+  User           User     @relation(fields: [userId], references: [id])
+
+  @@id([userId, jobId])
+}
+
+model Transaction {
+  userId         Int
+  subscriptionId Int
+  amount         Int
+  status         TransactionStatus
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  id             String            @id
+  subscription   Subscription      @relation(fields: [subscriptionId], references: [id])
+  user           User              @relation(fields: [userId], references: [id])
+}
+
+model Assessment {
+  id                 Int                  @id @default(autoincrement())
+  title              String               @db.VarChar(255)
+  description        String
+  createdAt          DateTime             @default(now())
+  AssessmentQuestion AssessmentQuestion[]
+}
+
+model UserAssessment {
+  userId        Int
+  assessmentId  Int
+  score         Int                   @default(0)
+  certificateId Int
+  status        UserAssessmentStatus?
+  endTime       DateTime
+  certificate   Certificate           @relation(fields: [certificateId], references: [id])
+  User          User                  @relation(fields: [userId], references: [id])
+
+  @@id([userId, assessmentId])
+}
+
+model AssessmentQuestion {
+  id            Int        @id @default(autoincrement())
+  assessmentId  Int
+  question      String
+  options       String[]
+  correctAnswer Int
+  assessment    Assessment @relation(fields: [assessmentId], references: [id])
+}
+
+model Certificate {
+  id             Int              @id @default(autoincrement())
+  CertificateUrl String
+  badgeName      String
+  badgeIcon      String
+  createdAt      DateTime         @default(now())
+  UserAssessment UserAssessment[]
+}
+
+model UserSubscription {
+  userId          Int
+  subscriptionId  Int
+  startDate       DateTime
+  endDate         DateTime
+  isActive        Boolean      @default(true)
+  assessmentCount Int          @default(0)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  subscription    Subscription @relation(fields: [subscriptionId], references: [id])
+  user            User         @relation(fields: [userId], references: [id])
+
+  @@id([userId, subscriptionId])
+}
+
 enum Gender {
   female
   male
@@ -55,235 +279,4 @@ enum TransactionStatus {
 enum UserAssessmentStatus {
   failed
   passed
-}
-
-model User {
-  id              Int               @id @default(autoincrement())
-  username        String            @unique @db.VarChar(255)
-  fullname        String?           @db.VarChar(255)
-  email           String            @unique @db.VarChar(255)
-  password        String
-  isVerified      Boolean           @default(false)
-  avatar          String            @default("https://res.cloudinary.com/dozmme9hc/image/upload/v1734232945/Default_idtsln.png")
-  gender          Gender?
-  dob             DateTime?
-  lastEdu         LastEdu?
-  domicileId      Int?
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  CurriculumVitae CurriculumVitae[]
-
-  location         Location?          @relation(fields: [domicileId], references: [id])
-  JobApplication   JobApplication[]
-  Transaction      Transaction[]
-  UserSubscription UserSubscription[]
-}
-
-model Admin {
-  id          Int      @id @default(autoincrement())
-  companyName String   @db.VarChar(255)
-  email       String   @unique @db.VarChar(255)
-  password    String
-  noHandphone String   @db.VarChar(255)
-  description String
-  isVerified  Boolean  @default(false)
-  logo        String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  Job         Job[]
-}
-
-model Developer {
-  id       Int    @id @default(autoincrement())
-  email    String @unique @db.VarChar(255)
-  password String
-}
-
-model Job {
-  id           String      @id @default(uuid())
-  title        String      @db.VarChar(255)
-  adminId      Int
-  banner       String?
-  category     JobCategory
-  role         String
-  salary       Int?
-  description  String
-  endDate      DateTime
-  isPublished  Boolean     @default(true)
-  isTestActive Boolean     @default(false)
-  tags         String[]
-  locationId   Int
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-
-  admin            Admin              @relation(fields: [adminId], references: [id])
-  location         Location           @relation(fields: [locationId], references: [id])
-  PreSelectionTest PreSelectionTest[]
-  JobApplication   JobApplication[]
-}
-
-model CurriculumVitae {
-  id         Int      @id @default(autoincrement())
-  userId     Int
-  summary    String
-  experience String
-  skill      String
-  education  String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id])
-}
-
-model Location {
-  id              Int    @id @default(autoincrement())
-  location        String @unique
-  displayLocation String
-  latitude        Float
-  longitude       Float
-  User            User[]
-  Job             Job[]
-}
-
-model Subscription {
-  id        Int                  @id @default(autoincrement())
-  category  SubscriptionCategory
-  price     Int
-  feature   String               @db.VarChar(255)
-  createdAt DateTime             @default(now())
-  updatedAt DateTime             @updatedAt
-
-  Transaction      Transaction[]
-  UserSubscription UserSubscription[]
-}
-
-model PreSelectionTest {
-  id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(255)
-  description String
-  jobId       String
-  createdAt   DateTime @default(now())
-
-  job                   Job                     @relation(fields: [jobId], references: [id])
-  SelectionTestQuestion SelectionTestQuestion[]
-}
-
-model SelectionTestQuestion {
-  id                 Int      @id @default(autoincrement())
-  preSelectionTestId Int
-  question           String
-  options            String[]
-  correctAnswer      Int
-
-  preSelectionTest PreSelectionTest @relation(fields: [preSelectionTestId], references: [id])
-}
-
-model JobApplication {
-  userId              Int
-  jobId               String
-  resume              String
-  expectedSalary      Int
-  status              JobApplicationStatus @default(processed)
-  isTaken             Boolean
-  rejectedReview      String?
-  selectionTestResult Int?
-  createdAt           DateTime             @default(now())
-  user                User                 @relation(fields: [userId], references: [id])
-  job                 Job                  @relation(fields: [jobId], references: [id])
-
-  @@id([userId, jobId])
-}
-
-model Interview {
-  userId    Int
-  jobId     String
-  startTime DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@id([userId, jobId])
-}
-
-model Review {
-  userId         Int
-  jobId          String
-  review         String
-  CultureRating  Int
-  balanceRating  Int
-  facilityRating Int
-  careerRating   Int
-  salary         Int
-  createdAt      DateTime @default(now())
-
-  @@id([userId, jobId])
-}
-
-model Transaction {
-  userId         Int
-  subscriptionId Int
-  amount         Int
-  status         TransactionStatus
-  createdAt      DateTime          @default(now())
-  updatedAt      DateTime          @updatedAt
-
-  user         User         @relation(fields: [userId], references: [id])
-  subscription Subscription @relation(fields: [subscriptionId], references: [id])
-
-  @@id([userId, subscriptionId])
-}
-
-model Assessment {
-  id                 Int                  @id @default(autoincrement())
-  title              String               @db.VarChar(255)
-  description        String
-  createdAt          DateTime             @default(now())
-  AssessmentQuestion AssessmentQuestion[]
-}
-
-model UserAssessment {
-  userId        Int
-  assessmentId  Int
-  score         Int                   @default(0)
-  certificateId Int
-  status        UserAssessmentStatus?
-  endTime       DateTime
-
-  certificate Certificate @relation(fields: [certificateId], references: [id])
-
-  @@id([userId, assessmentId])
-}
-
-model AssessmentQuestion {
-  id            Int      @id @default(autoincrement())
-  assessmentId  Int
-  question      String
-  options       String[]
-  correctAnswer Int
-
-  assessment Assessment @relation(fields: [assessmentId], references: [id])
-}
-
-model Certificate {
-  id             Int              @id @default(autoincrement())
-  CertificateUrl String
-  badgeName      String
-  badgeIcon      String
-  createdAt      DateTime         @default(now())
-  UserAssessment UserAssessment[]
-}
-
-model UserSubscription {
-  userId          Int
-  subscriptionId  Int
-  startDate       DateTime
-  endDate         DateTime
-  isActive        Boolean  @default(true)
-  assessmentCount Int      @default(0)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-
-  user         User         @relation(fields: [userId], references: [id])
-  subscription Subscription @relation(fields: [subscriptionId], references: [id])
-
-  @@id([userId, subscriptionId])
 }
