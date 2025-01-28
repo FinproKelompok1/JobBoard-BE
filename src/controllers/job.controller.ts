@@ -22,14 +22,12 @@ export class JobController {
         req.body.banner = secure_url;
       }
 
-      let location = await prisma.location.findUnique({
+      let location = await prisma.location.findFirst({
         where: { location: req.body.city },
       });
       if (!location) {
         const { data } = await axios.get(
           `https://api.opencagedata.com/geocode/v1/json?q=${req.body.city
-            .split(" ")
-            .join("+")}+${req.body.province
             .split(" ")
             .join("+")}&key=bcf87dd591a44c57b21a10bed03f5daa`
         );
@@ -50,8 +48,6 @@ export class JobController {
       req.body.tags = req.body.tags.trim().split(",");
       delete req.body.city;
       delete req.body.province;
-
-      console.log(req.body);
 
       await prisma.job.create({
         data: { ...req.body, adminId, locationId: location.id },
