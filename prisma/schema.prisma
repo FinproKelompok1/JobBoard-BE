@@ -30,6 +30,7 @@ model User {
   location         Location?          @relation(fields: [domicileId], references: [id])
   UserAssessment   UserAssessment[]
   UserSubscription UserSubscription[]
+  Interview        Interview[]
 }
 
 model Admin {
@@ -42,7 +43,7 @@ model Admin {
   logo        String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  phoneNumber String   @db.VarChar(255)
+  noHandphone String   @db.VarChar(255)
   Job         Job[]
 }
 
@@ -68,10 +69,13 @@ model Job {
   locationId       Int
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
+  isActive         Boolean            @default(true)
   admin            Admin              @relation(fields: [adminId], references: [id])
   location         Location           @relation(fields: [locationId], references: [id])
   JobApplication   JobApplication[]
   PreSelectionTest PreSelectionTest[]
+  Review           Review[]
+  Interview        Interview[]
 }
 
 model CurriculumVitae {
@@ -149,6 +153,9 @@ model Interview {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  user User @relation(fields: [userId], references: [id])
+  job  Job  @relation(fields: [jobId], references: [id])
+
   @@id([userId, jobId])
 }
 
@@ -162,19 +169,20 @@ model Review {
   careerRating   Int
   salary         Int
   createdAt      DateTime @default(now())
-  User           User     @relation(fields: [userId], references: [id])
+  user           User     @relation(fields: [userId], references: [id])
+  job            Job      @relation(fields: [jobId], references: [id])
 
   @@id([userId, jobId])
 }
 
 model Transaction {
+  id             String            @id @default(uuid())
   userId         Int
   subscriptionId Int
   amount         Int
   status         TransactionStatus
   createdAt      DateTime          @default(now())
   updatedAt      DateTime          @updatedAt
-  id             String            @id
   subscription   Subscription      @relation(fields: [subscriptionId], references: [id])
   user           User              @relation(fields: [userId], references: [id])
 }
@@ -185,6 +193,7 @@ model Assessment {
   description        String
   createdAt          DateTime             @default(now())
   AssessmentQuestion AssessmentQuestion[]
+  UserAssessment     UserAssessment[]
 }
 
 model UserAssessment {
@@ -196,6 +205,7 @@ model UserAssessment {
   endTime       DateTime
   certificate   Certificate           @relation(fields: [certificateId], references: [id])
   User          User                  @relation(fields: [userId], references: [id])
+  assessment    Assessment            @relation(fields: [assessmentId], references: [id])
 
   @@id([userId, assessmentId])
 }

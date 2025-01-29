@@ -143,7 +143,7 @@ exports.Prisma.AdminScalarFieldEnum = {
   logo: 'logo',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  phoneNumber: 'phoneNumber'
+  noHandphone: 'noHandphone'
 };
 
 exports.Prisma.DeveloperScalarFieldEnum = {
@@ -167,7 +167,8 @@ exports.Prisma.JobScalarFieldEnum = {
   tags: 'tags',
   locationId: 'locationId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  isActive: 'isActive'
 };
 
 exports.Prisma.CurriculumVitaeScalarFieldEnum = {
@@ -247,13 +248,13 @@ exports.Prisma.ReviewScalarFieldEnum = {
 };
 
 exports.Prisma.TransactionScalarFieldEnum = {
+  id: 'id',
   userId: 'userId',
   subscriptionId: 'subscriptionId',
   amount: 'amount',
   status: 'status',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  id: 'id'
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.AssessmentScalarFieldEnum = {

@@ -22,8 +22,9 @@ export class JobRouter {
     
     this.router.get("/total", this.jobController.totalJobs);
     this.router.get("/:id", this.jobController.getJobDetail);
-    this.router.patch("/:id", this.jobController.jobEdit);
-    this.router.delete("/:id", this.jobController.deleteJob);
+    this.router.put("/:id", this.jobController.jobEdit);
+    this.router.patch("/delete/:id", this.jobController.deleteJob);
+    this.router.patch("/publish/:id", this.jobController.setPublishJob);
   }
 
   getRoutes(): Router {

@@ -10,7 +10,9 @@ export class JobController {
       const limit = 10;
       const { sort = "asc", page = "1", search } = req.query;
 
-      const filter: Prisma.JobWhereInput = { adminId: 1 };
+      const filter: Prisma.JobWhereInput = {
+        AND: [{ adminId: 1 }, { isActive: true }],
+      };
 
       if (search) {
         const isEnumValid = Object.values(JobCategory).includes(
@@ -109,8 +111,31 @@ export class JobController {
 
   async deleteJob(req: Request, res: Response) {
     try {
-      await prisma.job.delete({ where: { id: req.params.id } });
+      await prisma.job.update({
+        where: { id: req.params.id },
+        data: { isActive: false },
+      });
       res.status(200).send({ message: "Your job has been deleted" });
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  }
+
+  async setPublishJob(req: Request, res: Response) {
+    try {
+      const { isPublished } = req.body;
+      await prisma.job.update({
+        where: { id: req.params.id },
+        data: { isPublished },
+      });
+      res
+        .status(200)
+        .send({
+          message: `Your job has been ${
+            isPublished ? "published" : "unpublished"
+          }`,
+        });
     } catch (err) {
       console.log(err);
       res.status(400).send(err);
@@ -120,7 +145,7 @@ export class JobController {
   async totalJobs(req: Request, res: Response) {
     try {
       const jobs = await prisma.job.aggregate({
-        where: { adminId: 1 },
+        where: { adminId: 1, isActive: true },
         _count: { _all: true },
       });
       res.status(200).send({ result: jobs._count._all });
