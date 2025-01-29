@@ -2,11 +2,39 @@ import { Request, Response } from "express";
 import prisma from "../prisma";
 import { cloudinaryUpload } from "../services/cloudinary";
 import axios from "axios";
+import { JobCategory, Prisma } from "../../prisma/generated/client";
 
 export class JobController {
   async getJobs(req: Request, res: Response) {
     try {
-      const jobs = await prisma.job.findMany({ where: { adminId: 1 } });
+      const limit = 10;
+      const { sort = "asc", page = "1", search } = req.query;
+
+      const filter: Prisma.JobWhereInput = { adminId: 1 };
+
+      if (search) {
+        const isEnumValid = Object.values(JobCategory).includes(
+          search as JobCategory
+        );
+        filter.OR = [
+          { title: { contains: search as string, mode: "insensitive" } },
+          ...(isEnumValid ? [{ category: search as JobCategory }] : []),
+        ];
+      }
+
+      const jobs = await prisma.job.findMany({
+        where: filter,
+        skip: +limit * (+page - 1),
+        select: {
+          id: true,
+          title: true,
+          category: true,
+          isPublished: true,
+          isTestActive: true,
+        },
+        orderBy: { createdAt: sort as Prisma.SortOrder },
+      });
+
       res.status(200).send({ result: jobs });
     } catch (err) {
       console.log(err);
@@ -73,6 +101,29 @@ export class JobController {
     try {
       await prisma.job.update({ data: req.body, where: { id: req.params.id } });
       res.status(200).send({ message: "your job jas been edited" });
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  }
+
+  async deleteJob(req: Request, res: Response) {
+    try {
+      await prisma.job.delete({ where: { id: req.params.id } });
+      res.status(200).send({ message: "Your job has been deleted" });
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  }
+
+  async totalJobs(req: Request, res: Response) {
+    try {
+      const jobs = await prisma.job.aggregate({
+        where: { adminId: 1 },
+        _count: { _all: true },
+      });
+      res.status(200).send({ result: jobs._count._all });
     } catch (err) {
       console.log(err);
       res.status(400).send(err);
