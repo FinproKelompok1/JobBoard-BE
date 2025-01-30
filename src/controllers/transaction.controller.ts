@@ -143,13 +143,15 @@ export class TransactionController {
           first_name: user!.fullname,
           email: user!.email,
         },
-        item_details: {
-          id: activeTransaction!.subscriptionId,
-          price: activeTransaction!.amount,
-          quantity: 1,
-          name: subscriptionCategory,
-        },
-        expiry: {
+        item_details: [
+          {
+            id: activeTransaction!.subscriptionId,
+            price: activeTransaction!.amount,
+            quantity: 1,
+            name: subscriptionCategory,
+          },
+        ],
+        custom_expiry: {
           order_time: activeTransaction!.createdAt,
           expiry_duration: 1,
           unit: "day",

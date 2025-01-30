@@ -27,6 +27,10 @@ export class SubscriptionRouter {
       "/:subscriptionId",
       this.subscriptionController.deleteSubcription
     );
+    this.router.get(
+      "/:subscriptionId/users",
+      this.subscriptionController.getSubscriptionUsers
+    );
   }
 
   getRouter(): Router {

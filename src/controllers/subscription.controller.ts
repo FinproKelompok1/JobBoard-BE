@@ -104,4 +104,36 @@ export class SubscriptionController {
       });
     }
   }
+
+  async getSubscriptionUsers(req: Request, res: Response) {
+    try {
+      const id = req.params.subscriptionId;
+      const subscription = await prisma.subscription.findUnique({
+        where: { id: +id },
+        select: {
+          UserSubscription: {
+            select: {
+              startDate: true,
+              endDate: true,
+              assessmentCount: true,
+              isActive: true,
+              subscription: { select: { category: true } },
+              user: {
+                select: { email: true },
+              },
+            },
+          },
+        },
+      });
+
+      res
+        .status(200)
+        .send({ subscriptionUsers: subscription?.UserSubscription });
+    } catch (error) {
+      console.error("Error retrieving subscription users:", error);
+      res.status(500).send({
+        message: "Server error: Unable to retrieve subscription users.",
+      });
+    }
+  }
 }
