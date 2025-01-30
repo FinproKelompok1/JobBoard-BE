@@ -23,7 +23,10 @@ export class TransactionRouter {
       this.transactionController.updateTransaction
     );
 
-    this.router.get("/:id", this.transactionController.getTransactionById);
+    this.router.get(
+      "/:transactionId",
+      this.transactionController.getTransactionById
+    );
   }
 
   getRouter(): Router {

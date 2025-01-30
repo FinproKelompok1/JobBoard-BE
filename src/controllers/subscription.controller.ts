@@ -37,7 +37,7 @@ export class SubscriptionController {
 
   async getSubscriptionById(req: Request, res: Response) {
     try {
-      const id = req.params.id;
+      const id = req.params.subscriptionId;
       const subscription = await prisma.subscription.findUnique({
         where: { id: +id },
         select: { id: true, category: true, price: true, feature: true },
@@ -54,7 +54,7 @@ export class SubscriptionController {
 
   async editSubscription(req: Request, res: Response) {
     try {
-      const id = req.params.id;
+      const id = req.params.subscriptionId;
       const { category, price, feature } = req.body;
 
       const data: {
@@ -90,7 +90,7 @@ export class SubscriptionController {
 
   async deleteSubcription(req: Request, res: Response) {
     try {
-      const id = req.params.id;
+      const id = req.params.subscriptionId;
 
       await prisma.subscription.delete({ where: { id: +id } });
 
