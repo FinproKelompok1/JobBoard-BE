@@ -91,13 +91,13 @@ model CurriculumVitae {
 }
 
 model Location {
-  id              Int    @id @default(autoincrement())
-  location        String @unique
-  displayLocation String
-  latitude        Float
-  longitude       Float
-  Job             Job[]
-  User            User[]
+  id        Int    @id @default(autoincrement())
+  city      String
+  province  String
+  latitude  Float
+  longitude Float
+  Job       Job[]
+  User      User[]
 }
 
 model Subscription {
@@ -191,23 +191,24 @@ model Assessment {
   id                 Int                  @id @default(autoincrement())
   title              String               @db.VarChar(255)
   description        String
+  isActive           Boolean              @default(false)
   createdAt          DateTime             @default(now())
   AssessmentQuestion AssessmentQuestion[]
   UserAssessment     UserAssessment[]
 }
 
 model UserAssessment {
+  id            Int                   @id @default(autoincrement())
   userId        Int
   assessmentId  Int
   score         Int                   @default(0)
-  certificateId Int
+  certificateId Int?
   status        UserAssessmentStatus?
   endTime       DateTime
-  certificate   Certificate           @relation(fields: [certificateId], references: [id])
-  User          User                  @relation(fields: [userId], references: [id])
-  assessment    Assessment            @relation(fields: [assessmentId], references: [id])
 
-  @@id([userId, assessmentId])
+  certificate Certificate? @relation(fields: [certificateId], references: [id])
+  User        User         @relation(fields: [userId], references: [id])
+  assessment  Assessment   @relation(fields: [assessmentId], references: [id])
 }
 
 model AssessmentQuestion {

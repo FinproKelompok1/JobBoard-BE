@@ -184,8 +184,8 @@ exports.Prisma.CurriculumVitaeScalarFieldEnum = {
 
 exports.Prisma.LocationScalarFieldEnum = {
   id: 'id',
-  location: 'location',
-  displayLocation: 'displayLocation',
+  city: 'city',
+  province: 'province',
   latitude: 'latitude',
   longitude: 'longitude'
 };
@@ -261,10 +261,12 @@ exports.Prisma.AssessmentScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
+  isActive: 'isActive',
   createdAt: 'createdAt'
 };
 
 exports.Prisma.UserAssessmentScalarFieldEnum = {
+  id: 'id',
   userId: 'userId',
   assessmentId: 'assessmentId',
   score: 'score',

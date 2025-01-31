@@ -8921,24 +8921,24 @@ export namespace Prisma {
 
   export type LocationMinAggregateOutputType = {
     id: number | null
-    location: string | null
-    displayLocation: string | null
+    city: string | null
+    province: string | null
     latitude: number | null
     longitude: number | null
   }
 
   export type LocationMaxAggregateOutputType = {
     id: number | null
-    location: string | null
-    displayLocation: string | null
+    city: string | null
+    province: string | null
     latitude: number | null
     longitude: number | null
   }
 
   export type LocationCountAggregateOutputType = {
     id: number
-    location: number
-    displayLocation: number
+    city: number
+    province: number
     latitude: number
     longitude: number
     _all: number
@@ -8959,24 +8959,24 @@ export namespace Prisma {
 
   export type LocationMinAggregateInputType = {
     id?: true
-    location?: true
-    displayLocation?: true
+    city?: true
+    province?: true
     latitude?: true
     longitude?: true
   }
 
   export type LocationMaxAggregateInputType = {
     id?: true
-    location?: true
-    displayLocation?: true
+    city?: true
+    province?: true
     latitude?: true
     longitude?: true
   }
 
   export type LocationCountAggregateInputType = {
     id?: true
-    location?: true
-    displayLocation?: true
+    city?: true
+    province?: true
     latitude?: true
     longitude?: true
     _all?: true
@@ -9070,8 +9070,8 @@ export namespace Prisma {
 
   export type LocationGroupByOutputType = {
     id: number
-    location: string
-    displayLocation: string
+    city: string
+    province: string
     latitude: number
     longitude: number
     _count: LocationCountAggregateOutputType | null
@@ -9097,8 +9097,8 @@ export namespace Prisma {
 
   export type LocationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    location?: boolean
-    displayLocation?: boolean
+    city?: boolean
+    province?: boolean
     latitude?: boolean
     longitude?: boolean
     Job?: boolean | Location$JobArgs<ExtArgs>
@@ -9108,29 +9108,29 @@ export namespace Prisma {
 
   export type LocationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    location?: boolean
-    displayLocation?: boolean
+    city?: boolean
+    province?: boolean
     latitude?: boolean
     longitude?: boolean
   }, ExtArgs["result"]["location"]>
 
   export type LocationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    location?: boolean
-    displayLocation?: boolean
+    city?: boolean
+    province?: boolean
     latitude?: boolean
     longitude?: boolean
   }, ExtArgs["result"]["location"]>
 
   export type LocationSelectScalar = {
     id?: boolean
-    location?: boolean
-    displayLocation?: boolean
+    city?: boolean
+    province?: boolean
     latitude?: boolean
     longitude?: boolean
   }
 
-  export type LocationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "location" | "displayLocation" | "latitude" | "longitude", ExtArgs["result"]["location"]>
+  export type LocationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "city" | "province" | "latitude" | "longitude", ExtArgs["result"]["location"]>
   export type LocationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Job?: boolean | Location$JobArgs<ExtArgs>
     User?: boolean | Location$UserArgs<ExtArgs>
@@ -9147,8 +9147,8 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      location: string
-      displayLocation: string
+      city: string
+      province: string
       latitude: number
       longitude: number
     }, ExtArgs["result"]["location"]>
@@ -9577,8 +9577,8 @@ export namespace Prisma {
    */ 
   interface LocationFieldRefs {
     readonly id: FieldRef<"Location", 'Int'>
-    readonly location: FieldRef<"Location", 'String'>
-    readonly displayLocation: FieldRef<"Location", 'String'>
+    readonly city: FieldRef<"Location", 'String'>
+    readonly province: FieldRef<"Location", 'String'>
     readonly latitude: FieldRef<"Location", 'Float'>
     readonly longitude: FieldRef<"Location", 'Float'>
   }
@@ -17896,6 +17896,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     description: string | null
+    isActive: boolean | null
     createdAt: Date | null
   }
 
@@ -17903,6 +17904,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     description: string | null
+    isActive: boolean | null
     createdAt: Date | null
   }
 
@@ -17910,6 +17912,7 @@ export namespace Prisma {
     id: number
     title: number
     description: number
+    isActive: number
     createdAt: number
     _all: number
   }
@@ -17927,6 +17930,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
+    isActive?: true
     createdAt?: true
   }
 
@@ -17934,6 +17938,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
+    isActive?: true
     createdAt?: true
   }
 
@@ -17941,6 +17946,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
+    isActive?: true
     createdAt?: true
     _all?: true
   }
@@ -18035,6 +18041,7 @@ export namespace Prisma {
     id: number
     title: string
     description: string
+    isActive: boolean
     createdAt: Date
     _count: AssessmentCountAggregateOutputType | null
     _avg: AssessmentAvgAggregateOutputType | null
@@ -18061,6 +18068,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    isActive?: boolean
     createdAt?: boolean
     AssessmentQuestion?: boolean | Assessment$AssessmentQuestionArgs<ExtArgs>
     UserAssessment?: boolean | Assessment$UserAssessmentArgs<ExtArgs>
@@ -18071,6 +18079,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    isActive?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["assessment"]>
 
@@ -18078,6 +18087,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    isActive?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["assessment"]>
 
@@ -18085,10 +18095,11 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    isActive?: boolean
     createdAt?: boolean
   }
 
-  export type AssessmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "createdAt", ExtArgs["result"]["assessment"]>
+  export type AssessmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "isActive" | "createdAt", ExtArgs["result"]["assessment"]>
   export type AssessmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     AssessmentQuestion?: boolean | Assessment$AssessmentQuestionArgs<ExtArgs>
     UserAssessment?: boolean | Assessment$UserAssessmentArgs<ExtArgs>
@@ -18107,6 +18118,7 @@ export namespace Prisma {
       id: number
       title: string
       description: string
+      isActive: boolean
       createdAt: Date
     }, ExtArgs["result"]["assessment"]>
     composites: {}
@@ -18536,6 +18548,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Assessment", 'Int'>
     readonly title: FieldRef<"Assessment", 'String'>
     readonly description: FieldRef<"Assessment", 'String'>
+    readonly isActive: FieldRef<"Assessment", 'Boolean'>
     readonly createdAt: FieldRef<"Assessment", 'DateTime'>
   }
     
@@ -18992,6 +19005,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentAvgAggregateOutputType = {
+    id: number | null
     userId: number | null
     assessmentId: number | null
     score: number | null
@@ -18999,6 +19013,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentSumAggregateOutputType = {
+    id: number | null
     userId: number | null
     assessmentId: number | null
     score: number | null
@@ -19006,6 +19021,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentMinAggregateOutputType = {
+    id: number | null
     userId: number | null
     assessmentId: number | null
     score: number | null
@@ -19015,6 +19031,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentMaxAggregateOutputType = {
+    id: number | null
     userId: number | null
     assessmentId: number | null
     score: number | null
@@ -19024,6 +19041,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentCountAggregateOutputType = {
+    id: number
     userId: number
     assessmentId: number
     score: number
@@ -19035,6 +19053,7 @@ export namespace Prisma {
 
 
   export type UserAssessmentAvgAggregateInputType = {
+    id?: true
     userId?: true
     assessmentId?: true
     score?: true
@@ -19042,6 +19061,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentSumAggregateInputType = {
+    id?: true
     userId?: true
     assessmentId?: true
     score?: true
@@ -19049,6 +19069,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentMinAggregateInputType = {
+    id?: true
     userId?: true
     assessmentId?: true
     score?: true
@@ -19058,6 +19079,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentMaxAggregateInputType = {
+    id?: true
     userId?: true
     assessmentId?: true
     score?: true
@@ -19067,6 +19089,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentCountAggregateInputType = {
+    id?: true
     userId?: true
     assessmentId?: true
     score?: true
@@ -19163,10 +19186,11 @@ export namespace Prisma {
   }
 
   export type UserAssessmentGroupByOutputType = {
+    id: number
     userId: number
     assessmentId: number
     score: number
-    certificateId: number
+    certificateId: number | null
     status: $Enums.UserAssessmentStatus | null
     endTime: Date
     _count: UserAssessmentCountAggregateOutputType | null
@@ -19191,42 +19215,46 @@ export namespace Prisma {
 
 
   export type UserAssessmentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     userId?: boolean
     assessmentId?: boolean
     score?: boolean
     certificateId?: boolean
     status?: boolean
     endTime?: boolean
-    certificate?: boolean | CertificateDefaultArgs<ExtArgs>
+    certificate?: boolean | UserAssessment$certificateArgs<ExtArgs>
     User?: boolean | UserDefaultArgs<ExtArgs>
     assessment?: boolean | AssessmentDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userAssessment"]>
 
   export type UserAssessmentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     userId?: boolean
     assessmentId?: boolean
     score?: boolean
     certificateId?: boolean
     status?: boolean
     endTime?: boolean
-    certificate?: boolean | CertificateDefaultArgs<ExtArgs>
+    certificate?: boolean | UserAssessment$certificateArgs<ExtArgs>
     User?: boolean | UserDefaultArgs<ExtArgs>
     assessment?: boolean | AssessmentDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userAssessment"]>
 
   export type UserAssessmentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     userId?: boolean
     assessmentId?: boolean
     score?: boolean
     certificateId?: boolean
     status?: boolean
     endTime?: boolean
-    certificate?: boolean | CertificateDefaultArgs<ExtArgs>
+    certificate?: boolean | UserAssessment$certificateArgs<ExtArgs>
     User?: boolean | UserDefaultArgs<ExtArgs>
     assessment?: boolean | AssessmentDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userAssessment"]>
 
   export type UserAssessmentSelectScalar = {
+    id?: boolean
     userId?: boolean
     assessmentId?: boolean
     score?: boolean
@@ -19235,19 +19263,19 @@ export namespace Prisma {
     endTime?: boolean
   }
 
-  export type UserAssessmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "assessmentId" | "score" | "certificateId" | "status" | "endTime", ExtArgs["result"]["userAssessment"]>
+  export type UserAssessmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "assessmentId" | "score" | "certificateId" | "status" | "endTime", ExtArgs["result"]["userAssessment"]>
   export type UserAssessmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    certificate?: boolean | CertificateDefaultArgs<ExtArgs>
+    certificate?: boolean | UserAssessment$certificateArgs<ExtArgs>
     User?: boolean | UserDefaultArgs<ExtArgs>
     assessment?: boolean | AssessmentDefaultArgs<ExtArgs>
   }
   export type UserAssessmentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    certificate?: boolean | CertificateDefaultArgs<ExtArgs>
+    certificate?: boolean | UserAssessment$certificateArgs<ExtArgs>
     User?: boolean | UserDefaultArgs<ExtArgs>
     assessment?: boolean | AssessmentDefaultArgs<ExtArgs>
   }
   export type UserAssessmentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    certificate?: boolean | CertificateDefaultArgs<ExtArgs>
+    certificate?: boolean | UserAssessment$certificateArgs<ExtArgs>
     User?: boolean | UserDefaultArgs<ExtArgs>
     assessment?: boolean | AssessmentDefaultArgs<ExtArgs>
   }
@@ -19255,15 +19283,16 @@ export namespace Prisma {
   export type $UserAssessmentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "UserAssessment"
     objects: {
-      certificate: Prisma.$CertificatePayload<ExtArgs>
+      certificate: Prisma.$CertificatePayload<ExtArgs> | null
       User: Prisma.$UserPayload<ExtArgs>
       assessment: Prisma.$AssessmentPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
+      id: number
       userId: number
       assessmentId: number
       score: number
-      certificateId: number
+      certificateId: number | null
       status: $Enums.UserAssessmentStatus | null
       endTime: Date
     }, ExtArgs["result"]["userAssessment"]>
@@ -19349,8 +19378,8 @@ export namespace Prisma {
      * // Get first 10 UserAssessments
      * const userAssessments = await prisma.userAssessment.findMany({ take: 10 })
      * 
-     * // Only select the `userId`
-     * const userAssessmentWithUserIdOnly = await prisma.userAssessment.findMany({ select: { userId: true } })
+     * // Only select the `id`
+     * const userAssessmentWithIdOnly = await prisma.userAssessment.findMany({ select: { id: true } })
      * 
      */
     findMany<T extends UserAssessmentFindManyArgs>(args?: SelectSubset<T, UserAssessmentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAssessmentPayload<ExtArgs>, T, "findMany", ClientOptions>>
@@ -19394,9 +19423,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many UserAssessments and only return the `userId`
-     * const userAssessmentWithUserIdOnly = await prisma.userAssessment.createManyAndReturn({
-     *   select: { userId: true },
+     * // Create many UserAssessments and only return the `id`
+     * const userAssessmentWithIdOnly = await prisma.userAssessment.createManyAndReturn({
+     *   select: { id: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -19485,9 +19514,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more UserAssessments and only return the `userId`
-     * const userAssessmentWithUserIdOnly = await prisma.userAssessment.updateManyAndReturn({
-     *   select: { userId: true },
+     * // Update zero or more UserAssessments and only return the `id`
+     * const userAssessmentWithIdOnly = await prisma.userAssessment.updateManyAndReturn({
+     *   select: { id: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -19660,7 +19689,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserAssessmentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    certificate<T extends CertificateDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CertificateDefaultArgs<ExtArgs>>): Prisma__CertificateClient<$Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    certificate<T extends UserAssessment$certificateArgs<ExtArgs> = {}>(args?: Subset<T, UserAssessment$certificateArgs<ExtArgs>>): Prisma__CertificateClient<$Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     User<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     assessment<T extends AssessmentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentDefaultArgs<ExtArgs>>): Prisma__AssessmentClient<$Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     /**
@@ -19692,6 +19721,7 @@ export namespace Prisma {
    * Fields of the UserAssessment model
    */ 
   interface UserAssessmentFieldRefs {
+    readonly id: FieldRef<"UserAssessment", 'Int'>
     readonly userId: FieldRef<"UserAssessment", 'Int'>
     readonly assessmentId: FieldRef<"UserAssessment", 'Int'>
     readonly score: FieldRef<"UserAssessment", 'Int'>
@@ -20079,6 +20109,25 @@ export namespace Prisma {
      * Filter which UserAssessments to delete
      */
     where?: UserAssessmentWhereInput
+  }
+
+  /**
+   * UserAssessment.certificate
+   */
+  export type UserAssessment$certificateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Certificate
+     */
+    select?: CertificateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Certificate
+     */
+    omit?: CertificateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CertificateInclude<ExtArgs> | null
+    where?: CertificateWhereInput
   }
 
   /**
@@ -23507,8 +23556,8 @@ export namespace Prisma {
 
   export const LocationScalarFieldEnum: {
     id: 'id',
-    location: 'location',
-    displayLocation: 'displayLocation',
+    city: 'city',
+    province: 'province',
     latitude: 'latitude',
     longitude: 'longitude'
   };
@@ -23608,6 +23657,7 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     description: 'description',
+    isActive: 'isActive',
     createdAt: 'createdAt'
   };
 
@@ -23615,6 +23665,7 @@ export namespace Prisma {
 
 
   export const UserAssessmentScalarFieldEnum: {
+    id: 'id',
     userId: 'userId',
     assessmentId: 'assessmentId',
     score: 'score',
@@ -24303,8 +24354,8 @@ export namespace Prisma {
     OR?: LocationWhereInput[]
     NOT?: LocationWhereInput | LocationWhereInput[]
     id?: IntFilter<"Location"> | number
-    location?: StringFilter<"Location"> | string
-    displayLocation?: StringFilter<"Location"> | string
+    city?: StringFilter<"Location"> | string
+    province?: StringFilter<"Location"> | string
     latitude?: FloatFilter<"Location"> | number
     longitude?: FloatFilter<"Location"> | number
     Job?: JobListRelationFilter
@@ -24313,8 +24364,8 @@ export namespace Prisma {
 
   export type LocationOrderByWithRelationInput = {
     id?: SortOrder
-    location?: SortOrder
-    displayLocation?: SortOrder
+    city?: SortOrder
+    province?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
     Job?: JobOrderByRelationAggregateInput
@@ -24323,21 +24374,21 @@ export namespace Prisma {
 
   export type LocationWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    location?: string
     AND?: LocationWhereInput | LocationWhereInput[]
     OR?: LocationWhereInput[]
     NOT?: LocationWhereInput | LocationWhereInput[]
-    displayLocation?: StringFilter<"Location"> | string
+    city?: StringFilter<"Location"> | string
+    province?: StringFilter<"Location"> | string
     latitude?: FloatFilter<"Location"> | number
     longitude?: FloatFilter<"Location"> | number
     Job?: JobListRelationFilter
     User?: UserListRelationFilter
-  }, "id" | "location">
+  }, "id">
 
   export type LocationOrderByWithAggregationInput = {
     id?: SortOrder
-    location?: SortOrder
-    displayLocation?: SortOrder
+    city?: SortOrder
+    province?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
     _count?: LocationCountOrderByAggregateInput
@@ -24352,8 +24403,8 @@ export namespace Prisma {
     OR?: LocationScalarWhereWithAggregatesInput[]
     NOT?: LocationScalarWhereWithAggregatesInput | LocationScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Location"> | number
-    location?: StringWithAggregatesFilter<"Location"> | string
-    displayLocation?: StringWithAggregatesFilter<"Location"> | string
+    city?: StringWithAggregatesFilter<"Location"> | string
+    province?: StringWithAggregatesFilter<"Location"> | string
     latitude?: FloatWithAggregatesFilter<"Location"> | number
     longitude?: FloatWithAggregatesFilter<"Location"> | number
   }
@@ -24840,6 +24891,7 @@ export namespace Prisma {
     id?: IntFilter<"Assessment"> | number
     title?: StringFilter<"Assessment"> | string
     description?: StringFilter<"Assessment"> | string
+    isActive?: BoolFilter<"Assessment"> | boolean
     createdAt?: DateTimeFilter<"Assessment"> | Date | string
     AssessmentQuestion?: AssessmentQuestionListRelationFilter
     UserAssessment?: UserAssessmentListRelationFilter
@@ -24849,6 +24901,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     AssessmentQuestion?: AssessmentQuestionOrderByRelationAggregateInput
     UserAssessment?: UserAssessmentOrderByRelationAggregateInput
@@ -24861,6 +24914,7 @@ export namespace Prisma {
     NOT?: AssessmentWhereInput | AssessmentWhereInput[]
     title?: StringFilter<"Assessment"> | string
     description?: StringFilter<"Assessment"> | string
+    isActive?: BoolFilter<"Assessment"> | boolean
     createdAt?: DateTimeFilter<"Assessment"> | Date | string
     AssessmentQuestion?: AssessmentQuestionListRelationFilter
     UserAssessment?: UserAssessmentListRelationFilter
@@ -24870,6 +24924,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     _count?: AssessmentCountOrderByAggregateInput
     _avg?: AssessmentAvgOrderByAggregateInput
@@ -24885,6 +24940,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Assessment"> | number
     title?: StringWithAggregatesFilter<"Assessment"> | string
     description?: StringWithAggregatesFilter<"Assessment"> | string
+    isActive?: BoolWithAggregatesFilter<"Assessment"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Assessment"> | Date | string
   }
 
@@ -24892,22 +24948,24 @@ export namespace Prisma {
     AND?: UserAssessmentWhereInput | UserAssessmentWhereInput[]
     OR?: UserAssessmentWhereInput[]
     NOT?: UserAssessmentWhereInput | UserAssessmentWhereInput[]
+    id?: IntFilter<"UserAssessment"> | number
     userId?: IntFilter<"UserAssessment"> | number
     assessmentId?: IntFilter<"UserAssessment"> | number
     score?: IntFilter<"UserAssessment"> | number
-    certificateId?: IntFilter<"UserAssessment"> | number
+    certificateId?: IntNullableFilter<"UserAssessment"> | number | null
     status?: EnumUserAssessmentStatusNullableFilter<"UserAssessment"> | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFilter<"UserAssessment"> | Date | string
-    certificate?: XOR<CertificateScalarRelationFilter, CertificateWhereInput>
+    certificate?: XOR<CertificateNullableScalarRelationFilter, CertificateWhereInput> | null
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
     assessment?: XOR<AssessmentScalarRelationFilter, AssessmentWhereInput>
   }
 
   export type UserAssessmentOrderByWithRelationInput = {
+    id?: SortOrder
     userId?: SortOrder
     assessmentId?: SortOrder
     score?: SortOrder
-    certificateId?: SortOrder
+    certificateId?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
     endTime?: SortOrder
     certificate?: CertificateOrderByWithRelationInput
@@ -24916,26 +24974,27 @@ export namespace Prisma {
   }
 
   export type UserAssessmentWhereUniqueInput = Prisma.AtLeast<{
-    userId_assessmentId?: UserAssessmentUserIdAssessmentIdCompoundUniqueInput
+    id?: number
     AND?: UserAssessmentWhereInput | UserAssessmentWhereInput[]
     OR?: UserAssessmentWhereInput[]
     NOT?: UserAssessmentWhereInput | UserAssessmentWhereInput[]
     userId?: IntFilter<"UserAssessment"> | number
     assessmentId?: IntFilter<"UserAssessment"> | number
     score?: IntFilter<"UserAssessment"> | number
-    certificateId?: IntFilter<"UserAssessment"> | number
+    certificateId?: IntNullableFilter<"UserAssessment"> | number | null
     status?: EnumUserAssessmentStatusNullableFilter<"UserAssessment"> | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFilter<"UserAssessment"> | Date | string
-    certificate?: XOR<CertificateScalarRelationFilter, CertificateWhereInput>
+    certificate?: XOR<CertificateNullableScalarRelationFilter, CertificateWhereInput> | null
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
     assessment?: XOR<AssessmentScalarRelationFilter, AssessmentWhereInput>
-  }, "userId_assessmentId">
+  }, "id">
 
   export type UserAssessmentOrderByWithAggregationInput = {
+    id?: SortOrder
     userId?: SortOrder
     assessmentId?: SortOrder
     score?: SortOrder
-    certificateId?: SortOrder
+    certificateId?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
     endTime?: SortOrder
     _count?: UserAssessmentCountOrderByAggregateInput
@@ -24949,10 +25008,11 @@ export namespace Prisma {
     AND?: UserAssessmentScalarWhereWithAggregatesInput | UserAssessmentScalarWhereWithAggregatesInput[]
     OR?: UserAssessmentScalarWhereWithAggregatesInput[]
     NOT?: UserAssessmentScalarWhereWithAggregatesInput | UserAssessmentScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"UserAssessment"> | number
     userId?: IntWithAggregatesFilter<"UserAssessment"> | number
     assessmentId?: IntWithAggregatesFilter<"UserAssessment"> | number
     score?: IntWithAggregatesFilter<"UserAssessment"> | number
-    certificateId?: IntWithAggregatesFilter<"UserAssessment"> | number
+    certificateId?: IntNullableWithAggregatesFilter<"UserAssessment"> | number | null
     status?: EnumUserAssessmentStatusNullableWithAggregatesFilter<"UserAssessment"> | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeWithAggregatesFilter<"UserAssessment"> | Date | string
   }
@@ -25635,8 +25695,8 @@ export namespace Prisma {
   }
 
   export type LocationCreateInput = {
-    location: string
-    displayLocation: string
+    city: string
+    province: string
     latitude: number
     longitude: number
     Job?: JobCreateNestedManyWithoutLocationInput
@@ -25645,8 +25705,8 @@ export namespace Prisma {
 
   export type LocationUncheckedCreateInput = {
     id?: number
-    location: string
-    displayLocation: string
+    city: string
+    province: string
     latitude: number
     longitude: number
     Job?: JobUncheckedCreateNestedManyWithoutLocationInput
@@ -25654,8 +25714,8 @@ export namespace Prisma {
   }
 
   export type LocationUpdateInput = {
-    location?: StringFieldUpdateOperationsInput | string
-    displayLocation?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     Job?: JobUpdateManyWithoutLocationNestedInput
@@ -25664,8 +25724,8 @@ export namespace Prisma {
 
   export type LocationUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    location?: StringFieldUpdateOperationsInput | string
-    displayLocation?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     Job?: JobUncheckedUpdateManyWithoutLocationNestedInput
@@ -25674,23 +25734,23 @@ export namespace Prisma {
 
   export type LocationCreateManyInput = {
     id?: number
-    location: string
-    displayLocation: string
+    city: string
+    province: string
     latitude: number
     longitude: number
   }
 
   export type LocationUpdateManyMutationInput = {
-    location?: StringFieldUpdateOperationsInput | string
-    displayLocation?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
   }
 
   export type LocationUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    location?: StringFieldUpdateOperationsInput | string
-    displayLocation?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
   }
@@ -26160,6 +26220,7 @@ export namespace Prisma {
   export type AssessmentCreateInput = {
     title: string
     description: string
+    isActive?: boolean
     createdAt?: Date | string
     AssessmentQuestion?: AssessmentQuestionCreateNestedManyWithoutAssessmentInput
     UserAssessment?: UserAssessmentCreateNestedManyWithoutAssessmentInput
@@ -26169,6 +26230,7 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
+    isActive?: boolean
     createdAt?: Date | string
     AssessmentQuestion?: AssessmentQuestionUncheckedCreateNestedManyWithoutAssessmentInput
     UserAssessment?: UserAssessmentUncheckedCreateNestedManyWithoutAssessmentInput
@@ -26177,6 +26239,7 @@ export namespace Prisma {
   export type AssessmentUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     AssessmentQuestion?: AssessmentQuestionUpdateManyWithoutAssessmentNestedInput
     UserAssessment?: UserAssessmentUpdateManyWithoutAssessmentNestedInput
@@ -26186,6 +26249,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     AssessmentQuestion?: AssessmentQuestionUncheckedUpdateManyWithoutAssessmentNestedInput
     UserAssessment?: UserAssessmentUncheckedUpdateManyWithoutAssessmentNestedInput
@@ -26195,12 +26259,14 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
+    isActive?: boolean
     createdAt?: Date | string
   }
 
   export type AssessmentUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -26208,6 +26274,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -26215,16 +26282,17 @@ export namespace Prisma {
     score?: number
     status?: $Enums.UserAssessmentStatus | null
     endTime: Date | string
-    certificate: CertificateCreateNestedOneWithoutUserAssessmentInput
+    certificate?: CertificateCreateNestedOneWithoutUserAssessmentInput
     User: UserCreateNestedOneWithoutUserAssessmentInput
     assessment: AssessmentCreateNestedOneWithoutUserAssessmentInput
   }
 
   export type UserAssessmentUncheckedCreateInput = {
+    id?: number
     userId: number
     assessmentId: number
     score?: number
-    certificateId: number
+    certificateId?: number | null
     status?: $Enums.UserAssessmentStatus | null
     endTime: Date | string
   }
@@ -26233,25 +26301,27 @@ export namespace Prisma {
     score?: IntFieldUpdateOperationsInput | number
     status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    certificate?: CertificateUpdateOneRequiredWithoutUserAssessmentNestedInput
+    certificate?: CertificateUpdateOneWithoutUserAssessmentNestedInput
     User?: UserUpdateOneRequiredWithoutUserAssessmentNestedInput
     assessment?: AssessmentUpdateOneRequiredWithoutUserAssessmentNestedInput
   }
 
   export type UserAssessmentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     assessmentId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
-    certificateId?: IntFieldUpdateOperationsInput | number
+    certificateId?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserAssessmentCreateManyInput = {
+    id?: number
     userId: number
     assessmentId: number
     score?: number
-    certificateId: number
+    certificateId?: number | null
     status?: $Enums.UserAssessmentStatus | null
     endTime: Date | string
   }
@@ -26263,10 +26333,11 @@ export namespace Prisma {
   }
 
   export type UserAssessmentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     assessmentId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
-    certificateId?: IntFieldUpdateOperationsInput | number
+    certificateId?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -27076,8 +27147,8 @@ export namespace Prisma {
 
   export type LocationCountOrderByAggregateInput = {
     id?: SortOrder
-    location?: SortOrder
-    displayLocation?: SortOrder
+    city?: SortOrder
+    province?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
   }
@@ -27090,16 +27161,16 @@ export namespace Prisma {
 
   export type LocationMaxOrderByAggregateInput = {
     id?: SortOrder
-    location?: SortOrder
-    displayLocation?: SortOrder
+    city?: SortOrder
+    province?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
   }
 
   export type LocationMinOrderByAggregateInput = {
     id?: SortOrder
-    location?: SortOrder
-    displayLocation?: SortOrder
+    city?: SortOrder
+    province?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
   }
@@ -27510,6 +27581,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -27521,6 +27593,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -27528,6 +27601,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -27542,9 +27616,9 @@ export namespace Prisma {
     not?: NestedEnumUserAssessmentStatusNullableFilter<$PrismaModel> | $Enums.UserAssessmentStatus | null
   }
 
-  export type CertificateScalarRelationFilter = {
-    is?: CertificateWhereInput
-    isNot?: CertificateWhereInput
+  export type CertificateNullableScalarRelationFilter = {
+    is?: CertificateWhereInput | null
+    isNot?: CertificateWhereInput | null
   }
 
   export type AssessmentScalarRelationFilter = {
@@ -27552,12 +27626,8 @@ export namespace Prisma {
     isNot?: AssessmentWhereInput
   }
 
-  export type UserAssessmentUserIdAssessmentIdCompoundUniqueInput = {
-    userId: number
-    assessmentId: number
-  }
-
   export type UserAssessmentCountOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     assessmentId?: SortOrder
     score?: SortOrder
@@ -27567,6 +27637,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentAvgOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     assessmentId?: SortOrder
     score?: SortOrder
@@ -27574,6 +27645,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentMaxOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     assessmentId?: SortOrder
     score?: SortOrder
@@ -27583,6 +27655,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentMinOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     assessmentId?: SortOrder
     score?: SortOrder
@@ -27592,6 +27665,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentSumOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     assessmentId?: SortOrder
     score?: SortOrder
@@ -28828,10 +28902,12 @@ export namespace Prisma {
     set?: $Enums.UserAssessmentStatus | null
   }
 
-  export type CertificateUpdateOneRequiredWithoutUserAssessmentNestedInput = {
+  export type CertificateUpdateOneWithoutUserAssessmentNestedInput = {
     create?: XOR<CertificateCreateWithoutUserAssessmentInput, CertificateUncheckedCreateWithoutUserAssessmentInput>
     connectOrCreate?: CertificateCreateOrConnectWithoutUserAssessmentInput
     upsert?: CertificateUpsertWithoutUserAssessmentInput
+    disconnect?: CertificateWhereInput | boolean
+    delete?: CertificateWhereInput | boolean
     connect?: CertificateWhereUniqueInput
     update?: XOR<XOR<CertificateUpdateToOneWithWhereWithoutUserAssessmentInput, CertificateUpdateWithoutUserAssessmentInput>, CertificateUncheckedUpdateWithoutUserAssessmentInput>
   }
@@ -29403,8 +29479,8 @@ export namespace Prisma {
   }
 
   export type LocationCreateWithoutUserInput = {
-    location: string
-    displayLocation: string
+    city: string
+    province: string
     latitude: number
     longitude: number
     Job?: JobCreateNestedManyWithoutLocationInput
@@ -29412,8 +29488,8 @@ export namespace Prisma {
 
   export type LocationUncheckedCreateWithoutUserInput = {
     id?: number
-    location: string
-    displayLocation: string
+    city: string
+    province: string
     latitude: number
     longitude: number
     Job?: JobUncheckedCreateNestedManyWithoutLocationInput
@@ -29428,14 +29504,15 @@ export namespace Prisma {
     score?: number
     status?: $Enums.UserAssessmentStatus | null
     endTime: Date | string
-    certificate: CertificateCreateNestedOneWithoutUserAssessmentInput
+    certificate?: CertificateCreateNestedOneWithoutUserAssessmentInput
     assessment: AssessmentCreateNestedOneWithoutUserAssessmentInput
   }
 
   export type UserAssessmentUncheckedCreateWithoutUserInput = {
+    id?: number
     assessmentId: number
     score?: number
-    certificateId: number
+    certificateId?: number | null
     status?: $Enums.UserAssessmentStatus | null
     endTime: Date | string
   }
@@ -29637,8 +29714,8 @@ export namespace Prisma {
   }
 
   export type LocationUpdateWithoutUserInput = {
-    location?: StringFieldUpdateOperationsInput | string
-    displayLocation?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     Job?: JobUpdateManyWithoutLocationNestedInput
@@ -29646,8 +29723,8 @@ export namespace Prisma {
 
   export type LocationUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
-    location?: StringFieldUpdateOperationsInput | string
-    displayLocation?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     Job?: JobUncheckedUpdateManyWithoutLocationNestedInput
@@ -29673,10 +29750,11 @@ export namespace Prisma {
     AND?: UserAssessmentScalarWhereInput | UserAssessmentScalarWhereInput[]
     OR?: UserAssessmentScalarWhereInput[]
     NOT?: UserAssessmentScalarWhereInput | UserAssessmentScalarWhereInput[]
+    id?: IntFilter<"UserAssessment"> | number
     userId?: IntFilter<"UserAssessment"> | number
     assessmentId?: IntFilter<"UserAssessment"> | number
     score?: IntFilter<"UserAssessment"> | number
-    certificateId?: IntFilter<"UserAssessment"> | number
+    certificateId?: IntNullableFilter<"UserAssessment"> | number | null
     status?: EnumUserAssessmentStatusNullableFilter<"UserAssessment"> | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFilter<"UserAssessment"> | Date | string
   }
@@ -29861,8 +29939,8 @@ export namespace Prisma {
   }
 
   export type LocationCreateWithoutJobInput = {
-    location: string
-    displayLocation: string
+    city: string
+    province: string
     latitude: number
     longitude: number
     User?: UserCreateNestedManyWithoutLocationInput
@@ -29870,8 +29948,8 @@ export namespace Prisma {
 
   export type LocationUncheckedCreateWithoutJobInput = {
     id?: number
-    location: string
-    displayLocation: string
+    city: string
+    province: string
     latitude: number
     longitude: number
     User?: UserUncheckedCreateNestedManyWithoutLocationInput
@@ -30043,8 +30121,8 @@ export namespace Prisma {
   }
 
   export type LocationUpdateWithoutJobInput = {
-    location?: StringFieldUpdateOperationsInput | string
-    displayLocation?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     User?: UserUpdateManyWithoutLocationNestedInput
@@ -30052,8 +30130,8 @@ export namespace Prisma {
 
   export type LocationUncheckedUpdateWithoutJobInput = {
     id?: IntFieldUpdateOperationsInput | number
-    location?: StringFieldUpdateOperationsInput | string
-    displayLocation?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     User?: UserUncheckedUpdateManyWithoutLocationNestedInput
@@ -31485,14 +31563,15 @@ export namespace Prisma {
     score?: number
     status?: $Enums.UserAssessmentStatus | null
     endTime: Date | string
-    certificate: CertificateCreateNestedOneWithoutUserAssessmentInput
+    certificate?: CertificateCreateNestedOneWithoutUserAssessmentInput
     User: UserCreateNestedOneWithoutUserAssessmentInput
   }
 
   export type UserAssessmentUncheckedCreateWithoutAssessmentInput = {
+    id?: number
     userId: number
     score?: number
-    certificateId: number
+    certificateId?: number | null
     status?: $Enums.UserAssessmentStatus | null
     endTime: Date | string
   }
@@ -31621,6 +31700,7 @@ export namespace Prisma {
   export type AssessmentCreateWithoutUserAssessmentInput = {
     title: string
     description: string
+    isActive?: boolean
     createdAt?: Date | string
     AssessmentQuestion?: AssessmentQuestionCreateNestedManyWithoutAssessmentInput
   }
@@ -31629,6 +31709,7 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
+    isActive?: boolean
     createdAt?: Date | string
     AssessmentQuestion?: AssessmentQuestionUncheckedCreateNestedManyWithoutAssessmentInput
   }
@@ -31732,6 +31813,7 @@ export namespace Prisma {
   export type AssessmentUpdateWithoutUserAssessmentInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     AssessmentQuestion?: AssessmentQuestionUpdateManyWithoutAssessmentNestedInput
   }
@@ -31740,6 +31822,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     AssessmentQuestion?: AssessmentQuestionUncheckedUpdateManyWithoutAssessmentNestedInput
   }
@@ -31747,6 +31830,7 @@ export namespace Prisma {
   export type AssessmentCreateWithoutAssessmentQuestionInput = {
     title: string
     description: string
+    isActive?: boolean
     createdAt?: Date | string
     UserAssessment?: UserAssessmentCreateNestedManyWithoutAssessmentInput
   }
@@ -31755,6 +31839,7 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
+    isActive?: boolean
     createdAt?: Date | string
     UserAssessment?: UserAssessmentUncheckedCreateNestedManyWithoutAssessmentInput
   }
@@ -31778,6 +31863,7 @@ export namespace Prisma {
   export type AssessmentUpdateWithoutAssessmentQuestionInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     UserAssessment?: UserAssessmentUpdateManyWithoutAssessmentNestedInput
   }
@@ -31786,6 +31872,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     UserAssessment?: UserAssessmentUncheckedUpdateManyWithoutAssessmentNestedInput
   }
@@ -31799,6 +31886,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentUncheckedCreateWithoutCertificateInput = {
+    id?: number
     userId: number
     assessmentId: number
     score?: number
@@ -32030,9 +32118,10 @@ export namespace Prisma {
   }
 
   export type UserAssessmentCreateManyUserInput = {
+    id?: number
     assessmentId: number
     score?: number
-    certificateId: number
+    certificateId?: number | null
     status?: $Enums.UserAssessmentStatus | null
     endTime: Date | string
   }
@@ -32180,22 +32269,24 @@ export namespace Prisma {
     score?: IntFieldUpdateOperationsInput | number
     status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    certificate?: CertificateUpdateOneRequiredWithoutUserAssessmentNestedInput
+    certificate?: CertificateUpdateOneWithoutUserAssessmentNestedInput
     assessment?: AssessmentUpdateOneRequiredWithoutUserAssessmentNestedInput
   }
 
   export type UserAssessmentUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
     assessmentId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
-    certificateId?: IntFieldUpdateOperationsInput | number
+    certificateId?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserAssessmentUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
     assessmentId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
-    certificateId?: IntFieldUpdateOperationsInput | number
+    certificateId?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -32740,9 +32831,10 @@ export namespace Prisma {
   }
 
   export type UserAssessmentCreateManyAssessmentInput = {
+    id?: number
     userId: number
     score?: number
-    certificateId: number
+    certificateId?: number | null
     status?: $Enums.UserAssessmentStatus | null
     endTime: Date | string
   }
@@ -32771,27 +32863,30 @@ export namespace Prisma {
     score?: IntFieldUpdateOperationsInput | number
     status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    certificate?: CertificateUpdateOneRequiredWithoutUserAssessmentNestedInput
+    certificate?: CertificateUpdateOneWithoutUserAssessmentNestedInput
     User?: UserUpdateOneRequiredWithoutUserAssessmentNestedInput
   }
 
   export type UserAssessmentUncheckedUpdateWithoutAssessmentInput = {
+    id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
-    certificateId?: IntFieldUpdateOperationsInput | number
+    certificateId?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserAssessmentUncheckedUpdateManyWithoutAssessmentInput = {
+    id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
-    certificateId?: IntFieldUpdateOperationsInput | number
+    certificateId?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserAssessmentCreateManyCertificateInput = {
+    id?: number
     userId: number
     assessmentId: number
     score?: number
@@ -32808,6 +32903,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentUncheckedUpdateWithoutCertificateInput = {
+    id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     assessmentId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
@@ -32816,6 +32912,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentUncheckedUpdateManyWithoutCertificateInput = {
+    id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     assessmentId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number

@@ -11,7 +11,7 @@ export class JobController {
       const { sort = "asc", page = "1", search } = req.query;
 
       const filter: Prisma.JobWhereInput = {
-        AND: [{ adminId: 1 }, { isActive: true }],
+        AND: [{ adminId: 2 }, { isActive: true }],
       };
 
       if (search) {
@@ -46,26 +46,28 @@ export class JobController {
 
   async createJob(req: Request, res: Response) {
     try {
-      const adminId = 1;
+      const adminId = 2;
       if (req.file) {
         const { secure_url } = await cloudinaryUpload(req.file, "jobsBanner");
         req.body.banner = secure_url;
       }
 
       let location = await prisma.location.findFirst({
-        where: { location: req.body.city },
+        where: { city: req.body.city },
       });
       if (!location) {
         const { data } = await axios.get(
           `https://api.opencagedata.com/geocode/v1/json?q=${req.body.city
             .split(" ")
+            .join("+")}+${req.body.province
+            .split(" ")
             .join("+")}&key=bcf87dd591a44c57b21a10bed03f5daa`
         );
-        const { formatted, geometry } = data.results[0];
+        const { geometry } = data.results[0];
         location = await prisma.location.create({
           data: {
-            location: req.body.city,
-            displayLocation: formatted,
+            city: req.body.city,
+            province: req.body.province,
             latitude: geometry.lat,
             longitude: geometry.lng,
           },
@@ -91,7 +93,20 @@ export class JobController {
 
   async getJobDetail(req: Request, res: Response) {
     try {
-      const job = await prisma.job.findUnique({ where: { id: req.params.id } });
+      const job = await prisma.job.findUnique({
+        where: { id: req.params.id },
+        select: {
+          title: true,
+          role: true,
+          banner: true,
+          endDate: true,
+          salary: true,
+          category: true,
+          description: true,
+          tags: true,
+          location: { select: { city: true, province: true } },
+        },
+      });
       res.status(200).send({ result: job });
     } catch (err) {
       console.log(err);
@@ -129,13 +144,11 @@ export class JobController {
         where: { id: req.params.id },
         data: { isPublished },
       });
-      res
-        .status(200)
-        .send({
-          message: `Your job has been ${
-            isPublished ? "published" : "unpublished"
-          }`,
-        });
+      res.status(200).send({
+        message: `Your job has been ${
+          isPublished ? "published" : "unpublished"
+        }`,
+      });
     } catch (err) {
       console.log(err);
       res.status(400).send(err);
@@ -145,7 +158,7 @@ export class JobController {
   async totalJobs(req: Request, res: Response) {
     try {
       const jobs = await prisma.job.aggregate({
-        where: { adminId: 1, isActive: true },
+        where: { adminId: 2, isActive: true },
         _count: { _all: true },
       });
       res.status(200).send({ result: jobs._count._all });
