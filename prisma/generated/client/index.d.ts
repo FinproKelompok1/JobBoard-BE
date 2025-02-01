@@ -2517,15 +2517,21 @@ export namespace Prisma {
   export type UserCountOutputType = {
     CurriculumVitae: number
     JobApplication: number
+    Review: number
     Transaction: number
+    UserAssessment: number
     UserSubscription: number
+    Interview: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     CurriculumVitae?: boolean | UserCountOutputTypeCountCurriculumVitaeArgs
     JobApplication?: boolean | UserCountOutputTypeCountJobApplicationArgs
+    Review?: boolean | UserCountOutputTypeCountReviewArgs
     Transaction?: boolean | UserCountOutputTypeCountTransactionArgs
+    UserAssessment?: boolean | UserCountOutputTypeCountUserAssessmentArgs
     UserSubscription?: boolean | UserCountOutputTypeCountUserSubscriptionArgs
+    Interview?: boolean | UserCountOutputTypeCountInterviewArgs
   }
 
   // Custom InputTypes
@@ -2556,6 +2562,13 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
+  export type UserCountOutputTypeCountReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
   export type UserCountOutputTypeCountTransactionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TransactionWhereInput
   }
@@ -2563,8 +2576,22 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
+  export type UserCountOutputTypeCountUserAssessmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserAssessmentWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
   export type UserCountOutputTypeCountUserSubscriptionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserSubscriptionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountInterviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InterviewWhereInput
   }
 
 
@@ -2604,13 +2631,17 @@ export namespace Prisma {
    */
 
   export type JobCountOutputType = {
-    PreSelectionTest: number
     JobApplication: number
+    PreSelectionTest: number
+    Review: number
+    Interview: number
   }
 
   export type JobCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    PreSelectionTest?: boolean | JobCountOutputTypeCountPreSelectionTestArgs
     JobApplication?: boolean | JobCountOutputTypeCountJobApplicationArgs
+    PreSelectionTest?: boolean | JobCountOutputTypeCountPreSelectionTestArgs
+    Review?: boolean | JobCountOutputTypeCountReviewArgs
+    Interview?: boolean | JobCountOutputTypeCountInterviewArgs
   }
 
   // Custom InputTypes
@@ -2627,6 +2658,13 @@ export namespace Prisma {
   /**
    * JobCountOutputType without action
    */
+  export type JobCountOutputTypeCountJobApplicationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JobApplicationWhereInput
+  }
+
+  /**
+   * JobCountOutputType without action
+   */
   export type JobCountOutputTypeCountPreSelectionTestArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PreSelectionTestWhereInput
   }
@@ -2634,8 +2672,15 @@ export namespace Prisma {
   /**
    * JobCountOutputType without action
    */
-  export type JobCountOutputTypeCountJobApplicationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: JobApplicationWhereInput
+  export type JobCountOutputTypeCountReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewWhereInput
+  }
+
+  /**
+   * JobCountOutputType without action
+   */
+  export type JobCountOutputTypeCountInterviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InterviewWhereInput
   }
 
 
@@ -2644,13 +2689,13 @@ export namespace Prisma {
    */
 
   export type LocationCountOutputType = {
-    User: number
     Job: number
+    User: number
   }
 
   export type LocationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    User?: boolean | LocationCountOutputTypeCountUserArgs
     Job?: boolean | LocationCountOutputTypeCountJobArgs
+    User?: boolean | LocationCountOutputTypeCountUserArgs
   }
 
   // Custom InputTypes
@@ -2667,15 +2712,15 @@ export namespace Prisma {
   /**
    * LocationCountOutputType without action
    */
-  export type LocationCountOutputTypeCountUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserWhereInput
+  export type LocationCountOutputTypeCountJobArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JobWhereInput
   }
 
   /**
    * LocationCountOutputType without action
    */
-  export type LocationCountOutputTypeCountJobArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: JobWhereInput
+  export type LocationCountOutputTypeCountUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
   }
 
 
@@ -2756,10 +2801,12 @@ export namespace Prisma {
 
   export type AssessmentCountOutputType = {
     AssessmentQuestion: number
+    UserAssessment: number
   }
 
   export type AssessmentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     AssessmentQuestion?: boolean | AssessmentCountOutputTypeCountAssessmentQuestionArgs
+    UserAssessment?: boolean | AssessmentCountOutputTypeCountUserAssessmentArgs
   }
 
   // Custom InputTypes
@@ -2778,6 +2825,13 @@ export namespace Prisma {
    */
   export type AssessmentCountOutputTypeCountAssessmentQuestionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AssessmentQuestionWhereInput
+  }
+
+  /**
+   * AssessmentCountOutputType without action
+   */
+  export type AssessmentCountOutputTypeCountUserAssessmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserAssessmentWhereInput
   }
 
 
@@ -3083,10 +3137,13 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     CurriculumVitae?: boolean | User$CurriculumVitaeArgs<ExtArgs>
-    location?: boolean | User$locationArgs<ExtArgs>
     JobApplication?: boolean | User$JobApplicationArgs<ExtArgs>
+    Review?: boolean | User$ReviewArgs<ExtArgs>
     Transaction?: boolean | User$TransactionArgs<ExtArgs>
+    location?: boolean | User$locationArgs<ExtArgs>
+    UserAssessment?: boolean | User$UserAssessmentArgs<ExtArgs>
     UserSubscription?: boolean | User$UserSubscriptionArgs<ExtArgs>
+    Interview?: boolean | User$InterviewArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -3143,10 +3200,13 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "fullname" | "email" | "password" | "isVerified" | "avatar" | "gender" | "dob" | "lastEdu" | "domicileId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     CurriculumVitae?: boolean | User$CurriculumVitaeArgs<ExtArgs>
-    location?: boolean | User$locationArgs<ExtArgs>
     JobApplication?: boolean | User$JobApplicationArgs<ExtArgs>
+    Review?: boolean | User$ReviewArgs<ExtArgs>
     Transaction?: boolean | User$TransactionArgs<ExtArgs>
+    location?: boolean | User$locationArgs<ExtArgs>
+    UserAssessment?: boolean | User$UserAssessmentArgs<ExtArgs>
     UserSubscription?: boolean | User$UserSubscriptionArgs<ExtArgs>
+    Interview?: boolean | User$InterviewArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3160,10 +3220,13 @@ export namespace Prisma {
     name: "User"
     objects: {
       CurriculumVitae: Prisma.$CurriculumVitaePayload<ExtArgs>[]
-      location: Prisma.$LocationPayload<ExtArgs> | null
       JobApplication: Prisma.$JobApplicationPayload<ExtArgs>[]
+      Review: Prisma.$ReviewPayload<ExtArgs>[]
       Transaction: Prisma.$TransactionPayload<ExtArgs>[]
+      location: Prisma.$LocationPayload<ExtArgs> | null
+      UserAssessment: Prisma.$UserAssessmentPayload<ExtArgs>[]
       UserSubscription: Prisma.$UserSubscriptionPayload<ExtArgs>[]
+      Interview: Prisma.$InterviewPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3574,10 +3637,13 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     CurriculumVitae<T extends User$CurriculumVitaeArgs<ExtArgs> = {}>(args?: Subset<T, User$CurriculumVitaeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CurriculumVitaePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    location<T extends User$locationArgs<ExtArgs> = {}>(args?: Subset<T, User$locationArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     JobApplication<T extends User$JobApplicationArgs<ExtArgs> = {}>(args?: Subset<T, User$JobApplicationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobApplicationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    Review<T extends User$ReviewArgs<ExtArgs> = {}>(args?: Subset<T, User$ReviewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     Transaction<T extends User$TransactionArgs<ExtArgs> = {}>(args?: Subset<T, User$TransactionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    location<T extends User$locationArgs<ExtArgs> = {}>(args?: Subset<T, User$locationArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    UserAssessment<T extends User$UserAssessmentArgs<ExtArgs> = {}>(args?: Subset<T, User$UserAssessmentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAssessmentPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     UserSubscription<T extends User$UserSubscriptionArgs<ExtArgs> = {}>(args?: Subset<T, User$UserSubscriptionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserSubscriptionPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    Interview<T extends User$InterviewArgs<ExtArgs> = {}>(args?: Subset<T, User$InterviewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InterviewPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4028,25 +4094,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.location
-   */
-  export type User$locationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Location
-     */
-    select?: LocationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Location
-     */
-    omit?: LocationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: LocationInclude<ExtArgs> | null
-    where?: LocationWhereInput
-  }
-
-  /**
    * User.JobApplication
    */
   export type User$JobApplicationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4068,6 +4115,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: JobApplicationScalarFieldEnum | JobApplicationScalarFieldEnum[]
+  }
+
+  /**
+   * User.Review
+   */
+  export type User$ReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Review
+     */
+    omit?: ReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    where?: ReviewWhereInput
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
+    cursor?: ReviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
   }
 
   /**
@@ -4095,6 +4166,49 @@ export namespace Prisma {
   }
 
   /**
+   * User.location
+   */
+  export type User$locationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    where?: LocationWhereInput
+  }
+
+  /**
+   * User.UserAssessment
+   */
+  export type User$UserAssessmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAssessment
+     */
+    select?: UserAssessmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAssessment
+     */
+    omit?: UserAssessmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAssessmentInclude<ExtArgs> | null
+    where?: UserAssessmentWhereInput
+    orderBy?: UserAssessmentOrderByWithRelationInput | UserAssessmentOrderByWithRelationInput[]
+    cursor?: UserAssessmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserAssessmentScalarFieldEnum | UserAssessmentScalarFieldEnum[]
+  }
+
+  /**
    * User.UserSubscription
    */
   export type User$UserSubscriptionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4116,6 +4230,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserSubscriptionScalarFieldEnum | UserSubscriptionScalarFieldEnum[]
+  }
+
+  /**
+   * User.Interview
+   */
+  export type User$InterviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interview
+     */
+    select?: InterviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interview
+     */
+    omit?: InterviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InterviewInclude<ExtArgs> | null
+    where?: InterviewWhereInput
+    orderBy?: InterviewOrderByWithRelationInput | InterviewOrderByWithRelationInput[]
+    cursor?: InterviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InterviewScalarFieldEnum | InterviewScalarFieldEnum[]
   }
 
   /**
@@ -4162,12 +4300,12 @@ export namespace Prisma {
     companyName: string | null
     email: string | null
     password: string | null
-    noHandphone: string | null
     description: string | null
     isVerified: boolean | null
     logo: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    noHandphone: string | null
   }
 
   export type AdminMaxAggregateOutputType = {
@@ -4175,12 +4313,12 @@ export namespace Prisma {
     companyName: string | null
     email: string | null
     password: string | null
-    noHandphone: string | null
     description: string | null
     isVerified: boolean | null
     logo: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    noHandphone: string | null
   }
 
   export type AdminCountAggregateOutputType = {
@@ -4188,12 +4326,12 @@ export namespace Prisma {
     companyName: number
     email: number
     password: number
-    noHandphone: number
     description: number
     isVerified: number
     logo: number
     createdAt: number
     updatedAt: number
+    noHandphone: number
     _all: number
   }
 
@@ -4211,12 +4349,12 @@ export namespace Prisma {
     companyName?: true
     email?: true
     password?: true
-    noHandphone?: true
     description?: true
     isVerified?: true
     logo?: true
     createdAt?: true
     updatedAt?: true
+    noHandphone?: true
   }
 
   export type AdminMaxAggregateInputType = {
@@ -4224,12 +4362,12 @@ export namespace Prisma {
     companyName?: true
     email?: true
     password?: true
-    noHandphone?: true
     description?: true
     isVerified?: true
     logo?: true
     createdAt?: true
     updatedAt?: true
+    noHandphone?: true
   }
 
   export type AdminCountAggregateInputType = {
@@ -4237,12 +4375,12 @@ export namespace Prisma {
     companyName?: true
     email?: true
     password?: true
-    noHandphone?: true
     description?: true
     isVerified?: true
     logo?: true
     createdAt?: true
     updatedAt?: true
+    noHandphone?: true
     _all?: true
   }
 
@@ -4337,12 +4475,12 @@ export namespace Prisma {
     companyName: string
     email: string
     password: string
-    noHandphone: string
     description: string
     isVerified: boolean
     logo: string | null
     createdAt: Date
     updatedAt: Date
+    noHandphone: string
     _count: AdminCountAggregateOutputType | null
     _avg: AdminAvgAggregateOutputType | null
     _sum: AdminSumAggregateOutputType | null
@@ -4369,12 +4507,12 @@ export namespace Prisma {
     companyName?: boolean
     email?: boolean
     password?: boolean
-    noHandphone?: boolean
     description?: boolean
     isVerified?: boolean
     logo?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    noHandphone?: boolean
     Job?: boolean | Admin$JobArgs<ExtArgs>
     _count?: boolean | AdminCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["admin"]>
@@ -4384,12 +4522,12 @@ export namespace Prisma {
     companyName?: boolean
     email?: boolean
     password?: boolean
-    noHandphone?: boolean
     description?: boolean
     isVerified?: boolean
     logo?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    noHandphone?: boolean
   }, ExtArgs["result"]["admin"]>
 
   export type AdminSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4397,12 +4535,12 @@ export namespace Prisma {
     companyName?: boolean
     email?: boolean
     password?: boolean
-    noHandphone?: boolean
     description?: boolean
     isVerified?: boolean
     logo?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    noHandphone?: boolean
   }, ExtArgs["result"]["admin"]>
 
   export type AdminSelectScalar = {
@@ -4410,15 +4548,15 @@ export namespace Prisma {
     companyName?: boolean
     email?: boolean
     password?: boolean
-    noHandphone?: boolean
     description?: boolean
     isVerified?: boolean
     logo?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    noHandphone?: boolean
   }
 
-  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyName" | "email" | "password" | "noHandphone" | "description" | "isVerified" | "logo" | "createdAt" | "updatedAt", ExtArgs["result"]["admin"]>
+  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyName" | "email" | "password" | "description" | "isVerified" | "logo" | "createdAt" | "updatedAt" | "noHandphone", ExtArgs["result"]["admin"]>
   export type AdminInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Job?: boolean | Admin$JobArgs<ExtArgs>
     _count?: boolean | AdminCountOutputTypeDefaultArgs<ExtArgs>
@@ -4436,12 +4574,12 @@ export namespace Prisma {
       companyName: string
       email: string
       password: string
-      noHandphone: string
       description: string
       isVerified: boolean
       logo: string | null
       createdAt: Date
       updatedAt: Date
+      noHandphone: string
     }, ExtArgs["result"]["admin"]>
     composites: {}
   }
@@ -4870,12 +5008,12 @@ export namespace Prisma {
     readonly companyName: FieldRef<"Admin", 'String'>
     readonly email: FieldRef<"Admin", 'String'>
     readonly password: FieldRef<"Admin", 'String'>
-    readonly noHandphone: FieldRef<"Admin", 'String'>
     readonly description: FieldRef<"Admin", 'String'>
     readonly isVerified: FieldRef<"Admin", 'Boolean'>
     readonly logo: FieldRef<"Admin", 'String'>
     readonly createdAt: FieldRef<"Admin", 'DateTime'>
     readonly updatedAt: FieldRef<"Admin", 'DateTime'>
+    readonly noHandphone: FieldRef<"Admin", 'String'>
   }
     
 
@@ -6324,6 +6462,7 @@ export namespace Prisma {
     locationId: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    isActive: boolean | null
   }
 
   export type JobMaxAggregateOutputType = {
@@ -6341,6 +6480,7 @@ export namespace Prisma {
     locationId: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    isActive: boolean | null
   }
 
   export type JobCountAggregateOutputType = {
@@ -6359,6 +6499,7 @@ export namespace Prisma {
     locationId: number
     createdAt: number
     updatedAt: number
+    isActive: number
     _all: number
   }
 
@@ -6390,6 +6531,7 @@ export namespace Prisma {
     locationId?: true
     createdAt?: true
     updatedAt?: true
+    isActive?: true
   }
 
   export type JobMaxAggregateInputType = {
@@ -6407,6 +6549,7 @@ export namespace Prisma {
     locationId?: true
     createdAt?: true
     updatedAt?: true
+    isActive?: true
   }
 
   export type JobCountAggregateInputType = {
@@ -6425,6 +6568,7 @@ export namespace Prisma {
     locationId?: true
     createdAt?: true
     updatedAt?: true
+    isActive?: true
     _all?: true
   }
 
@@ -6530,6 +6674,7 @@ export namespace Prisma {
     locationId: number
     createdAt: Date
     updatedAt: Date
+    isActive: boolean
     _count: JobCountAggregateOutputType | null
     _avg: JobAvgAggregateOutputType | null
     _sum: JobSumAggregateOutputType | null
@@ -6567,10 +6712,13 @@ export namespace Prisma {
     locationId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isActive?: boolean
     admin?: boolean | AdminDefaultArgs<ExtArgs>
     location?: boolean | LocationDefaultArgs<ExtArgs>
-    PreSelectionTest?: boolean | Job$PreSelectionTestArgs<ExtArgs>
     JobApplication?: boolean | Job$JobApplicationArgs<ExtArgs>
+    PreSelectionTest?: boolean | Job$PreSelectionTestArgs<ExtArgs>
+    Review?: boolean | Job$ReviewArgs<ExtArgs>
+    Interview?: boolean | Job$InterviewArgs<ExtArgs>
     _count?: boolean | JobCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["job"]>
 
@@ -6590,6 +6738,7 @@ export namespace Prisma {
     locationId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isActive?: boolean
     admin?: boolean | AdminDefaultArgs<ExtArgs>
     location?: boolean | LocationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["job"]>
@@ -6610,6 +6759,7 @@ export namespace Prisma {
     locationId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isActive?: boolean
     admin?: boolean | AdminDefaultArgs<ExtArgs>
     location?: boolean | LocationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["job"]>
@@ -6630,14 +6780,17 @@ export namespace Prisma {
     locationId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isActive?: boolean
   }
 
-  export type JobOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "adminId" | "banner" | "category" | "role" | "salary" | "description" | "endDate" | "isPublished" | "isTestActive" | "tags" | "locationId" | "createdAt" | "updatedAt", ExtArgs["result"]["job"]>
+  export type JobOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "adminId" | "banner" | "category" | "role" | "salary" | "description" | "endDate" | "isPublished" | "isTestActive" | "tags" | "locationId" | "createdAt" | "updatedAt" | "isActive", ExtArgs["result"]["job"]>
   export type JobInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     admin?: boolean | AdminDefaultArgs<ExtArgs>
     location?: boolean | LocationDefaultArgs<ExtArgs>
-    PreSelectionTest?: boolean | Job$PreSelectionTestArgs<ExtArgs>
     JobApplication?: boolean | Job$JobApplicationArgs<ExtArgs>
+    PreSelectionTest?: boolean | Job$PreSelectionTestArgs<ExtArgs>
+    Review?: boolean | Job$ReviewArgs<ExtArgs>
+    Interview?: boolean | Job$InterviewArgs<ExtArgs>
     _count?: boolean | JobCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type JobIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6654,8 +6807,10 @@ export namespace Prisma {
     objects: {
       admin: Prisma.$AdminPayload<ExtArgs>
       location: Prisma.$LocationPayload<ExtArgs>
-      PreSelectionTest: Prisma.$PreSelectionTestPayload<ExtArgs>[]
       JobApplication: Prisma.$JobApplicationPayload<ExtArgs>[]
+      PreSelectionTest: Prisma.$PreSelectionTestPayload<ExtArgs>[]
+      Review: Prisma.$ReviewPayload<ExtArgs>[]
+      Interview: Prisma.$InterviewPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6673,6 +6828,7 @@ export namespace Prisma {
       locationId: number
       createdAt: Date
       updatedAt: Date
+      isActive: boolean
     }, ExtArgs["result"]["job"]>
     composites: {}
   }
@@ -7069,8 +7225,10 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     admin<T extends AdminDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AdminDefaultArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     location<T extends LocationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LocationDefaultArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
-    PreSelectionTest<T extends Job$PreSelectionTestArgs<ExtArgs> = {}>(args?: Subset<T, Job$PreSelectionTestArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PreSelectionTestPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     JobApplication<T extends Job$JobApplicationArgs<ExtArgs> = {}>(args?: Subset<T, Job$JobApplicationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobApplicationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    PreSelectionTest<T extends Job$PreSelectionTestArgs<ExtArgs> = {}>(args?: Subset<T, Job$PreSelectionTestArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PreSelectionTestPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    Review<T extends Job$ReviewArgs<ExtArgs> = {}>(args?: Subset<T, Job$ReviewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    Interview<T extends Job$InterviewArgs<ExtArgs> = {}>(args?: Subset<T, Job$InterviewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InterviewPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7115,6 +7273,7 @@ export namespace Prisma {
     readonly locationId: FieldRef<"Job", 'Int'>
     readonly createdAt: FieldRef<"Job", 'DateTime'>
     readonly updatedAt: FieldRef<"Job", 'DateTime'>
+    readonly isActive: FieldRef<"Job", 'Boolean'>
   }
     
 
@@ -7499,6 +7658,30 @@ export namespace Prisma {
   }
 
   /**
+   * Job.JobApplication
+   */
+  export type Job$JobApplicationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobApplication
+     */
+    select?: JobApplicationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobApplication
+     */
+    omit?: JobApplicationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobApplicationInclude<ExtArgs> | null
+    where?: JobApplicationWhereInput
+    orderBy?: JobApplicationOrderByWithRelationInput | JobApplicationOrderByWithRelationInput[]
+    cursor?: JobApplicationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: JobApplicationScalarFieldEnum | JobApplicationScalarFieldEnum[]
+  }
+
+  /**
    * Job.PreSelectionTest
    */
   export type Job$PreSelectionTestArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7523,27 +7706,51 @@ export namespace Prisma {
   }
 
   /**
-   * Job.JobApplication
+   * Job.Review
    */
-  export type Job$JobApplicationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Job$ReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the JobApplication
+     * Select specific fields to fetch from the Review
      */
-    select?: JobApplicationSelect<ExtArgs> | null
+    select?: ReviewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the JobApplication
+     * Omit specific fields from the Review
      */
-    omit?: JobApplicationOmit<ExtArgs> | null
+    omit?: ReviewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: JobApplicationInclude<ExtArgs> | null
-    where?: JobApplicationWhereInput
-    orderBy?: JobApplicationOrderByWithRelationInput | JobApplicationOrderByWithRelationInput[]
-    cursor?: JobApplicationWhereUniqueInput
+    include?: ReviewInclude<ExtArgs> | null
+    where?: ReviewWhereInput
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
+    cursor?: ReviewWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: JobApplicationScalarFieldEnum | JobApplicationScalarFieldEnum[]
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+  }
+
+  /**
+   * Job.Interview
+   */
+  export type Job$InterviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interview
+     */
+    select?: InterviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interview
+     */
+    omit?: InterviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InterviewInclude<ExtArgs> | null
+    where?: InterviewWhereInput
+    orderBy?: InterviewOrderByWithRelationInput | InterviewOrderByWithRelationInput[]
+    cursor?: InterviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InterviewScalarFieldEnum | InterviewScalarFieldEnum[]
   }
 
   /**
@@ -8714,24 +8921,24 @@ export namespace Prisma {
 
   export type LocationMinAggregateOutputType = {
     id: number | null
-    location: string | null
-    displayLocation: string | null
+    city: string | null
+    province: string | null
     latitude: number | null
     longitude: number | null
   }
 
   export type LocationMaxAggregateOutputType = {
     id: number | null
-    location: string | null
-    displayLocation: string | null
+    city: string | null
+    province: string | null
     latitude: number | null
     longitude: number | null
   }
 
   export type LocationCountAggregateOutputType = {
     id: number
-    location: number
-    displayLocation: number
+    city: number
+    province: number
     latitude: number
     longitude: number
     _all: number
@@ -8752,24 +8959,24 @@ export namespace Prisma {
 
   export type LocationMinAggregateInputType = {
     id?: true
-    location?: true
-    displayLocation?: true
+    city?: true
+    province?: true
     latitude?: true
     longitude?: true
   }
 
   export type LocationMaxAggregateInputType = {
     id?: true
-    location?: true
-    displayLocation?: true
+    city?: true
+    province?: true
     latitude?: true
     longitude?: true
   }
 
   export type LocationCountAggregateInputType = {
     id?: true
-    location?: true
-    displayLocation?: true
+    city?: true
+    province?: true
     latitude?: true
     longitude?: true
     _all?: true
@@ -8863,8 +9070,8 @@ export namespace Prisma {
 
   export type LocationGroupByOutputType = {
     id: number
-    location: string
-    displayLocation: string
+    city: string
+    province: string
     latitude: number
     longitude: number
     _count: LocationCountAggregateOutputType | null
@@ -8890,43 +9097,43 @@ export namespace Prisma {
 
   export type LocationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    location?: boolean
-    displayLocation?: boolean
+    city?: boolean
+    province?: boolean
     latitude?: boolean
     longitude?: boolean
-    User?: boolean | Location$UserArgs<ExtArgs>
     Job?: boolean | Location$JobArgs<ExtArgs>
+    User?: boolean | Location$UserArgs<ExtArgs>
     _count?: boolean | LocationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["location"]>
 
   export type LocationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    location?: boolean
-    displayLocation?: boolean
+    city?: boolean
+    province?: boolean
     latitude?: boolean
     longitude?: boolean
   }, ExtArgs["result"]["location"]>
 
   export type LocationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    location?: boolean
-    displayLocation?: boolean
+    city?: boolean
+    province?: boolean
     latitude?: boolean
     longitude?: boolean
   }, ExtArgs["result"]["location"]>
 
   export type LocationSelectScalar = {
     id?: boolean
-    location?: boolean
-    displayLocation?: boolean
+    city?: boolean
+    province?: boolean
     latitude?: boolean
     longitude?: boolean
   }
 
-  export type LocationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "location" | "displayLocation" | "latitude" | "longitude", ExtArgs["result"]["location"]>
+  export type LocationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "city" | "province" | "latitude" | "longitude", ExtArgs["result"]["location"]>
   export type LocationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    User?: boolean | Location$UserArgs<ExtArgs>
     Job?: boolean | Location$JobArgs<ExtArgs>
+    User?: boolean | Location$UserArgs<ExtArgs>
     _count?: boolean | LocationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type LocationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -8935,13 +9142,13 @@ export namespace Prisma {
   export type $LocationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Location"
     objects: {
-      User: Prisma.$UserPayload<ExtArgs>[]
       Job: Prisma.$JobPayload<ExtArgs>[]
+      User: Prisma.$UserPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      location: string
-      displayLocation: string
+      city: string
+      province: string
       latitude: number
       longitude: number
     }, ExtArgs["result"]["location"]>
@@ -9338,8 +9545,8 @@ export namespace Prisma {
    */
   export interface Prisma__LocationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    User<T extends Location$UserArgs<ExtArgs> = {}>(args?: Subset<T, Location$UserArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     Job<T extends Location$JobArgs<ExtArgs> = {}>(args?: Subset<T, Location$JobArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    User<T extends Location$UserArgs<ExtArgs> = {}>(args?: Subset<T, Location$UserArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9370,8 +9577,8 @@ export namespace Prisma {
    */ 
   interface LocationFieldRefs {
     readonly id: FieldRef<"Location", 'Int'>
-    readonly location: FieldRef<"Location", 'String'>
-    readonly displayLocation: FieldRef<"Location", 'String'>
+    readonly city: FieldRef<"Location", 'String'>
+    readonly province: FieldRef<"Location", 'String'>
     readonly latitude: FieldRef<"Location", 'Float'>
     readonly longitude: FieldRef<"Location", 'Float'>
   }
@@ -9750,30 +9957,6 @@ export namespace Prisma {
   }
 
   /**
-   * Location.User
-   */
-  export type Location$UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
-    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
-    cursor?: UserWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
-  }
-
-  /**
    * Location.Job
    */
   export type Location$JobArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9795,6 +9978,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: JobScalarFieldEnum | JobScalarFieldEnum[]
+  }
+
+  /**
+   * Location.User
+   */
+  export type Location$UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
@@ -13385,8 +13592,8 @@ export namespace Prisma {
     rejectedReview?: boolean
     selectionTestResult?: boolean
     createdAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     job?: boolean | JobDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["jobApplication"]>
 
   export type JobApplicationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -13399,8 +13606,8 @@ export namespace Prisma {
     rejectedReview?: boolean
     selectionTestResult?: boolean
     createdAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     job?: boolean | JobDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["jobApplication"]>
 
   export type JobApplicationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -13413,8 +13620,8 @@ export namespace Prisma {
     rejectedReview?: boolean
     selectionTestResult?: boolean
     createdAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     job?: boolean | JobDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["jobApplication"]>
 
   export type JobApplicationSelectScalar = {
@@ -13431,23 +13638,23 @@ export namespace Prisma {
 
   export type JobApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "jobId" | "resume" | "expectedSalary" | "status" | "isTaken" | "rejectedReview" | "selectionTestResult" | "createdAt", ExtArgs["result"]["jobApplication"]>
   export type JobApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     job?: boolean | JobDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type JobApplicationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     job?: boolean | JobDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type JobApplicationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     job?: boolean | JobDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $JobApplicationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "JobApplication"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
       job: Prisma.$JobPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       userId: number
@@ -13853,8 +14060,8 @@ export namespace Prisma {
    */
   export interface Prisma__JobApplicationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     job<T extends JobDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JobDefaultArgs<ExtArgs>>): Prisma__JobClient<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14493,6 +14700,8 @@ export namespace Prisma {
     startTime?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    job?: boolean | JobDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["interview"]>
 
   export type InterviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -14501,6 +14710,8 @@ export namespace Prisma {
     startTime?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    job?: boolean | JobDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["interview"]>
 
   export type InterviewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -14509,6 +14720,8 @@ export namespace Prisma {
     startTime?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    job?: boolean | JobDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["interview"]>
 
   export type InterviewSelectScalar = {
@@ -14520,10 +14733,25 @@ export namespace Prisma {
   }
 
   export type InterviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "jobId" | "startTime" | "createdAt" | "updatedAt", ExtArgs["result"]["interview"]>
+  export type InterviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    job?: boolean | JobDefaultArgs<ExtArgs>
+  }
+  export type InterviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    job?: boolean | JobDefaultArgs<ExtArgs>
+  }
+  export type InterviewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    job?: boolean | JobDefaultArgs<ExtArgs>
+  }
 
   export type $InterviewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Interview"
-    objects: {}
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      job: Prisma.$JobPayload<ExtArgs>
+    }
     scalars: $Extensions.GetPayloadResult<{
       userId: number
       jobId: string
@@ -14924,6 +15152,8 @@ export namespace Prisma {
    */
   export interface Prisma__InterviewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    job<T extends JobDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JobDefaultArgs<ExtArgs>>): Prisma__JobClient<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14975,6 +15205,10 @@ export namespace Prisma {
      */
     omit?: InterviewOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InterviewInclude<ExtArgs> | null
+    /**
      * Filter, which Interview to fetch.
      */
     where: InterviewWhereUniqueInput
@@ -14993,6 +15227,10 @@ export namespace Prisma {
      */
     omit?: InterviewOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InterviewInclude<ExtArgs> | null
+    /**
      * Filter, which Interview to fetch.
      */
     where: InterviewWhereUniqueInput
@@ -15010,6 +15248,10 @@ export namespace Prisma {
      * Omit specific fields from the Interview
      */
     omit?: InterviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InterviewInclude<ExtArgs> | null
     /**
      * Filter, which Interview to fetch.
      */
@@ -15059,6 +15301,10 @@ export namespace Prisma {
      */
     omit?: InterviewOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InterviewInclude<ExtArgs> | null
+    /**
      * Filter, which Interview to fetch.
      */
     where?: InterviewWhereInput
@@ -15107,6 +15353,10 @@ export namespace Prisma {
      */
     omit?: InterviewOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InterviewInclude<ExtArgs> | null
+    /**
      * Filter, which Interviews to fetch.
      */
     where?: InterviewWhereInput
@@ -15150,6 +15400,10 @@ export namespace Prisma {
      */
     omit?: InterviewOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InterviewInclude<ExtArgs> | null
+    /**
      * The data needed to create a Interview.
      */
     data: XOR<InterviewCreateInput, InterviewUncheckedCreateInput>
@@ -15183,6 +15437,10 @@ export namespace Prisma {
      */
     data: InterviewCreateManyInput | InterviewCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InterviewIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -15197,6 +15455,10 @@ export namespace Prisma {
      * Omit specific fields from the Interview
      */
     omit?: InterviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InterviewInclude<ExtArgs> | null
     /**
      * The data needed to update a Interview.
      */
@@ -15241,6 +15503,10 @@ export namespace Prisma {
      * Filter which Interviews to update
      */
     where?: InterviewWhereInput
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InterviewIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -15255,6 +15521,10 @@ export namespace Prisma {
      * Omit specific fields from the Interview
      */
     omit?: InterviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InterviewInclude<ExtArgs> | null
     /**
      * The filter to search for the Interview to update in case it exists.
      */
@@ -15281,6 +15551,10 @@ export namespace Prisma {
      * Omit specific fields from the Interview
      */
     omit?: InterviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InterviewInclude<ExtArgs> | null
     /**
      * Filter which Interview to delete.
      */
@@ -15309,6 +15583,10 @@ export namespace Prisma {
      * Omit specific fields from the Interview
      */
     omit?: InterviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InterviewInclude<ExtArgs> | null
   }
 
 
@@ -15562,6 +15840,8 @@ export namespace Prisma {
     careerRating?: boolean
     salary?: boolean
     createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    job?: boolean | JobDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -15574,6 +15854,8 @@ export namespace Prisma {
     careerRating?: boolean
     salary?: boolean
     createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    job?: boolean | JobDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -15586,6 +15868,8 @@ export namespace Prisma {
     careerRating?: boolean
     salary?: boolean
     createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    job?: boolean | JobDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectScalar = {
@@ -15601,10 +15885,25 @@ export namespace Prisma {
   }
 
   export type ReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "jobId" | "review" | "CultureRating" | "balanceRating" | "facilityRating" | "careerRating" | "salary" | "createdAt", ExtArgs["result"]["review"]>
+  export type ReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    job?: boolean | JobDefaultArgs<ExtArgs>
+  }
+  export type ReviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    job?: boolean | JobDefaultArgs<ExtArgs>
+  }
+  export type ReviewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    job?: boolean | JobDefaultArgs<ExtArgs>
+  }
 
   export type $ReviewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Review"
-    objects: {}
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      job: Prisma.$JobPayload<ExtArgs>
+    }
     scalars: $Extensions.GetPayloadResult<{
       userId: number
       jobId: string
@@ -16009,6 +16308,8 @@ export namespace Prisma {
    */
   export interface Prisma__ReviewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    job<T extends JobDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JobDefaultArgs<ExtArgs>>): Prisma__JobClient<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16064,6 +16365,10 @@ export namespace Prisma {
      */
     omit?: ReviewOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    /**
      * Filter, which Review to fetch.
      */
     where: ReviewWhereUniqueInput
@@ -16082,6 +16387,10 @@ export namespace Prisma {
      */
     omit?: ReviewOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    /**
      * Filter, which Review to fetch.
      */
     where: ReviewWhereUniqueInput
@@ -16099,6 +16408,10 @@ export namespace Prisma {
      * Omit specific fields from the Review
      */
     omit?: ReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
     /**
      * Filter, which Review to fetch.
      */
@@ -16148,6 +16461,10 @@ export namespace Prisma {
      */
     omit?: ReviewOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    /**
      * Filter, which Review to fetch.
      */
     where?: ReviewWhereInput
@@ -16196,6 +16513,10 @@ export namespace Prisma {
      */
     omit?: ReviewOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    /**
      * Filter, which Reviews to fetch.
      */
     where?: ReviewWhereInput
@@ -16239,6 +16560,10 @@ export namespace Prisma {
      */
     omit?: ReviewOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    /**
      * The data needed to create a Review.
      */
     data: XOR<ReviewCreateInput, ReviewUncheckedCreateInput>
@@ -16272,6 +16597,10 @@ export namespace Prisma {
      */
     data: ReviewCreateManyInput | ReviewCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -16286,6 +16615,10 @@ export namespace Prisma {
      * Omit specific fields from the Review
      */
     omit?: ReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
     /**
      * The data needed to update a Review.
      */
@@ -16330,6 +16663,10 @@ export namespace Prisma {
      * Filter which Reviews to update
      */
     where?: ReviewWhereInput
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -16344,6 +16681,10 @@ export namespace Prisma {
      * Omit specific fields from the Review
      */
     omit?: ReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
     /**
      * The filter to search for the Review to update in case it exists.
      */
@@ -16370,6 +16711,10 @@ export namespace Prisma {
      * Omit specific fields from the Review
      */
     omit?: ReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
     /**
      * Filter which Review to delete.
      */
@@ -16398,6 +16743,10 @@ export namespace Prisma {
      * Omit specific fields from the Review
      */
     omit?: ReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
   }
 
 
@@ -16426,6 +16775,7 @@ export namespace Prisma {
   }
 
   export type TransactionMinAggregateOutputType = {
+    id: string | null
     userId: number | null
     subscriptionId: number | null
     amount: number | null
@@ -16435,6 +16785,7 @@ export namespace Prisma {
   }
 
   export type TransactionMaxAggregateOutputType = {
+    id: string | null
     userId: number | null
     subscriptionId: number | null
     amount: number | null
@@ -16444,6 +16795,7 @@ export namespace Prisma {
   }
 
   export type TransactionCountAggregateOutputType = {
+    id: number
     userId: number
     subscriptionId: number
     amount: number
@@ -16467,6 +16819,7 @@ export namespace Prisma {
   }
 
   export type TransactionMinAggregateInputType = {
+    id?: true
     userId?: true
     subscriptionId?: true
     amount?: true
@@ -16476,6 +16829,7 @@ export namespace Prisma {
   }
 
   export type TransactionMaxAggregateInputType = {
+    id?: true
     userId?: true
     subscriptionId?: true
     amount?: true
@@ -16485,6 +16839,7 @@ export namespace Prisma {
   }
 
   export type TransactionCountAggregateInputType = {
+    id?: true
     userId?: true
     subscriptionId?: true
     amount?: true
@@ -16581,6 +16936,7 @@ export namespace Prisma {
   }
 
   export type TransactionGroupByOutputType = {
+    id: string
     userId: number
     subscriptionId: number
     amount: number
@@ -16609,39 +16965,43 @@ export namespace Prisma {
 
 
   export type TransactionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     userId?: boolean
     subscriptionId?: boolean
     amount?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     userId?: boolean
     subscriptionId?: boolean
     amount?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     userId?: boolean
     subscriptionId?: boolean
     amount?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectScalar = {
+    id?: boolean
     userId?: boolean
     subscriptionId?: boolean
     amount?: boolean
@@ -16650,27 +17010,28 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type TransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "subscriptionId" | "amount" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["transaction"]>
+  export type TransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "subscriptionId" | "amount" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["transaction"]>
   export type TransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type TransactionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type TransactionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $TransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Transaction"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
       subscription: Prisma.$SubscriptionPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
+      id: string
       userId: number
       subscriptionId: number
       amount: number
@@ -16760,8 +17121,8 @@ export namespace Prisma {
      * // Get first 10 Transactions
      * const transactions = await prisma.transaction.findMany({ take: 10 })
      * 
-     * // Only select the `userId`
-     * const transactionWithUserIdOnly = await prisma.transaction.findMany({ select: { userId: true } })
+     * // Only select the `id`
+     * const transactionWithIdOnly = await prisma.transaction.findMany({ select: { id: true } })
      * 
      */
     findMany<T extends TransactionFindManyArgs>(args?: SelectSubset<T, TransactionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", ClientOptions>>
@@ -16805,9 +17166,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Transactions and only return the `userId`
-     * const transactionWithUserIdOnly = await prisma.transaction.createManyAndReturn({
-     *   select: { userId: true },
+     * // Create many Transactions and only return the `id`
+     * const transactionWithIdOnly = await prisma.transaction.createManyAndReturn({
+     *   select: { id: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -16896,9 +17257,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Transactions and only return the `userId`
-     * const transactionWithUserIdOnly = await prisma.transaction.updateManyAndReturn({
-     *   select: { userId: true },
+     * // Update zero or more Transactions and only return the `id`
+     * const transactionWithIdOnly = await prisma.transaction.updateManyAndReturn({
+     *   select: { id: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -17071,8 +17432,8 @@ export namespace Prisma {
    */
   export interface Prisma__TransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     subscription<T extends SubscriptionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SubscriptionDefaultArgs<ExtArgs>>): Prisma__SubscriptionClient<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -17102,6 +17463,7 @@ export namespace Prisma {
    * Fields of the Transaction model
    */ 
   interface TransactionFieldRefs {
+    readonly id: FieldRef<"Transaction", 'String'>
     readonly userId: FieldRef<"Transaction", 'Int'>
     readonly subscriptionId: FieldRef<"Transaction", 'Int'>
     readonly amount: FieldRef<"Transaction", 'Int'>
@@ -17534,6 +17896,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     description: string | null
+    isActive: boolean | null
     createdAt: Date | null
   }
 
@@ -17541,6 +17904,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     description: string | null
+    isActive: boolean | null
     createdAt: Date | null
   }
 
@@ -17548,6 +17912,7 @@ export namespace Prisma {
     id: number
     title: number
     description: number
+    isActive: number
     createdAt: number
     _all: number
   }
@@ -17565,6 +17930,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
+    isActive?: true
     createdAt?: true
   }
 
@@ -17572,6 +17938,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
+    isActive?: true
     createdAt?: true
   }
 
@@ -17579,6 +17946,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
+    isActive?: true
     createdAt?: true
     _all?: true
   }
@@ -17673,6 +18041,7 @@ export namespace Prisma {
     id: number
     title: string
     description: string
+    isActive: boolean
     createdAt: Date
     _count: AssessmentCountAggregateOutputType | null
     _avg: AssessmentAvgAggregateOutputType | null
@@ -17699,8 +18068,10 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    isActive?: boolean
     createdAt?: boolean
     AssessmentQuestion?: boolean | Assessment$AssessmentQuestionArgs<ExtArgs>
+    UserAssessment?: boolean | Assessment$UserAssessmentArgs<ExtArgs>
     _count?: boolean | AssessmentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["assessment"]>
 
@@ -17708,6 +18079,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    isActive?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["assessment"]>
 
@@ -17715,6 +18087,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    isActive?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["assessment"]>
 
@@ -17722,12 +18095,14 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    isActive?: boolean
     createdAt?: boolean
   }
 
-  export type AssessmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "createdAt", ExtArgs["result"]["assessment"]>
+  export type AssessmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "isActive" | "createdAt", ExtArgs["result"]["assessment"]>
   export type AssessmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     AssessmentQuestion?: boolean | Assessment$AssessmentQuestionArgs<ExtArgs>
+    UserAssessment?: boolean | Assessment$UserAssessmentArgs<ExtArgs>
     _count?: boolean | AssessmentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AssessmentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -17737,11 +18112,13 @@ export namespace Prisma {
     name: "Assessment"
     objects: {
       AssessmentQuestion: Prisma.$AssessmentQuestionPayload<ExtArgs>[]
+      UserAssessment: Prisma.$UserAssessmentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       title: string
       description: string
+      isActive: boolean
       createdAt: Date
     }, ExtArgs["result"]["assessment"]>
     composites: {}
@@ -18138,6 +18515,7 @@ export namespace Prisma {
   export interface Prisma__AssessmentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     AssessmentQuestion<T extends Assessment$AssessmentQuestionArgs<ExtArgs> = {}>(args?: Subset<T, Assessment$AssessmentQuestionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentQuestionPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    UserAssessment<T extends Assessment$UserAssessmentArgs<ExtArgs> = {}>(args?: Subset<T, Assessment$UserAssessmentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAssessmentPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -18170,6 +18548,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Assessment", 'Int'>
     readonly title: FieldRef<"Assessment", 'String'>
     readonly description: FieldRef<"Assessment", 'String'>
+    readonly isActive: FieldRef<"Assessment", 'Boolean'>
     readonly createdAt: FieldRef<"Assessment", 'DateTime'>
   }
     
@@ -18571,6 +18950,30 @@ export namespace Prisma {
   }
 
   /**
+   * Assessment.UserAssessment
+   */
+  export type Assessment$UserAssessmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAssessment
+     */
+    select?: UserAssessmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAssessment
+     */
+    omit?: UserAssessmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAssessmentInclude<ExtArgs> | null
+    where?: UserAssessmentWhereInput
+    orderBy?: UserAssessmentOrderByWithRelationInput | UserAssessmentOrderByWithRelationInput[]
+    cursor?: UserAssessmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserAssessmentScalarFieldEnum | UserAssessmentScalarFieldEnum[]
+  }
+
+  /**
    * Assessment without action
    */
   export type AssessmentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -18602,6 +19005,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentAvgAggregateOutputType = {
+    id: number | null
     userId: number | null
     assessmentId: number | null
     score: number | null
@@ -18609,6 +19013,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentSumAggregateOutputType = {
+    id: number | null
     userId: number | null
     assessmentId: number | null
     score: number | null
@@ -18616,6 +19021,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentMinAggregateOutputType = {
+    id: number | null
     userId: number | null
     assessmentId: number | null
     score: number | null
@@ -18625,6 +19031,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentMaxAggregateOutputType = {
+    id: number | null
     userId: number | null
     assessmentId: number | null
     score: number | null
@@ -18634,6 +19041,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentCountAggregateOutputType = {
+    id: number
     userId: number
     assessmentId: number
     score: number
@@ -18645,6 +19053,7 @@ export namespace Prisma {
 
 
   export type UserAssessmentAvgAggregateInputType = {
+    id?: true
     userId?: true
     assessmentId?: true
     score?: true
@@ -18652,6 +19061,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentSumAggregateInputType = {
+    id?: true
     userId?: true
     assessmentId?: true
     score?: true
@@ -18659,6 +19069,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentMinAggregateInputType = {
+    id?: true
     userId?: true
     assessmentId?: true
     score?: true
@@ -18668,6 +19079,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentMaxAggregateInputType = {
+    id?: true
     userId?: true
     assessmentId?: true
     score?: true
@@ -18677,6 +19089,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentCountAggregateInputType = {
+    id?: true
     userId?: true
     assessmentId?: true
     score?: true
@@ -18773,10 +19186,11 @@ export namespace Prisma {
   }
 
   export type UserAssessmentGroupByOutputType = {
+    id: number
     userId: number
     assessmentId: number
     score: number
-    certificateId: number
+    certificateId: number | null
     status: $Enums.UserAssessmentStatus | null
     endTime: Date
     _count: UserAssessmentCountAggregateOutputType | null
@@ -18801,36 +19215,46 @@ export namespace Prisma {
 
 
   export type UserAssessmentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     userId?: boolean
     assessmentId?: boolean
     score?: boolean
     certificateId?: boolean
     status?: boolean
     endTime?: boolean
-    certificate?: boolean | CertificateDefaultArgs<ExtArgs>
+    certificate?: boolean | UserAssessment$certificateArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
+    assessment?: boolean | AssessmentDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userAssessment"]>
 
   export type UserAssessmentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     userId?: boolean
     assessmentId?: boolean
     score?: boolean
     certificateId?: boolean
     status?: boolean
     endTime?: boolean
-    certificate?: boolean | CertificateDefaultArgs<ExtArgs>
+    certificate?: boolean | UserAssessment$certificateArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
+    assessment?: boolean | AssessmentDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userAssessment"]>
 
   export type UserAssessmentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     userId?: boolean
     assessmentId?: boolean
     score?: boolean
     certificateId?: boolean
     status?: boolean
     endTime?: boolean
-    certificate?: boolean | CertificateDefaultArgs<ExtArgs>
+    certificate?: boolean | UserAssessment$certificateArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
+    assessment?: boolean | AssessmentDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userAssessment"]>
 
   export type UserAssessmentSelectScalar = {
+    id?: boolean
     userId?: boolean
     assessmentId?: boolean
     score?: boolean
@@ -18839,27 +19263,36 @@ export namespace Prisma {
     endTime?: boolean
   }
 
-  export type UserAssessmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "assessmentId" | "score" | "certificateId" | "status" | "endTime", ExtArgs["result"]["userAssessment"]>
+  export type UserAssessmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "assessmentId" | "score" | "certificateId" | "status" | "endTime", ExtArgs["result"]["userAssessment"]>
   export type UserAssessmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    certificate?: boolean | CertificateDefaultArgs<ExtArgs>
+    certificate?: boolean | UserAssessment$certificateArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
+    assessment?: boolean | AssessmentDefaultArgs<ExtArgs>
   }
   export type UserAssessmentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    certificate?: boolean | CertificateDefaultArgs<ExtArgs>
+    certificate?: boolean | UserAssessment$certificateArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
+    assessment?: boolean | AssessmentDefaultArgs<ExtArgs>
   }
   export type UserAssessmentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    certificate?: boolean | CertificateDefaultArgs<ExtArgs>
+    certificate?: boolean | UserAssessment$certificateArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
+    assessment?: boolean | AssessmentDefaultArgs<ExtArgs>
   }
 
   export type $UserAssessmentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "UserAssessment"
     objects: {
-      certificate: Prisma.$CertificatePayload<ExtArgs>
+      certificate: Prisma.$CertificatePayload<ExtArgs> | null
+      User: Prisma.$UserPayload<ExtArgs>
+      assessment: Prisma.$AssessmentPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
+      id: number
       userId: number
       assessmentId: number
       score: number
-      certificateId: number
+      certificateId: number | null
       status: $Enums.UserAssessmentStatus | null
       endTime: Date
     }, ExtArgs["result"]["userAssessment"]>
@@ -18945,8 +19378,8 @@ export namespace Prisma {
      * // Get first 10 UserAssessments
      * const userAssessments = await prisma.userAssessment.findMany({ take: 10 })
      * 
-     * // Only select the `userId`
-     * const userAssessmentWithUserIdOnly = await prisma.userAssessment.findMany({ select: { userId: true } })
+     * // Only select the `id`
+     * const userAssessmentWithIdOnly = await prisma.userAssessment.findMany({ select: { id: true } })
      * 
      */
     findMany<T extends UserAssessmentFindManyArgs>(args?: SelectSubset<T, UserAssessmentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAssessmentPayload<ExtArgs>, T, "findMany", ClientOptions>>
@@ -18990,9 +19423,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many UserAssessments and only return the `userId`
-     * const userAssessmentWithUserIdOnly = await prisma.userAssessment.createManyAndReturn({
-     *   select: { userId: true },
+     * // Create many UserAssessments and only return the `id`
+     * const userAssessmentWithIdOnly = await prisma.userAssessment.createManyAndReturn({
+     *   select: { id: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -19081,9 +19514,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more UserAssessments and only return the `userId`
-     * const userAssessmentWithUserIdOnly = await prisma.userAssessment.updateManyAndReturn({
-     *   select: { userId: true },
+     * // Update zero or more UserAssessments and only return the `id`
+     * const userAssessmentWithIdOnly = await prisma.userAssessment.updateManyAndReturn({
+     *   select: { id: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -19256,7 +19689,9 @@ export namespace Prisma {
    */
   export interface Prisma__UserAssessmentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    certificate<T extends CertificateDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CertificateDefaultArgs<ExtArgs>>): Prisma__CertificateClient<$Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    certificate<T extends UserAssessment$certificateArgs<ExtArgs> = {}>(args?: Subset<T, UserAssessment$certificateArgs<ExtArgs>>): Prisma__CertificateClient<$Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    User<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    assessment<T extends AssessmentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentDefaultArgs<ExtArgs>>): Prisma__AssessmentClient<$Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -19286,6 +19721,7 @@ export namespace Prisma {
    * Fields of the UserAssessment model
    */ 
   interface UserAssessmentFieldRefs {
+    readonly id: FieldRef<"UserAssessment", 'Int'>
     readonly userId: FieldRef<"UserAssessment", 'Int'>
     readonly assessmentId: FieldRef<"UserAssessment", 'Int'>
     readonly score: FieldRef<"UserAssessment", 'Int'>
@@ -19673,6 +20109,25 @@ export namespace Prisma {
      * Filter which UserAssessments to delete
      */
     where?: UserAssessmentWhereInput
+  }
+
+  /**
+   * UserAssessment.certificate
+   */
+  export type UserAssessment$certificateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Certificate
+     */
+    select?: CertificateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Certificate
+     */
+    omit?: CertificateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CertificateInclude<ExtArgs> | null
+    where?: CertificateWhereInput
   }
 
   /**
@@ -22100,8 +22555,8 @@ export namespace Prisma {
     assessmentCount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userSubscription"]>
 
   export type UserSubscriptionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -22113,8 +22568,8 @@ export namespace Prisma {
     assessmentCount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userSubscription"]>
 
   export type UserSubscriptionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -22126,8 +22581,8 @@ export namespace Prisma {
     assessmentCount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userSubscription"]>
 
   export type UserSubscriptionSelectScalar = {
@@ -22143,23 +22598,23 @@ export namespace Prisma {
 
   export type UserSubscriptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "subscriptionId" | "startDate" | "endDate" | "isActive" | "assessmentCount" | "createdAt" | "updatedAt", ExtArgs["result"]["userSubscription"]>
   export type UserSubscriptionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type UserSubscriptionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type UserSubscriptionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     subscription?: boolean | SubscriptionDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $UserSubscriptionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "UserSubscription"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
       subscription: Prisma.$SubscriptionPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       userId: number
@@ -22564,8 +23019,8 @@ export namespace Prisma {
    */
   export interface Prisma__UserSubscriptionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     subscription<T extends SubscriptionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SubscriptionDefaultArgs<ExtArgs>>): Prisma__SubscriptionClient<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -23043,12 +23498,12 @@ export namespace Prisma {
     companyName: 'companyName',
     email: 'email',
     password: 'password',
-    noHandphone: 'noHandphone',
     description: 'description',
     isVerified: 'isVerified',
     logo: 'logo',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    noHandphone: 'noHandphone'
   };
 
   export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
@@ -23078,7 +23533,8 @@ export namespace Prisma {
     tags: 'tags',
     locationId: 'locationId',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    isActive: 'isActive'
   };
 
   export type JobScalarFieldEnum = (typeof JobScalarFieldEnum)[keyof typeof JobScalarFieldEnum]
@@ -23100,8 +23556,8 @@ export namespace Prisma {
 
   export const LocationScalarFieldEnum: {
     id: 'id',
-    location: 'location',
-    displayLocation: 'displayLocation',
+    city: 'city',
+    province: 'province',
     latitude: 'latitude',
     longitude: 'longitude'
   };
@@ -23185,6 +23641,7 @@ export namespace Prisma {
 
 
   export const TransactionScalarFieldEnum: {
+    id: 'id',
     userId: 'userId',
     subscriptionId: 'subscriptionId',
     amount: 'amount',
@@ -23200,6 +23657,7 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     description: 'description',
+    isActive: 'isActive',
     createdAt: 'createdAt'
   };
 
@@ -23207,6 +23665,7 @@ export namespace Prisma {
 
 
   export const UserAssessmentScalarFieldEnum: {
+    id: 'id',
     userId: 'userId',
     assessmentId: 'assessmentId',
     score: 'score',
@@ -23465,10 +23924,13 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     CurriculumVitae?: CurriculumVitaeListRelationFilter
-    location?: XOR<LocationNullableScalarRelationFilter, LocationWhereInput> | null
     JobApplication?: JobApplicationListRelationFilter
+    Review?: ReviewListRelationFilter
     Transaction?: TransactionListRelationFilter
+    location?: XOR<LocationNullableScalarRelationFilter, LocationWhereInput> | null
+    UserAssessment?: UserAssessmentListRelationFilter
     UserSubscription?: UserSubscriptionListRelationFilter
+    Interview?: InterviewListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -23486,10 +23948,13 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     CurriculumVitae?: CurriculumVitaeOrderByRelationAggregateInput
-    location?: LocationOrderByWithRelationInput
     JobApplication?: JobApplicationOrderByRelationAggregateInput
+    Review?: ReviewOrderByRelationAggregateInput
     Transaction?: TransactionOrderByRelationAggregateInput
+    location?: LocationOrderByWithRelationInput
+    UserAssessment?: UserAssessmentOrderByRelationAggregateInput
     UserSubscription?: UserSubscriptionOrderByRelationAggregateInput
+    Interview?: InterviewOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -23510,10 +23975,13 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     CurriculumVitae?: CurriculumVitaeListRelationFilter
-    location?: XOR<LocationNullableScalarRelationFilter, LocationWhereInput> | null
     JobApplication?: JobApplicationListRelationFilter
+    Review?: ReviewListRelationFilter
     Transaction?: TransactionListRelationFilter
+    location?: XOR<LocationNullableScalarRelationFilter, LocationWhereInput> | null
+    UserAssessment?: UserAssessmentListRelationFilter
     UserSubscription?: UserSubscriptionListRelationFilter
+    Interview?: InterviewListRelationFilter
   }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -23564,12 +24032,12 @@ export namespace Prisma {
     companyName?: StringFilter<"Admin"> | string
     email?: StringFilter<"Admin"> | string
     password?: StringFilter<"Admin"> | string
-    noHandphone?: StringFilter<"Admin"> | string
     description?: StringFilter<"Admin"> | string
     isVerified?: BoolFilter<"Admin"> | boolean
     logo?: StringNullableFilter<"Admin"> | string | null
     createdAt?: DateTimeFilter<"Admin"> | Date | string
     updatedAt?: DateTimeFilter<"Admin"> | Date | string
+    noHandphone?: StringFilter<"Admin"> | string
     Job?: JobListRelationFilter
   }
 
@@ -23578,12 +24046,12 @@ export namespace Prisma {
     companyName?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    noHandphone?: SortOrder
     description?: SortOrder
     isVerified?: SortOrder
     logo?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    noHandphone?: SortOrder
     Job?: JobOrderByRelationAggregateInput
   }
 
@@ -23595,12 +24063,12 @@ export namespace Prisma {
     NOT?: AdminWhereInput | AdminWhereInput[]
     companyName?: StringFilter<"Admin"> | string
     password?: StringFilter<"Admin"> | string
-    noHandphone?: StringFilter<"Admin"> | string
     description?: StringFilter<"Admin"> | string
     isVerified?: BoolFilter<"Admin"> | boolean
     logo?: StringNullableFilter<"Admin"> | string | null
     createdAt?: DateTimeFilter<"Admin"> | Date | string
     updatedAt?: DateTimeFilter<"Admin"> | Date | string
+    noHandphone?: StringFilter<"Admin"> | string
     Job?: JobListRelationFilter
   }, "id" | "email">
 
@@ -23609,12 +24077,12 @@ export namespace Prisma {
     companyName?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    noHandphone?: SortOrder
     description?: SortOrder
     isVerified?: SortOrder
     logo?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    noHandphone?: SortOrder
     _count?: AdminCountOrderByAggregateInput
     _avg?: AdminAvgOrderByAggregateInput
     _max?: AdminMaxOrderByAggregateInput
@@ -23630,12 +24098,12 @@ export namespace Prisma {
     companyName?: StringWithAggregatesFilter<"Admin"> | string
     email?: StringWithAggregatesFilter<"Admin"> | string
     password?: StringWithAggregatesFilter<"Admin"> | string
-    noHandphone?: StringWithAggregatesFilter<"Admin"> | string
     description?: StringWithAggregatesFilter<"Admin"> | string
     isVerified?: BoolWithAggregatesFilter<"Admin"> | boolean
     logo?: StringNullableWithAggregatesFilter<"Admin"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Admin"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Admin"> | Date | string
+    noHandphone?: StringWithAggregatesFilter<"Admin"> | string
   }
 
   export type DeveloperWhereInput = {
@@ -23701,10 +24169,13 @@ export namespace Prisma {
     locationId?: IntFilter<"Job"> | number
     createdAt?: DateTimeFilter<"Job"> | Date | string
     updatedAt?: DateTimeFilter<"Job"> | Date | string
+    isActive?: BoolFilter<"Job"> | boolean
     admin?: XOR<AdminScalarRelationFilter, AdminWhereInput>
     location?: XOR<LocationScalarRelationFilter, LocationWhereInput>
-    PreSelectionTest?: PreSelectionTestListRelationFilter
     JobApplication?: JobApplicationListRelationFilter
+    PreSelectionTest?: PreSelectionTestListRelationFilter
+    Review?: ReviewListRelationFilter
+    Interview?: InterviewListRelationFilter
   }
 
   export type JobOrderByWithRelationInput = {
@@ -23723,10 +24194,13 @@ export namespace Prisma {
     locationId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isActive?: SortOrder
     admin?: AdminOrderByWithRelationInput
     location?: LocationOrderByWithRelationInput
-    PreSelectionTest?: PreSelectionTestOrderByRelationAggregateInput
     JobApplication?: JobApplicationOrderByRelationAggregateInput
+    PreSelectionTest?: PreSelectionTestOrderByRelationAggregateInput
+    Review?: ReviewOrderByRelationAggregateInput
+    Interview?: InterviewOrderByRelationAggregateInput
   }
 
   export type JobWhereUniqueInput = Prisma.AtLeast<{
@@ -23748,10 +24222,13 @@ export namespace Prisma {
     locationId?: IntFilter<"Job"> | number
     createdAt?: DateTimeFilter<"Job"> | Date | string
     updatedAt?: DateTimeFilter<"Job"> | Date | string
+    isActive?: BoolFilter<"Job"> | boolean
     admin?: XOR<AdminScalarRelationFilter, AdminWhereInput>
     location?: XOR<LocationScalarRelationFilter, LocationWhereInput>
-    PreSelectionTest?: PreSelectionTestListRelationFilter
     JobApplication?: JobApplicationListRelationFilter
+    PreSelectionTest?: PreSelectionTestListRelationFilter
+    Review?: ReviewListRelationFilter
+    Interview?: InterviewListRelationFilter
   }, "id">
 
   export type JobOrderByWithAggregationInput = {
@@ -23770,6 +24247,7 @@ export namespace Prisma {
     locationId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isActive?: SortOrder
     _count?: JobCountOrderByAggregateInput
     _avg?: JobAvgOrderByAggregateInput
     _max?: JobMaxOrderByAggregateInput
@@ -23796,6 +24274,7 @@ export namespace Prisma {
     locationId?: IntWithAggregatesFilter<"Job"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Job"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Job"> | Date | string
+    isActive?: BoolWithAggregatesFilter<"Job"> | boolean
   }
 
   export type CurriculumVitaeWhereInput = {
@@ -23875,41 +24354,41 @@ export namespace Prisma {
     OR?: LocationWhereInput[]
     NOT?: LocationWhereInput | LocationWhereInput[]
     id?: IntFilter<"Location"> | number
-    location?: StringFilter<"Location"> | string
-    displayLocation?: StringFilter<"Location"> | string
+    city?: StringFilter<"Location"> | string
+    province?: StringFilter<"Location"> | string
     latitude?: FloatFilter<"Location"> | number
     longitude?: FloatFilter<"Location"> | number
-    User?: UserListRelationFilter
     Job?: JobListRelationFilter
+    User?: UserListRelationFilter
   }
 
   export type LocationOrderByWithRelationInput = {
     id?: SortOrder
-    location?: SortOrder
-    displayLocation?: SortOrder
+    city?: SortOrder
+    province?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
-    User?: UserOrderByRelationAggregateInput
     Job?: JobOrderByRelationAggregateInput
+    User?: UserOrderByRelationAggregateInput
   }
 
   export type LocationWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    location?: string
     AND?: LocationWhereInput | LocationWhereInput[]
     OR?: LocationWhereInput[]
     NOT?: LocationWhereInput | LocationWhereInput[]
-    displayLocation?: StringFilter<"Location"> | string
+    city?: StringFilter<"Location"> | string
+    province?: StringFilter<"Location"> | string
     latitude?: FloatFilter<"Location"> | number
     longitude?: FloatFilter<"Location"> | number
-    User?: UserListRelationFilter
     Job?: JobListRelationFilter
-  }, "id" | "location">
+    User?: UserListRelationFilter
+  }, "id">
 
   export type LocationOrderByWithAggregationInput = {
     id?: SortOrder
-    location?: SortOrder
-    displayLocation?: SortOrder
+    city?: SortOrder
+    province?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
     _count?: LocationCountOrderByAggregateInput
@@ -23924,8 +24403,8 @@ export namespace Prisma {
     OR?: LocationScalarWhereWithAggregatesInput[]
     NOT?: LocationScalarWhereWithAggregatesInput | LocationScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Location"> | number
-    location?: StringWithAggregatesFilter<"Location"> | string
-    displayLocation?: StringWithAggregatesFilter<"Location"> | string
+    city?: StringWithAggregatesFilter<"Location"> | string
+    province?: StringWithAggregatesFilter<"Location"> | string
     latitude?: FloatWithAggregatesFilter<"Location"> | number
     longitude?: FloatWithAggregatesFilter<"Location"> | number
   }
@@ -24125,8 +24604,8 @@ export namespace Prisma {
     rejectedReview?: StringNullableFilter<"JobApplication"> | string | null
     selectionTestResult?: IntNullableFilter<"JobApplication"> | number | null
     createdAt?: DateTimeFilter<"JobApplication"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     job?: XOR<JobScalarRelationFilter, JobWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type JobApplicationOrderByWithRelationInput = {
@@ -24139,8 +24618,8 @@ export namespace Prisma {
     rejectedReview?: SortOrderInput | SortOrder
     selectionTestResult?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    user?: UserOrderByWithRelationInput
     job?: JobOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type JobApplicationWhereUniqueInput = Prisma.AtLeast<{
@@ -24157,8 +24636,8 @@ export namespace Prisma {
     rejectedReview?: StringNullableFilter<"JobApplication"> | string | null
     selectionTestResult?: IntNullableFilter<"JobApplication"> | number | null
     createdAt?: DateTimeFilter<"JobApplication"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     job?: XOR<JobScalarRelationFilter, JobWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "userId_jobId">
 
   export type JobApplicationOrderByWithAggregationInput = {
@@ -24202,6 +24681,8 @@ export namespace Prisma {
     startTime?: DateTimeFilter<"Interview"> | Date | string
     createdAt?: DateTimeFilter<"Interview"> | Date | string
     updatedAt?: DateTimeFilter<"Interview"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    job?: XOR<JobScalarRelationFilter, JobWhereInput>
   }
 
   export type InterviewOrderByWithRelationInput = {
@@ -24210,6 +24691,8 @@ export namespace Prisma {
     startTime?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    job?: JobOrderByWithRelationInput
   }
 
   export type InterviewWhereUniqueInput = Prisma.AtLeast<{
@@ -24222,6 +24705,8 @@ export namespace Prisma {
     startTime?: DateTimeFilter<"Interview"> | Date | string
     createdAt?: DateTimeFilter<"Interview"> | Date | string
     updatedAt?: DateTimeFilter<"Interview"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    job?: XOR<JobScalarRelationFilter, JobWhereInput>
   }, "userId_jobId">
 
   export type InterviewOrderByWithAggregationInput = {
@@ -24261,6 +24746,8 @@ export namespace Prisma {
     careerRating?: IntFilter<"Review"> | number
     salary?: IntFilter<"Review"> | number
     createdAt?: DateTimeFilter<"Review"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    job?: XOR<JobScalarRelationFilter, JobWhereInput>
   }
 
   export type ReviewOrderByWithRelationInput = {
@@ -24273,6 +24760,8 @@ export namespace Prisma {
     careerRating?: SortOrder
     salary?: SortOrder
     createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    job?: JobOrderByWithRelationInput
   }
 
   export type ReviewWhereUniqueInput = Prisma.AtLeast<{
@@ -24289,6 +24778,8 @@ export namespace Prisma {
     careerRating?: IntFilter<"Review"> | number
     salary?: IntFilter<"Review"> | number
     createdAt?: DateTimeFilter<"Review"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    job?: XOR<JobScalarRelationFilter, JobWhereInput>
   }, "userId_jobId">
 
   export type ReviewOrderByWithAggregationInput = {
@@ -24327,29 +24818,31 @@ export namespace Prisma {
     AND?: TransactionWhereInput | TransactionWhereInput[]
     OR?: TransactionWhereInput[]
     NOT?: TransactionWhereInput | TransactionWhereInput[]
+    id?: StringFilter<"Transaction"> | string
     userId?: IntFilter<"Transaction"> | number
     subscriptionId?: IntFilter<"Transaction"> | number
     amount?: IntFilter<"Transaction"> | number
     status?: EnumTransactionStatusFilter<"Transaction"> | $Enums.TransactionStatus
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     updatedAt?: DateTimeFilter<"Transaction"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     subscription?: XOR<SubscriptionScalarRelationFilter, SubscriptionWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type TransactionOrderByWithRelationInput = {
+    id?: SortOrder
     userId?: SortOrder
     subscriptionId?: SortOrder
     amount?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    user?: UserOrderByWithRelationInput
     subscription?: SubscriptionOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type TransactionWhereUniqueInput = Prisma.AtLeast<{
-    userId_subscriptionId?: TransactionUserIdSubscriptionIdCompoundUniqueInput
+    id?: string
     AND?: TransactionWhereInput | TransactionWhereInput[]
     OR?: TransactionWhereInput[]
     NOT?: TransactionWhereInput | TransactionWhereInput[]
@@ -24359,11 +24852,12 @@ export namespace Prisma {
     status?: EnumTransactionStatusFilter<"Transaction"> | $Enums.TransactionStatus
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     updatedAt?: DateTimeFilter<"Transaction"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     subscription?: XOR<SubscriptionScalarRelationFilter, SubscriptionWhereInput>
-  }, "userId_subscriptionId">
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
 
   export type TransactionOrderByWithAggregationInput = {
+    id?: SortOrder
     userId?: SortOrder
     subscriptionId?: SortOrder
     amount?: SortOrder
@@ -24381,6 +24875,7 @@ export namespace Prisma {
     AND?: TransactionScalarWhereWithAggregatesInput | TransactionScalarWhereWithAggregatesInput[]
     OR?: TransactionScalarWhereWithAggregatesInput[]
     NOT?: TransactionScalarWhereWithAggregatesInput | TransactionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Transaction"> | string
     userId?: IntWithAggregatesFilter<"Transaction"> | number
     subscriptionId?: IntWithAggregatesFilter<"Transaction"> | number
     amount?: IntWithAggregatesFilter<"Transaction"> | number
@@ -24396,16 +24891,20 @@ export namespace Prisma {
     id?: IntFilter<"Assessment"> | number
     title?: StringFilter<"Assessment"> | string
     description?: StringFilter<"Assessment"> | string
+    isActive?: BoolFilter<"Assessment"> | boolean
     createdAt?: DateTimeFilter<"Assessment"> | Date | string
     AssessmentQuestion?: AssessmentQuestionListRelationFilter
+    UserAssessment?: UserAssessmentListRelationFilter
   }
 
   export type AssessmentOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     AssessmentQuestion?: AssessmentQuestionOrderByRelationAggregateInput
+    UserAssessment?: UserAssessmentOrderByRelationAggregateInput
   }
 
   export type AssessmentWhereUniqueInput = Prisma.AtLeast<{
@@ -24415,14 +24914,17 @@ export namespace Prisma {
     NOT?: AssessmentWhereInput | AssessmentWhereInput[]
     title?: StringFilter<"Assessment"> | string
     description?: StringFilter<"Assessment"> | string
+    isActive?: BoolFilter<"Assessment"> | boolean
     createdAt?: DateTimeFilter<"Assessment"> | Date | string
     AssessmentQuestion?: AssessmentQuestionListRelationFilter
+    UserAssessment?: UserAssessmentListRelationFilter
   }, "id">
 
   export type AssessmentOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     _count?: AssessmentCountOrderByAggregateInput
     _avg?: AssessmentAvgOrderByAggregateInput
@@ -24438,6 +24940,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Assessment"> | number
     title?: StringWithAggregatesFilter<"Assessment"> | string
     description?: StringWithAggregatesFilter<"Assessment"> | string
+    isActive?: BoolWithAggregatesFilter<"Assessment"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Assessment"> | Date | string
   }
 
@@ -24445,44 +24948,53 @@ export namespace Prisma {
     AND?: UserAssessmentWhereInput | UserAssessmentWhereInput[]
     OR?: UserAssessmentWhereInput[]
     NOT?: UserAssessmentWhereInput | UserAssessmentWhereInput[]
+    id?: IntFilter<"UserAssessment"> | number
     userId?: IntFilter<"UserAssessment"> | number
     assessmentId?: IntFilter<"UserAssessment"> | number
     score?: IntFilter<"UserAssessment"> | number
-    certificateId?: IntFilter<"UserAssessment"> | number
+    certificateId?: IntNullableFilter<"UserAssessment"> | number | null
     status?: EnumUserAssessmentStatusNullableFilter<"UserAssessment"> | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFilter<"UserAssessment"> | Date | string
-    certificate?: XOR<CertificateScalarRelationFilter, CertificateWhereInput>
+    certificate?: XOR<CertificateNullableScalarRelationFilter, CertificateWhereInput> | null
+    User?: XOR<UserScalarRelationFilter, UserWhereInput>
+    assessment?: XOR<AssessmentScalarRelationFilter, AssessmentWhereInput>
   }
 
   export type UserAssessmentOrderByWithRelationInput = {
+    id?: SortOrder
     userId?: SortOrder
     assessmentId?: SortOrder
     score?: SortOrder
-    certificateId?: SortOrder
+    certificateId?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
     endTime?: SortOrder
     certificate?: CertificateOrderByWithRelationInput
+    User?: UserOrderByWithRelationInput
+    assessment?: AssessmentOrderByWithRelationInput
   }
 
   export type UserAssessmentWhereUniqueInput = Prisma.AtLeast<{
-    userId_assessmentId?: UserAssessmentUserIdAssessmentIdCompoundUniqueInput
+    id?: number
     AND?: UserAssessmentWhereInput | UserAssessmentWhereInput[]
     OR?: UserAssessmentWhereInput[]
     NOT?: UserAssessmentWhereInput | UserAssessmentWhereInput[]
     userId?: IntFilter<"UserAssessment"> | number
     assessmentId?: IntFilter<"UserAssessment"> | number
     score?: IntFilter<"UserAssessment"> | number
-    certificateId?: IntFilter<"UserAssessment"> | number
+    certificateId?: IntNullableFilter<"UserAssessment"> | number | null
     status?: EnumUserAssessmentStatusNullableFilter<"UserAssessment"> | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFilter<"UserAssessment"> | Date | string
-    certificate?: XOR<CertificateScalarRelationFilter, CertificateWhereInput>
-  }, "userId_assessmentId">
+    certificate?: XOR<CertificateNullableScalarRelationFilter, CertificateWhereInput> | null
+    User?: XOR<UserScalarRelationFilter, UserWhereInput>
+    assessment?: XOR<AssessmentScalarRelationFilter, AssessmentWhereInput>
+  }, "id">
 
   export type UserAssessmentOrderByWithAggregationInput = {
+    id?: SortOrder
     userId?: SortOrder
     assessmentId?: SortOrder
     score?: SortOrder
-    certificateId?: SortOrder
+    certificateId?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
     endTime?: SortOrder
     _count?: UserAssessmentCountOrderByAggregateInput
@@ -24496,10 +25008,11 @@ export namespace Prisma {
     AND?: UserAssessmentScalarWhereWithAggregatesInput | UserAssessmentScalarWhereWithAggregatesInput[]
     OR?: UserAssessmentScalarWhereWithAggregatesInput[]
     NOT?: UserAssessmentScalarWhereWithAggregatesInput | UserAssessmentScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"UserAssessment"> | number
     userId?: IntWithAggregatesFilter<"UserAssessment"> | number
     assessmentId?: IntWithAggregatesFilter<"UserAssessment"> | number
     score?: IntWithAggregatesFilter<"UserAssessment"> | number
-    certificateId?: IntWithAggregatesFilter<"UserAssessment"> | number
+    certificateId?: IntNullableWithAggregatesFilter<"UserAssessment"> | number | null
     status?: EnumUserAssessmentStatusNullableWithAggregatesFilter<"UserAssessment"> | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeWithAggregatesFilter<"UserAssessment"> | Date | string
   }
@@ -24630,8 +25143,8 @@ export namespace Prisma {
     assessmentCount?: IntFilter<"UserSubscription"> | number
     createdAt?: DateTimeFilter<"UserSubscription"> | Date | string
     updatedAt?: DateTimeFilter<"UserSubscription"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     subscription?: XOR<SubscriptionScalarRelationFilter, SubscriptionWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type UserSubscriptionOrderByWithRelationInput = {
@@ -24643,8 +25156,8 @@ export namespace Prisma {
     assessmentCount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    user?: UserOrderByWithRelationInput
     subscription?: SubscriptionOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type UserSubscriptionWhereUniqueInput = Prisma.AtLeast<{
@@ -24660,8 +25173,8 @@ export namespace Prisma {
     assessmentCount?: IntFilter<"UserSubscription"> | number
     createdAt?: DateTimeFilter<"UserSubscription"> | Date | string
     updatedAt?: DateTimeFilter<"UserSubscription"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     subscription?: XOR<SubscriptionScalarRelationFilter, SubscriptionWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "userId_subscriptionId">
 
   export type UserSubscriptionOrderByWithAggregationInput = {
@@ -24707,10 +25220,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     CurriculumVitae?: CurriculumVitaeCreateNestedManyWithoutUserInput
-    location?: LocationCreateNestedOneWithoutUserInput
     JobApplication?: JobApplicationCreateNestedManyWithoutUserInput
+    Review?: ReviewCreateNestedManyWithoutUserInput
     Transaction?: TransactionCreateNestedManyWithoutUserInput
+    location?: LocationCreateNestedOneWithoutUserInput
+    UserAssessment?: UserAssessmentCreateNestedManyWithoutUserInput
     UserSubscription?: UserSubscriptionCreateNestedManyWithoutUserInput
+    Interview?: InterviewCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -24729,8 +25245,11 @@ export namespace Prisma {
     updatedAt?: Date | string
     CurriculumVitae?: CurriculumVitaeUncheckedCreateNestedManyWithoutUserInput
     JobApplication?: JobApplicationUncheckedCreateNestedManyWithoutUserInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutUserInput
     Transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    UserAssessment?: UserAssessmentUncheckedCreateNestedManyWithoutUserInput
     UserSubscription?: UserSubscriptionUncheckedCreateNestedManyWithoutUserInput
+    Interview?: InterviewUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -24746,10 +25265,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     CurriculumVitae?: CurriculumVitaeUpdateManyWithoutUserNestedInput
-    location?: LocationUpdateOneWithoutUserNestedInput
     JobApplication?: JobApplicationUpdateManyWithoutUserNestedInput
+    Review?: ReviewUpdateManyWithoutUserNestedInput
     Transaction?: TransactionUpdateManyWithoutUserNestedInput
+    location?: LocationUpdateOneWithoutUserNestedInput
+    UserAssessment?: UserAssessmentUpdateManyWithoutUserNestedInput
     UserSubscription?: UserSubscriptionUpdateManyWithoutUserNestedInput
+    Interview?: InterviewUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -24768,8 +25290,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     CurriculumVitae?: CurriculumVitaeUncheckedUpdateManyWithoutUserNestedInput
     JobApplication?: JobApplicationUncheckedUpdateManyWithoutUserNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     Transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    UserAssessment?: UserAssessmentUncheckedUpdateManyWithoutUserNestedInput
     UserSubscription?: UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+    Interview?: InterviewUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -24822,12 +25347,12 @@ export namespace Prisma {
     companyName: string
     email: string
     password: string
-    noHandphone: string
     description: string
     isVerified?: boolean
     logo?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    noHandphone: string
     Job?: JobCreateNestedManyWithoutAdminInput
   }
 
@@ -24836,12 +25361,12 @@ export namespace Prisma {
     companyName: string
     email: string
     password: string
-    noHandphone: string
     description: string
     isVerified?: boolean
     logo?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    noHandphone: string
     Job?: JobUncheckedCreateNestedManyWithoutAdminInput
   }
 
@@ -24849,12 +25374,12 @@ export namespace Prisma {
     companyName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    noHandphone?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    noHandphone?: StringFieldUpdateOperationsInput | string
     Job?: JobUpdateManyWithoutAdminNestedInput
   }
 
@@ -24863,12 +25388,12 @@ export namespace Prisma {
     companyName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    noHandphone?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    noHandphone?: StringFieldUpdateOperationsInput | string
     Job?: JobUncheckedUpdateManyWithoutAdminNestedInput
   }
 
@@ -24877,24 +25402,24 @@ export namespace Prisma {
     companyName: string
     email: string
     password: string
-    noHandphone: string
     description: string
     isVerified?: boolean
     logo?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    noHandphone: string
   }
 
   export type AdminUpdateManyMutationInput = {
     companyName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    noHandphone?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    noHandphone?: StringFieldUpdateOperationsInput | string
   }
 
   export type AdminUncheckedUpdateManyInput = {
@@ -24902,12 +25427,12 @@ export namespace Prisma {
     companyName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    noHandphone?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    noHandphone?: StringFieldUpdateOperationsInput | string
   }
 
   export type DeveloperCreateInput = {
@@ -24963,10 +25488,13 @@ export namespace Prisma {
     tags?: JobCreatetagsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
     admin: AdminCreateNestedOneWithoutJobInput
     location: LocationCreateNestedOneWithoutJobInput
-    PreSelectionTest?: PreSelectionTestCreateNestedManyWithoutJobInput
     JobApplication?: JobApplicationCreateNestedManyWithoutJobInput
+    PreSelectionTest?: PreSelectionTestCreateNestedManyWithoutJobInput
+    Review?: ReviewCreateNestedManyWithoutJobInput
+    Interview?: InterviewCreateNestedManyWithoutJobInput
   }
 
   export type JobUncheckedCreateInput = {
@@ -24985,8 +25513,11 @@ export namespace Prisma {
     locationId: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    PreSelectionTest?: PreSelectionTestUncheckedCreateNestedManyWithoutJobInput
+    isActive?: boolean
     JobApplication?: JobApplicationUncheckedCreateNestedManyWithoutJobInput
+    PreSelectionTest?: PreSelectionTestUncheckedCreateNestedManyWithoutJobInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutJobInput
+    Interview?: InterviewUncheckedCreateNestedManyWithoutJobInput
   }
 
   export type JobUpdateInput = {
@@ -25003,10 +25534,13 @@ export namespace Prisma {
     tags?: JobUpdatetagsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     admin?: AdminUpdateOneRequiredWithoutJobNestedInput
     location?: LocationUpdateOneRequiredWithoutJobNestedInput
-    PreSelectionTest?: PreSelectionTestUpdateManyWithoutJobNestedInput
     JobApplication?: JobApplicationUpdateManyWithoutJobNestedInput
+    PreSelectionTest?: PreSelectionTestUpdateManyWithoutJobNestedInput
+    Review?: ReviewUpdateManyWithoutJobNestedInput
+    Interview?: InterviewUpdateManyWithoutJobNestedInput
   }
 
   export type JobUncheckedUpdateInput = {
@@ -25025,8 +25559,11 @@ export namespace Prisma {
     locationId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    PreSelectionTest?: PreSelectionTestUncheckedUpdateManyWithoutJobNestedInput
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     JobApplication?: JobApplicationUncheckedUpdateManyWithoutJobNestedInput
+    PreSelectionTest?: PreSelectionTestUncheckedUpdateManyWithoutJobNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutJobNestedInput
+    Interview?: InterviewUncheckedUpdateManyWithoutJobNestedInput
   }
 
   export type JobCreateManyInput = {
@@ -25045,6 +25582,7 @@ export namespace Prisma {
     locationId: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
   }
 
   export type JobUpdateManyMutationInput = {
@@ -25061,6 +25599,7 @@ export namespace Prisma {
     tags?: JobUpdatetagsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type JobUncheckedUpdateManyInput = {
@@ -25079,6 +25618,7 @@ export namespace Prisma {
     locationId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CurriculumVitaeCreateInput = {
@@ -25155,62 +25695,62 @@ export namespace Prisma {
   }
 
   export type LocationCreateInput = {
-    location: string
-    displayLocation: string
+    city: string
+    province: string
     latitude: number
     longitude: number
-    User?: UserCreateNestedManyWithoutLocationInput
     Job?: JobCreateNestedManyWithoutLocationInput
+    User?: UserCreateNestedManyWithoutLocationInput
   }
 
   export type LocationUncheckedCreateInput = {
     id?: number
-    location: string
-    displayLocation: string
+    city: string
+    province: string
     latitude: number
     longitude: number
-    User?: UserUncheckedCreateNestedManyWithoutLocationInput
     Job?: JobUncheckedCreateNestedManyWithoutLocationInput
+    User?: UserUncheckedCreateNestedManyWithoutLocationInput
   }
 
   export type LocationUpdateInput = {
-    location?: StringFieldUpdateOperationsInput | string
-    displayLocation?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
-    User?: UserUpdateManyWithoutLocationNestedInput
     Job?: JobUpdateManyWithoutLocationNestedInput
+    User?: UserUpdateManyWithoutLocationNestedInput
   }
 
   export type LocationUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    location?: StringFieldUpdateOperationsInput | string
-    displayLocation?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
-    User?: UserUncheckedUpdateManyWithoutLocationNestedInput
     Job?: JobUncheckedUpdateManyWithoutLocationNestedInput
+    User?: UserUncheckedUpdateManyWithoutLocationNestedInput
   }
 
   export type LocationCreateManyInput = {
     id?: number
-    location: string
-    displayLocation: string
+    city: string
+    province: string
     latitude: number
     longitude: number
   }
 
   export type LocationUpdateManyMutationInput = {
-    location?: StringFieldUpdateOperationsInput | string
-    displayLocation?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
   }
 
   export type LocationUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    location?: StringFieldUpdateOperationsInput | string
-    displayLocation?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
   }
@@ -25399,8 +25939,8 @@ export namespace Prisma {
     rejectedReview?: string | null
     selectionTestResult?: number | null
     createdAt?: Date | string
-    user: UserCreateNestedOneWithoutJobApplicationInput
     job: JobCreateNestedOneWithoutJobApplicationInput
+    user: UserCreateNestedOneWithoutJobApplicationInput
   }
 
   export type JobApplicationUncheckedCreateInput = {
@@ -25423,8 +25963,8 @@ export namespace Prisma {
     rejectedReview?: NullableStringFieldUpdateOperationsInput | string | null
     selectionTestResult?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutJobApplicationNestedInput
     job?: JobUpdateOneRequiredWithoutJobApplicationNestedInput
+    user?: UserUpdateOneRequiredWithoutJobApplicationNestedInput
   }
 
   export type JobApplicationUncheckedUpdateInput = {
@@ -25474,11 +26014,11 @@ export namespace Prisma {
   }
 
   export type InterviewCreateInput = {
-    userId: number
-    jobId: string
     startTime: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutInterviewInput
+    job: JobCreateNestedOneWithoutInterviewInput
   }
 
   export type InterviewUncheckedCreateInput = {
@@ -25490,11 +26030,11 @@ export namespace Prisma {
   }
 
   export type InterviewUpdateInput = {
-    userId?: IntFieldUpdateOperationsInput | number
-    jobId?: StringFieldUpdateOperationsInput | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutInterviewNestedInput
+    job?: JobUpdateOneRequiredWithoutInterviewNestedInput
   }
 
   export type InterviewUncheckedUpdateInput = {
@@ -25514,8 +26054,6 @@ export namespace Prisma {
   }
 
   export type InterviewUpdateManyMutationInput = {
-    userId?: IntFieldUpdateOperationsInput | number
-    jobId?: StringFieldUpdateOperationsInput | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25530,8 +26068,6 @@ export namespace Prisma {
   }
 
   export type ReviewCreateInput = {
-    userId: number
-    jobId: string
     review: string
     CultureRating: number
     balanceRating: number
@@ -25539,6 +26075,8 @@ export namespace Prisma {
     careerRating: number
     salary: number
     createdAt?: Date | string
+    user: UserCreateNestedOneWithoutReviewInput
+    job: JobCreateNestedOneWithoutReviewInput
   }
 
   export type ReviewUncheckedCreateInput = {
@@ -25554,8 +26092,6 @@ export namespace Prisma {
   }
 
   export type ReviewUpdateInput = {
-    userId?: IntFieldUpdateOperationsInput | number
-    jobId?: StringFieldUpdateOperationsInput | string
     review?: StringFieldUpdateOperationsInput | string
     CultureRating?: IntFieldUpdateOperationsInput | number
     balanceRating?: IntFieldUpdateOperationsInput | number
@@ -25563,6 +26099,8 @@ export namespace Prisma {
     careerRating?: IntFieldUpdateOperationsInput | number
     salary?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutReviewNestedInput
+    job?: JobUpdateOneRequiredWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateInput = {
@@ -25590,8 +26128,6 @@ export namespace Prisma {
   }
 
   export type ReviewUpdateManyMutationInput = {
-    userId?: IntFieldUpdateOperationsInput | number
-    jobId?: StringFieldUpdateOperationsInput | string
     review?: StringFieldUpdateOperationsInput | string
     CultureRating?: IntFieldUpdateOperationsInput | number
     balanceRating?: IntFieldUpdateOperationsInput | number
@@ -25614,15 +26150,17 @@ export namespace Prisma {
   }
 
   export type TransactionCreateInput = {
+    id?: string
     amount: number
     status: $Enums.TransactionStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTransactionInput
     subscription: SubscriptionCreateNestedOneWithoutTransactionInput
+    user: UserCreateNestedOneWithoutTransactionInput
   }
 
   export type TransactionUncheckedCreateInput = {
+    id?: string
     userId: number
     subscriptionId: number
     amount: number
@@ -25632,15 +26170,17 @@ export namespace Prisma {
   }
 
   export type TransactionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
     status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTransactionNestedInput
     subscription?: SubscriptionUpdateOneRequiredWithoutTransactionNestedInput
+    user?: UserUpdateOneRequiredWithoutTransactionNestedInput
   }
 
   export type TransactionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     subscriptionId?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
@@ -25650,6 +26190,7 @@ export namespace Prisma {
   }
 
   export type TransactionCreateManyInput = {
+    id?: string
     userId: number
     subscriptionId: number
     amount: number
@@ -25659,6 +26200,7 @@ export namespace Prisma {
   }
 
   export type TransactionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
     status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25666,6 +26208,7 @@ export namespace Prisma {
   }
 
   export type TransactionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     subscriptionId?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
@@ -25677,43 +26220,53 @@ export namespace Prisma {
   export type AssessmentCreateInput = {
     title: string
     description: string
+    isActive?: boolean
     createdAt?: Date | string
     AssessmentQuestion?: AssessmentQuestionCreateNestedManyWithoutAssessmentInput
+    UserAssessment?: UserAssessmentCreateNestedManyWithoutAssessmentInput
   }
 
   export type AssessmentUncheckedCreateInput = {
     id?: number
     title: string
     description: string
+    isActive?: boolean
     createdAt?: Date | string
     AssessmentQuestion?: AssessmentQuestionUncheckedCreateNestedManyWithoutAssessmentInput
+    UserAssessment?: UserAssessmentUncheckedCreateNestedManyWithoutAssessmentInput
   }
 
   export type AssessmentUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     AssessmentQuestion?: AssessmentQuestionUpdateManyWithoutAssessmentNestedInput
+    UserAssessment?: UserAssessmentUpdateManyWithoutAssessmentNestedInput
   }
 
   export type AssessmentUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     AssessmentQuestion?: AssessmentQuestionUncheckedUpdateManyWithoutAssessmentNestedInput
+    UserAssessment?: UserAssessmentUncheckedUpdateManyWithoutAssessmentNestedInput
   }
 
   export type AssessmentCreateManyInput = {
     id?: number
     title: string
     description: string
+    isActive?: boolean
     createdAt?: Date | string
   }
 
   export type AssessmentUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -25721,67 +26274,70 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserAssessmentCreateInput = {
-    userId: number
-    assessmentId: number
     score?: number
     status?: $Enums.UserAssessmentStatus | null
     endTime: Date | string
-    certificate: CertificateCreateNestedOneWithoutUserAssessmentInput
+    certificate?: CertificateCreateNestedOneWithoutUserAssessmentInput
+    User: UserCreateNestedOneWithoutUserAssessmentInput
+    assessment: AssessmentCreateNestedOneWithoutUserAssessmentInput
   }
 
   export type UserAssessmentUncheckedCreateInput = {
+    id?: number
     userId: number
     assessmentId: number
     score?: number
-    certificateId: number
+    certificateId?: number | null
     status?: $Enums.UserAssessmentStatus | null
     endTime: Date | string
   }
 
   export type UserAssessmentUpdateInput = {
-    userId?: IntFieldUpdateOperationsInput | number
-    assessmentId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
     status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    certificate?: CertificateUpdateOneRequiredWithoutUserAssessmentNestedInput
+    certificate?: CertificateUpdateOneWithoutUserAssessmentNestedInput
+    User?: UserUpdateOneRequiredWithoutUserAssessmentNestedInput
+    assessment?: AssessmentUpdateOneRequiredWithoutUserAssessmentNestedInput
   }
 
   export type UserAssessmentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     assessmentId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
-    certificateId?: IntFieldUpdateOperationsInput | number
+    certificateId?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserAssessmentCreateManyInput = {
+    id?: number
     userId: number
     assessmentId: number
     score?: number
-    certificateId: number
+    certificateId?: number | null
     status?: $Enums.UserAssessmentStatus | null
     endTime: Date | string
   }
 
   export type UserAssessmentUpdateManyMutationInput = {
-    userId?: IntFieldUpdateOperationsInput | number
-    assessmentId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
     status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserAssessmentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     assessmentId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
-    certificateId?: IntFieldUpdateOperationsInput | number
+    certificateId?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -25902,8 +26458,8 @@ export namespace Prisma {
     assessmentCount?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutUserSubscriptionInput
     subscription: SubscriptionCreateNestedOneWithoutUserSubscriptionInput
+    user: UserCreateNestedOneWithoutUserSubscriptionInput
   }
 
   export type UserSubscriptionUncheckedCreateInput = {
@@ -25924,8 +26480,8 @@ export namespace Prisma {
     assessmentCount?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutUserSubscriptionNestedInput
     subscription?: SubscriptionUpdateOneRequiredWithoutUserSubscriptionNestedInput
+    user?: UserUpdateOneRequiredWithoutUserSubscriptionNestedInput
   }
 
   export type UserSubscriptionUncheckedUpdateInput = {
@@ -26069,15 +26625,16 @@ export namespace Prisma {
     none?: CurriculumVitaeWhereInput
   }
 
-  export type LocationNullableScalarRelationFilter = {
-    is?: LocationWhereInput | null
-    isNot?: LocationWhereInput | null
-  }
-
   export type JobApplicationListRelationFilter = {
     every?: JobApplicationWhereInput
     some?: JobApplicationWhereInput
     none?: JobApplicationWhereInput
+  }
+
+  export type ReviewListRelationFilter = {
+    every?: ReviewWhereInput
+    some?: ReviewWhereInput
+    none?: ReviewWhereInput
   }
 
   export type TransactionListRelationFilter = {
@@ -26086,10 +26643,27 @@ export namespace Prisma {
     none?: TransactionWhereInput
   }
 
+  export type LocationNullableScalarRelationFilter = {
+    is?: LocationWhereInput | null
+    isNot?: LocationWhereInput | null
+  }
+
+  export type UserAssessmentListRelationFilter = {
+    every?: UserAssessmentWhereInput
+    some?: UserAssessmentWhereInput
+    none?: UserAssessmentWhereInput
+  }
+
   export type UserSubscriptionListRelationFilter = {
     every?: UserSubscriptionWhereInput
     some?: UserSubscriptionWhereInput
     none?: UserSubscriptionWhereInput
+  }
+
+  export type InterviewListRelationFilter = {
+    every?: InterviewWhereInput
+    some?: InterviewWhereInput
+    none?: InterviewWhereInput
   }
 
   export type SortOrderInput = {
@@ -26105,11 +26679,23 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type ReviewOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type TransactionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
+  export type UserAssessmentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserSubscriptionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type InterviewOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -26310,12 +26896,12 @@ export namespace Prisma {
     companyName?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    noHandphone?: SortOrder
     description?: SortOrder
     isVerified?: SortOrder
     logo?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    noHandphone?: SortOrder
   }
 
   export type AdminAvgOrderByAggregateInput = {
@@ -26327,12 +26913,12 @@ export namespace Prisma {
     companyName?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    noHandphone?: SortOrder
     description?: SortOrder
     isVerified?: SortOrder
     logo?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    noHandphone?: SortOrder
   }
 
   export type AdminMinOrderByAggregateInput = {
@@ -26340,12 +26926,12 @@ export namespace Prisma {
     companyName?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    noHandphone?: SortOrder
     description?: SortOrder
     isVerified?: SortOrder
     logo?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    noHandphone?: SortOrder
   }
 
   export type AdminSumOrderByAggregateInput = {
@@ -26429,6 +27015,7 @@ export namespace Prisma {
     locationId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isActive?: SortOrder
   }
 
   export type JobAvgOrderByAggregateInput = {
@@ -26452,6 +27039,7 @@ export namespace Prisma {
     locationId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isActive?: SortOrder
   }
 
   export type JobMinOrderByAggregateInput = {
@@ -26469,6 +27057,7 @@ export namespace Prisma {
     locationId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isActive?: SortOrder
   }
 
   export type JobSumOrderByAggregateInput = {
@@ -26558,8 +27147,8 @@ export namespace Prisma {
 
   export type LocationCountOrderByAggregateInput = {
     id?: SortOrder
-    location?: SortOrder
-    displayLocation?: SortOrder
+    city?: SortOrder
+    province?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
   }
@@ -26572,16 +27161,16 @@ export namespace Prisma {
 
   export type LocationMaxOrderByAggregateInput = {
     id?: SortOrder
-    location?: SortOrder
-    displayLocation?: SortOrder
+    city?: SortOrder
+    province?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
   }
 
   export type LocationMinOrderByAggregateInput = {
     id?: SortOrder
-    location?: SortOrder
-    displayLocation?: SortOrder
+    city?: SortOrder
+    province?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
   }
@@ -26926,12 +27515,8 @@ export namespace Prisma {
     isNot?: SubscriptionWhereInput
   }
 
-  export type TransactionUserIdSubscriptionIdCompoundUniqueInput = {
-    userId: number
-    subscriptionId: number
-  }
-
   export type TransactionCountOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     subscriptionId?: SortOrder
     amount?: SortOrder
@@ -26947,6 +27532,7 @@ export namespace Prisma {
   }
 
   export type TransactionMaxOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     subscriptionId?: SortOrder
     amount?: SortOrder
@@ -26956,6 +27542,7 @@ export namespace Prisma {
   }
 
   export type TransactionMinOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     subscriptionId?: SortOrder
     amount?: SortOrder
@@ -26994,6 +27581,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -27005,6 +27593,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -27012,6 +27601,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -27026,17 +27616,18 @@ export namespace Prisma {
     not?: NestedEnumUserAssessmentStatusNullableFilter<$PrismaModel> | $Enums.UserAssessmentStatus | null
   }
 
-  export type CertificateScalarRelationFilter = {
-    is?: CertificateWhereInput
-    isNot?: CertificateWhereInput
+  export type CertificateNullableScalarRelationFilter = {
+    is?: CertificateWhereInput | null
+    isNot?: CertificateWhereInput | null
   }
 
-  export type UserAssessmentUserIdAssessmentIdCompoundUniqueInput = {
-    userId: number
-    assessmentId: number
+  export type AssessmentScalarRelationFilter = {
+    is?: AssessmentWhereInput
+    isNot?: AssessmentWhereInput
   }
 
   export type UserAssessmentCountOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     assessmentId?: SortOrder
     score?: SortOrder
@@ -27046,6 +27637,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentAvgOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     assessmentId?: SortOrder
     score?: SortOrder
@@ -27053,6 +27645,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentMaxOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     assessmentId?: SortOrder
     score?: SortOrder
@@ -27062,6 +27655,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentMinOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     assessmentId?: SortOrder
     score?: SortOrder
@@ -27071,6 +27665,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentSumOrderByAggregateInput = {
+    id?: SortOrder
     userId?: SortOrder
     assessmentId?: SortOrder
     score?: SortOrder
@@ -27085,11 +27680,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumUserAssessmentStatusNullableFilter<$PrismaModel>
     _max?: NestedEnumUserAssessmentStatusNullableFilter<$PrismaModel>
-  }
-
-  export type AssessmentScalarRelationFilter = {
-    is?: AssessmentWhereInput
-    isNot?: AssessmentWhereInput
   }
 
   export type AssessmentQuestionCountOrderByAggregateInput = {
@@ -27124,16 +27714,6 @@ export namespace Prisma {
     id?: SortOrder
     assessmentId?: SortOrder
     correctAnswer?: SortOrder
-  }
-
-  export type UserAssessmentListRelationFilter = {
-    every?: UserAssessmentWhereInput
-    some?: UserAssessmentWhereInput
-    none?: UserAssessmentWhereInput
-  }
-
-  export type UserAssessmentOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type CertificateCountOrderByAggregateInput = {
@@ -27225,17 +27805,18 @@ export namespace Prisma {
     connect?: CurriculumVitaeWhereUniqueInput | CurriculumVitaeWhereUniqueInput[]
   }
 
-  export type LocationCreateNestedOneWithoutUserInput = {
-    create?: XOR<LocationCreateWithoutUserInput, LocationUncheckedCreateWithoutUserInput>
-    connectOrCreate?: LocationCreateOrConnectWithoutUserInput
-    connect?: LocationWhereUniqueInput
-  }
-
   export type JobApplicationCreateNestedManyWithoutUserInput = {
     create?: XOR<JobApplicationCreateWithoutUserInput, JobApplicationUncheckedCreateWithoutUserInput> | JobApplicationCreateWithoutUserInput[] | JobApplicationUncheckedCreateWithoutUserInput[]
     connectOrCreate?: JobApplicationCreateOrConnectWithoutUserInput | JobApplicationCreateOrConnectWithoutUserInput[]
     createMany?: JobApplicationCreateManyUserInputEnvelope
     connect?: JobApplicationWhereUniqueInput | JobApplicationWhereUniqueInput[]
+  }
+
+  export type ReviewCreateNestedManyWithoutUserInput = {
+    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
+    createMany?: ReviewCreateManyUserInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
   export type TransactionCreateNestedManyWithoutUserInput = {
@@ -27245,11 +27826,31 @@ export namespace Prisma {
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
   }
 
+  export type LocationCreateNestedOneWithoutUserInput = {
+    create?: XOR<LocationCreateWithoutUserInput, LocationUncheckedCreateWithoutUserInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutUserInput
+    connect?: LocationWhereUniqueInput
+  }
+
+  export type UserAssessmentCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserAssessmentCreateWithoutUserInput, UserAssessmentUncheckedCreateWithoutUserInput> | UserAssessmentCreateWithoutUserInput[] | UserAssessmentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserAssessmentCreateOrConnectWithoutUserInput | UserAssessmentCreateOrConnectWithoutUserInput[]
+    createMany?: UserAssessmentCreateManyUserInputEnvelope
+    connect?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+  }
+
   export type UserSubscriptionCreateNestedManyWithoutUserInput = {
     create?: XOR<UserSubscriptionCreateWithoutUserInput, UserSubscriptionUncheckedCreateWithoutUserInput> | UserSubscriptionCreateWithoutUserInput[] | UserSubscriptionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserSubscriptionCreateOrConnectWithoutUserInput | UserSubscriptionCreateOrConnectWithoutUserInput[]
     createMany?: UserSubscriptionCreateManyUserInputEnvelope
     connect?: UserSubscriptionWhereUniqueInput | UserSubscriptionWhereUniqueInput[]
+  }
+
+  export type InterviewCreateNestedManyWithoutUserInput = {
+    create?: XOR<InterviewCreateWithoutUserInput, InterviewUncheckedCreateWithoutUserInput> | InterviewCreateWithoutUserInput[] | InterviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InterviewCreateOrConnectWithoutUserInput | InterviewCreateOrConnectWithoutUserInput[]
+    createMany?: InterviewCreateManyUserInputEnvelope
+    connect?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
   }
 
   export type CurriculumVitaeUncheckedCreateNestedManyWithoutUserInput = {
@@ -27266,6 +27867,13 @@ export namespace Prisma {
     connect?: JobApplicationWhereUniqueInput | JobApplicationWhereUniqueInput[]
   }
 
+  export type ReviewUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
+    createMany?: ReviewCreateManyUserInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
   export type TransactionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput> | TransactionCreateWithoutUserInput[] | TransactionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TransactionCreateOrConnectWithoutUserInput | TransactionCreateOrConnectWithoutUserInput[]
@@ -27273,11 +27881,25 @@ export namespace Prisma {
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
   }
 
+  export type UserAssessmentUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserAssessmentCreateWithoutUserInput, UserAssessmentUncheckedCreateWithoutUserInput> | UserAssessmentCreateWithoutUserInput[] | UserAssessmentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserAssessmentCreateOrConnectWithoutUserInput | UserAssessmentCreateOrConnectWithoutUserInput[]
+    createMany?: UserAssessmentCreateManyUserInputEnvelope
+    connect?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+  }
+
   export type UserSubscriptionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserSubscriptionCreateWithoutUserInput, UserSubscriptionUncheckedCreateWithoutUserInput> | UserSubscriptionCreateWithoutUserInput[] | UserSubscriptionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserSubscriptionCreateOrConnectWithoutUserInput | UserSubscriptionCreateOrConnectWithoutUserInput[]
     createMany?: UserSubscriptionCreateManyUserInputEnvelope
     connect?: UserSubscriptionWhereUniqueInput | UserSubscriptionWhereUniqueInput[]
+  }
+
+  export type InterviewUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<InterviewCreateWithoutUserInput, InterviewUncheckedCreateWithoutUserInput> | InterviewCreateWithoutUserInput[] | InterviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InterviewCreateOrConnectWithoutUserInput | InterviewCreateOrConnectWithoutUserInput[]
+    createMany?: InterviewCreateManyUserInputEnvelope
+    connect?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -27322,16 +27944,6 @@ export namespace Prisma {
     deleteMany?: CurriculumVitaeScalarWhereInput | CurriculumVitaeScalarWhereInput[]
   }
 
-  export type LocationUpdateOneWithoutUserNestedInput = {
-    create?: XOR<LocationCreateWithoutUserInput, LocationUncheckedCreateWithoutUserInput>
-    connectOrCreate?: LocationCreateOrConnectWithoutUserInput
-    upsert?: LocationUpsertWithoutUserInput
-    disconnect?: LocationWhereInput | boolean
-    delete?: LocationWhereInput | boolean
-    connect?: LocationWhereUniqueInput
-    update?: XOR<XOR<LocationUpdateToOneWithWhereWithoutUserInput, LocationUpdateWithoutUserInput>, LocationUncheckedUpdateWithoutUserInput>
-  }
-
   export type JobApplicationUpdateManyWithoutUserNestedInput = {
     create?: XOR<JobApplicationCreateWithoutUserInput, JobApplicationUncheckedCreateWithoutUserInput> | JobApplicationCreateWithoutUserInput[] | JobApplicationUncheckedCreateWithoutUserInput[]
     connectOrCreate?: JobApplicationCreateOrConnectWithoutUserInput | JobApplicationCreateOrConnectWithoutUserInput[]
@@ -27344,6 +27956,20 @@ export namespace Prisma {
     update?: JobApplicationUpdateWithWhereUniqueWithoutUserInput | JobApplicationUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: JobApplicationUpdateManyWithWhereWithoutUserInput | JobApplicationUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: JobApplicationScalarWhereInput | JobApplicationScalarWhereInput[]
+  }
+
+  export type ReviewUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutUserInput | ReviewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ReviewCreateManyUserInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutUserInput | ReviewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutUserInput | ReviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
   export type TransactionUpdateManyWithoutUserNestedInput = {
@@ -27360,6 +27986,30 @@ export namespace Prisma {
     deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
   }
 
+  export type LocationUpdateOneWithoutUserNestedInput = {
+    create?: XOR<LocationCreateWithoutUserInput, LocationUncheckedCreateWithoutUserInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutUserInput
+    upsert?: LocationUpsertWithoutUserInput
+    disconnect?: LocationWhereInput | boolean
+    delete?: LocationWhereInput | boolean
+    connect?: LocationWhereUniqueInput
+    update?: XOR<XOR<LocationUpdateToOneWithWhereWithoutUserInput, LocationUpdateWithoutUserInput>, LocationUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserAssessmentUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserAssessmentCreateWithoutUserInput, UserAssessmentUncheckedCreateWithoutUserInput> | UserAssessmentCreateWithoutUserInput[] | UserAssessmentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserAssessmentCreateOrConnectWithoutUserInput | UserAssessmentCreateOrConnectWithoutUserInput[]
+    upsert?: UserAssessmentUpsertWithWhereUniqueWithoutUserInput | UserAssessmentUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserAssessmentCreateManyUserInputEnvelope
+    set?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+    disconnect?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+    delete?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+    connect?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+    update?: UserAssessmentUpdateWithWhereUniqueWithoutUserInput | UserAssessmentUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserAssessmentUpdateManyWithWhereWithoutUserInput | UserAssessmentUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserAssessmentScalarWhereInput | UserAssessmentScalarWhereInput[]
+  }
+
   export type UserSubscriptionUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserSubscriptionCreateWithoutUserInput, UserSubscriptionUncheckedCreateWithoutUserInput> | UserSubscriptionCreateWithoutUserInput[] | UserSubscriptionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserSubscriptionCreateOrConnectWithoutUserInput | UserSubscriptionCreateOrConnectWithoutUserInput[]
@@ -27372,6 +28022,20 @@ export namespace Prisma {
     update?: UserSubscriptionUpdateWithWhereUniqueWithoutUserInput | UserSubscriptionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserSubscriptionUpdateManyWithWhereWithoutUserInput | UserSubscriptionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserSubscriptionScalarWhereInput | UserSubscriptionScalarWhereInput[]
+  }
+
+  export type InterviewUpdateManyWithoutUserNestedInput = {
+    create?: XOR<InterviewCreateWithoutUserInput, InterviewUncheckedCreateWithoutUserInput> | InterviewCreateWithoutUserInput[] | InterviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InterviewCreateOrConnectWithoutUserInput | InterviewCreateOrConnectWithoutUserInput[]
+    upsert?: InterviewUpsertWithWhereUniqueWithoutUserInput | InterviewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: InterviewCreateManyUserInputEnvelope
+    set?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
+    disconnect?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
+    delete?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
+    connect?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
+    update?: InterviewUpdateWithWhereUniqueWithoutUserInput | InterviewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: InterviewUpdateManyWithWhereWithoutUserInput | InterviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: InterviewScalarWhereInput | InterviewScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -27418,6 +28082,20 @@ export namespace Prisma {
     deleteMany?: JobApplicationScalarWhereInput | JobApplicationScalarWhereInput[]
   }
 
+  export type ReviewUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutUserInput | ReviewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ReviewCreateManyUserInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutUserInput | ReviewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutUserInput | ReviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
   export type TransactionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput> | TransactionCreateWithoutUserInput[] | TransactionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TransactionCreateOrConnectWithoutUserInput | TransactionCreateOrConnectWithoutUserInput[]
@@ -27432,6 +28110,20 @@ export namespace Prisma {
     deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
   }
 
+  export type UserAssessmentUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserAssessmentCreateWithoutUserInput, UserAssessmentUncheckedCreateWithoutUserInput> | UserAssessmentCreateWithoutUserInput[] | UserAssessmentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserAssessmentCreateOrConnectWithoutUserInput | UserAssessmentCreateOrConnectWithoutUserInput[]
+    upsert?: UserAssessmentUpsertWithWhereUniqueWithoutUserInput | UserAssessmentUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserAssessmentCreateManyUserInputEnvelope
+    set?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+    disconnect?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+    delete?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+    connect?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+    update?: UserAssessmentUpdateWithWhereUniqueWithoutUserInput | UserAssessmentUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserAssessmentUpdateManyWithWhereWithoutUserInput | UserAssessmentUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserAssessmentScalarWhereInput | UserAssessmentScalarWhereInput[]
+  }
+
   export type UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserSubscriptionCreateWithoutUserInput, UserSubscriptionUncheckedCreateWithoutUserInput> | UserSubscriptionCreateWithoutUserInput[] | UserSubscriptionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserSubscriptionCreateOrConnectWithoutUserInput | UserSubscriptionCreateOrConnectWithoutUserInput[]
@@ -27444,6 +28136,20 @@ export namespace Prisma {
     update?: UserSubscriptionUpdateWithWhereUniqueWithoutUserInput | UserSubscriptionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserSubscriptionUpdateManyWithWhereWithoutUserInput | UserSubscriptionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserSubscriptionScalarWhereInput | UserSubscriptionScalarWhereInput[]
+  }
+
+  export type InterviewUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<InterviewCreateWithoutUserInput, InterviewUncheckedCreateWithoutUserInput> | InterviewCreateWithoutUserInput[] | InterviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InterviewCreateOrConnectWithoutUserInput | InterviewCreateOrConnectWithoutUserInput[]
+    upsert?: InterviewUpsertWithWhereUniqueWithoutUserInput | InterviewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: InterviewCreateManyUserInputEnvelope
+    set?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
+    disconnect?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
+    delete?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
+    connect?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
+    update?: InterviewUpdateWithWhereUniqueWithoutUserInput | InterviewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: InterviewUpdateManyWithWhereWithoutUserInput | InterviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: InterviewScalarWhereInput | InterviewScalarWhereInput[]
   }
 
   export type JobCreateNestedManyWithoutAdminInput = {
@@ -27504,6 +28210,13 @@ export namespace Prisma {
     connect?: LocationWhereUniqueInput
   }
 
+  export type JobApplicationCreateNestedManyWithoutJobInput = {
+    create?: XOR<JobApplicationCreateWithoutJobInput, JobApplicationUncheckedCreateWithoutJobInput> | JobApplicationCreateWithoutJobInput[] | JobApplicationUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: JobApplicationCreateOrConnectWithoutJobInput | JobApplicationCreateOrConnectWithoutJobInput[]
+    createMany?: JobApplicationCreateManyJobInputEnvelope
+    connect?: JobApplicationWhereUniqueInput | JobApplicationWhereUniqueInput[]
+  }
+
   export type PreSelectionTestCreateNestedManyWithoutJobInput = {
     create?: XOR<PreSelectionTestCreateWithoutJobInput, PreSelectionTestUncheckedCreateWithoutJobInput> | PreSelectionTestCreateWithoutJobInput[] | PreSelectionTestUncheckedCreateWithoutJobInput[]
     connectOrCreate?: PreSelectionTestCreateOrConnectWithoutJobInput | PreSelectionTestCreateOrConnectWithoutJobInput[]
@@ -27511,7 +28224,21 @@ export namespace Prisma {
     connect?: PreSelectionTestWhereUniqueInput | PreSelectionTestWhereUniqueInput[]
   }
 
-  export type JobApplicationCreateNestedManyWithoutJobInput = {
+  export type ReviewCreateNestedManyWithoutJobInput = {
+    create?: XOR<ReviewCreateWithoutJobInput, ReviewUncheckedCreateWithoutJobInput> | ReviewCreateWithoutJobInput[] | ReviewUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutJobInput | ReviewCreateOrConnectWithoutJobInput[]
+    createMany?: ReviewCreateManyJobInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type InterviewCreateNestedManyWithoutJobInput = {
+    create?: XOR<InterviewCreateWithoutJobInput, InterviewUncheckedCreateWithoutJobInput> | InterviewCreateWithoutJobInput[] | InterviewUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: InterviewCreateOrConnectWithoutJobInput | InterviewCreateOrConnectWithoutJobInput[]
+    createMany?: InterviewCreateManyJobInputEnvelope
+    connect?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
+  }
+
+  export type JobApplicationUncheckedCreateNestedManyWithoutJobInput = {
     create?: XOR<JobApplicationCreateWithoutJobInput, JobApplicationUncheckedCreateWithoutJobInput> | JobApplicationCreateWithoutJobInput[] | JobApplicationUncheckedCreateWithoutJobInput[]
     connectOrCreate?: JobApplicationCreateOrConnectWithoutJobInput | JobApplicationCreateOrConnectWithoutJobInput[]
     createMany?: JobApplicationCreateManyJobInputEnvelope
@@ -27525,11 +28252,18 @@ export namespace Prisma {
     connect?: PreSelectionTestWhereUniqueInput | PreSelectionTestWhereUniqueInput[]
   }
 
-  export type JobApplicationUncheckedCreateNestedManyWithoutJobInput = {
-    create?: XOR<JobApplicationCreateWithoutJobInput, JobApplicationUncheckedCreateWithoutJobInput> | JobApplicationCreateWithoutJobInput[] | JobApplicationUncheckedCreateWithoutJobInput[]
-    connectOrCreate?: JobApplicationCreateOrConnectWithoutJobInput | JobApplicationCreateOrConnectWithoutJobInput[]
-    createMany?: JobApplicationCreateManyJobInputEnvelope
-    connect?: JobApplicationWhereUniqueInput | JobApplicationWhereUniqueInput[]
+  export type ReviewUncheckedCreateNestedManyWithoutJobInput = {
+    create?: XOR<ReviewCreateWithoutJobInput, ReviewUncheckedCreateWithoutJobInput> | ReviewCreateWithoutJobInput[] | ReviewUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutJobInput | ReviewCreateOrConnectWithoutJobInput[]
+    createMany?: ReviewCreateManyJobInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type InterviewUncheckedCreateNestedManyWithoutJobInput = {
+    create?: XOR<InterviewCreateWithoutJobInput, InterviewUncheckedCreateWithoutJobInput> | InterviewCreateWithoutJobInput[] | InterviewUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: InterviewCreateOrConnectWithoutJobInput | InterviewCreateOrConnectWithoutJobInput[]
+    createMany?: InterviewCreateManyJobInputEnvelope
+    connect?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
   }
 
   export type EnumJobCategoryFieldUpdateOperationsInput = {
@@ -27557,6 +28291,20 @@ export namespace Prisma {
     update?: XOR<XOR<LocationUpdateToOneWithWhereWithoutJobInput, LocationUpdateWithoutJobInput>, LocationUncheckedUpdateWithoutJobInput>
   }
 
+  export type JobApplicationUpdateManyWithoutJobNestedInput = {
+    create?: XOR<JobApplicationCreateWithoutJobInput, JobApplicationUncheckedCreateWithoutJobInput> | JobApplicationCreateWithoutJobInput[] | JobApplicationUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: JobApplicationCreateOrConnectWithoutJobInput | JobApplicationCreateOrConnectWithoutJobInput[]
+    upsert?: JobApplicationUpsertWithWhereUniqueWithoutJobInput | JobApplicationUpsertWithWhereUniqueWithoutJobInput[]
+    createMany?: JobApplicationCreateManyJobInputEnvelope
+    set?: JobApplicationWhereUniqueInput | JobApplicationWhereUniqueInput[]
+    disconnect?: JobApplicationWhereUniqueInput | JobApplicationWhereUniqueInput[]
+    delete?: JobApplicationWhereUniqueInput | JobApplicationWhereUniqueInput[]
+    connect?: JobApplicationWhereUniqueInput | JobApplicationWhereUniqueInput[]
+    update?: JobApplicationUpdateWithWhereUniqueWithoutJobInput | JobApplicationUpdateWithWhereUniqueWithoutJobInput[]
+    updateMany?: JobApplicationUpdateManyWithWhereWithoutJobInput | JobApplicationUpdateManyWithWhereWithoutJobInput[]
+    deleteMany?: JobApplicationScalarWhereInput | JobApplicationScalarWhereInput[]
+  }
+
   export type PreSelectionTestUpdateManyWithoutJobNestedInput = {
     create?: XOR<PreSelectionTestCreateWithoutJobInput, PreSelectionTestUncheckedCreateWithoutJobInput> | PreSelectionTestCreateWithoutJobInput[] | PreSelectionTestUncheckedCreateWithoutJobInput[]
     connectOrCreate?: PreSelectionTestCreateOrConnectWithoutJobInput | PreSelectionTestCreateOrConnectWithoutJobInput[]
@@ -27571,7 +28319,35 @@ export namespace Prisma {
     deleteMany?: PreSelectionTestScalarWhereInput | PreSelectionTestScalarWhereInput[]
   }
 
-  export type JobApplicationUpdateManyWithoutJobNestedInput = {
+  export type ReviewUpdateManyWithoutJobNestedInput = {
+    create?: XOR<ReviewCreateWithoutJobInput, ReviewUncheckedCreateWithoutJobInput> | ReviewCreateWithoutJobInput[] | ReviewUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutJobInput | ReviewCreateOrConnectWithoutJobInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutJobInput | ReviewUpsertWithWhereUniqueWithoutJobInput[]
+    createMany?: ReviewCreateManyJobInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutJobInput | ReviewUpdateWithWhereUniqueWithoutJobInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutJobInput | ReviewUpdateManyWithWhereWithoutJobInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type InterviewUpdateManyWithoutJobNestedInput = {
+    create?: XOR<InterviewCreateWithoutJobInput, InterviewUncheckedCreateWithoutJobInput> | InterviewCreateWithoutJobInput[] | InterviewUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: InterviewCreateOrConnectWithoutJobInput | InterviewCreateOrConnectWithoutJobInput[]
+    upsert?: InterviewUpsertWithWhereUniqueWithoutJobInput | InterviewUpsertWithWhereUniqueWithoutJobInput[]
+    createMany?: InterviewCreateManyJobInputEnvelope
+    set?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
+    disconnect?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
+    delete?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
+    connect?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
+    update?: InterviewUpdateWithWhereUniqueWithoutJobInput | InterviewUpdateWithWhereUniqueWithoutJobInput[]
+    updateMany?: InterviewUpdateManyWithWhereWithoutJobInput | InterviewUpdateManyWithWhereWithoutJobInput[]
+    deleteMany?: InterviewScalarWhereInput | InterviewScalarWhereInput[]
+  }
+
+  export type JobApplicationUncheckedUpdateManyWithoutJobNestedInput = {
     create?: XOR<JobApplicationCreateWithoutJobInput, JobApplicationUncheckedCreateWithoutJobInput> | JobApplicationCreateWithoutJobInput[] | JobApplicationUncheckedCreateWithoutJobInput[]
     connectOrCreate?: JobApplicationCreateOrConnectWithoutJobInput | JobApplicationCreateOrConnectWithoutJobInput[]
     upsert?: JobApplicationUpsertWithWhereUniqueWithoutJobInput | JobApplicationUpsertWithWhereUniqueWithoutJobInput[]
@@ -27599,18 +28375,32 @@ export namespace Prisma {
     deleteMany?: PreSelectionTestScalarWhereInput | PreSelectionTestScalarWhereInput[]
   }
 
-  export type JobApplicationUncheckedUpdateManyWithoutJobNestedInput = {
-    create?: XOR<JobApplicationCreateWithoutJobInput, JobApplicationUncheckedCreateWithoutJobInput> | JobApplicationCreateWithoutJobInput[] | JobApplicationUncheckedCreateWithoutJobInput[]
-    connectOrCreate?: JobApplicationCreateOrConnectWithoutJobInput | JobApplicationCreateOrConnectWithoutJobInput[]
-    upsert?: JobApplicationUpsertWithWhereUniqueWithoutJobInput | JobApplicationUpsertWithWhereUniqueWithoutJobInput[]
-    createMany?: JobApplicationCreateManyJobInputEnvelope
-    set?: JobApplicationWhereUniqueInput | JobApplicationWhereUniqueInput[]
-    disconnect?: JobApplicationWhereUniqueInput | JobApplicationWhereUniqueInput[]
-    delete?: JobApplicationWhereUniqueInput | JobApplicationWhereUniqueInput[]
-    connect?: JobApplicationWhereUniqueInput | JobApplicationWhereUniqueInput[]
-    update?: JobApplicationUpdateWithWhereUniqueWithoutJobInput | JobApplicationUpdateWithWhereUniqueWithoutJobInput[]
-    updateMany?: JobApplicationUpdateManyWithWhereWithoutJobInput | JobApplicationUpdateManyWithWhereWithoutJobInput[]
-    deleteMany?: JobApplicationScalarWhereInput | JobApplicationScalarWhereInput[]
+  export type ReviewUncheckedUpdateManyWithoutJobNestedInput = {
+    create?: XOR<ReviewCreateWithoutJobInput, ReviewUncheckedCreateWithoutJobInput> | ReviewCreateWithoutJobInput[] | ReviewUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutJobInput | ReviewCreateOrConnectWithoutJobInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutJobInput | ReviewUpsertWithWhereUniqueWithoutJobInput[]
+    createMany?: ReviewCreateManyJobInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutJobInput | ReviewUpdateWithWhereUniqueWithoutJobInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutJobInput | ReviewUpdateManyWithWhereWithoutJobInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type InterviewUncheckedUpdateManyWithoutJobNestedInput = {
+    create?: XOR<InterviewCreateWithoutJobInput, InterviewUncheckedCreateWithoutJobInput> | InterviewCreateWithoutJobInput[] | InterviewUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: InterviewCreateOrConnectWithoutJobInput | InterviewCreateOrConnectWithoutJobInput[]
+    upsert?: InterviewUpsertWithWhereUniqueWithoutJobInput | InterviewUpsertWithWhereUniqueWithoutJobInput[]
+    createMany?: InterviewCreateManyJobInputEnvelope
+    set?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
+    disconnect?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
+    delete?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
+    connect?: InterviewWhereUniqueInput | InterviewWhereUniqueInput[]
+    update?: InterviewUpdateWithWhereUniqueWithoutJobInput | InterviewUpdateWithWhereUniqueWithoutJobInput[]
+    updateMany?: InterviewUpdateManyWithWhereWithoutJobInput | InterviewUpdateManyWithWhereWithoutJobInput[]
+    deleteMany?: InterviewScalarWhereInput | InterviewScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutCurriculumVitaeInput = {
@@ -27627,13 +28417,6 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCurriculumVitaeInput, UserUpdateWithoutCurriculumVitaeInput>, UserUncheckedUpdateWithoutCurriculumVitaeInput>
   }
 
-  export type UserCreateNestedManyWithoutLocationInput = {
-    create?: XOR<UserCreateWithoutLocationInput, UserUncheckedCreateWithoutLocationInput> | UserCreateWithoutLocationInput[] | UserUncheckedCreateWithoutLocationInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutLocationInput | UserCreateOrConnectWithoutLocationInput[]
-    createMany?: UserCreateManyLocationInputEnvelope
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-  }
-
   export type JobCreateNestedManyWithoutLocationInput = {
     create?: XOR<JobCreateWithoutLocationInput, JobUncheckedCreateWithoutLocationInput> | JobCreateWithoutLocationInput[] | JobUncheckedCreateWithoutLocationInput[]
     connectOrCreate?: JobCreateOrConnectWithoutLocationInput | JobCreateOrConnectWithoutLocationInput[]
@@ -27641,7 +28424,7 @@ export namespace Prisma {
     connect?: JobWhereUniqueInput | JobWhereUniqueInput[]
   }
 
-  export type UserUncheckedCreateNestedManyWithoutLocationInput = {
+  export type UserCreateNestedManyWithoutLocationInput = {
     create?: XOR<UserCreateWithoutLocationInput, UserUncheckedCreateWithoutLocationInput> | UserCreateWithoutLocationInput[] | UserUncheckedCreateWithoutLocationInput[]
     connectOrCreate?: UserCreateOrConnectWithoutLocationInput | UserCreateOrConnectWithoutLocationInput[]
     createMany?: UserCreateManyLocationInputEnvelope
@@ -27655,26 +28438,19 @@ export namespace Prisma {
     connect?: JobWhereUniqueInput | JobWhereUniqueInput[]
   }
 
+  export type UserUncheckedCreateNestedManyWithoutLocationInput = {
+    create?: XOR<UserCreateWithoutLocationInput, UserUncheckedCreateWithoutLocationInput> | UserCreateWithoutLocationInput[] | UserUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutLocationInput | UserCreateOrConnectWithoutLocationInput[]
+    createMany?: UserCreateManyLocationInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
   export type FloatFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type UserUpdateManyWithoutLocationNestedInput = {
-    create?: XOR<UserCreateWithoutLocationInput, UserUncheckedCreateWithoutLocationInput> | UserCreateWithoutLocationInput[] | UserUncheckedCreateWithoutLocationInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutLocationInput | UserCreateOrConnectWithoutLocationInput[]
-    upsert?: UserUpsertWithWhereUniqueWithoutLocationInput | UserUpsertWithWhereUniqueWithoutLocationInput[]
-    createMany?: UserCreateManyLocationInputEnvelope
-    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    update?: UserUpdateWithWhereUniqueWithoutLocationInput | UserUpdateWithWhereUniqueWithoutLocationInput[]
-    updateMany?: UserUpdateManyWithWhereWithoutLocationInput | UserUpdateManyWithWhereWithoutLocationInput[]
-    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
   export type JobUpdateManyWithoutLocationNestedInput = {
@@ -27691,7 +28467,7 @@ export namespace Prisma {
     deleteMany?: JobScalarWhereInput | JobScalarWhereInput[]
   }
 
-  export type UserUncheckedUpdateManyWithoutLocationNestedInput = {
+  export type UserUpdateManyWithoutLocationNestedInput = {
     create?: XOR<UserCreateWithoutLocationInput, UserUncheckedCreateWithoutLocationInput> | UserCreateWithoutLocationInput[] | UserUncheckedCreateWithoutLocationInput[]
     connectOrCreate?: UserCreateOrConnectWithoutLocationInput | UserCreateOrConnectWithoutLocationInput[]
     upsert?: UserUpsertWithWhereUniqueWithoutLocationInput | UserUpsertWithWhereUniqueWithoutLocationInput[]
@@ -27717,6 +28493,20 @@ export namespace Prisma {
     update?: JobUpdateWithWhereUniqueWithoutLocationInput | JobUpdateWithWhereUniqueWithoutLocationInput[]
     updateMany?: JobUpdateManyWithWhereWithoutLocationInput | JobUpdateManyWithWhereWithoutLocationInput[]
     deleteMany?: JobScalarWhereInput | JobScalarWhereInput[]
+  }
+
+  export type UserUncheckedUpdateManyWithoutLocationNestedInput = {
+    create?: XOR<UserCreateWithoutLocationInput, UserUncheckedCreateWithoutLocationInput> | UserCreateWithoutLocationInput[] | UserUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutLocationInput | UserCreateOrConnectWithoutLocationInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutLocationInput | UserUpsertWithWhereUniqueWithoutLocationInput[]
+    createMany?: UserCreateManyLocationInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutLocationInput | UserUpdateWithWhereUniqueWithoutLocationInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutLocationInput | UserUpdateManyWithWhereWithoutLocationInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
   export type TransactionCreateNestedManyWithoutSubscriptionInput = {
@@ -27886,28 +28676,20 @@ export namespace Prisma {
     update?: XOR<XOR<PreSelectionTestUpdateToOneWithWhereWithoutSelectionTestQuestionInput, PreSelectionTestUpdateWithoutSelectionTestQuestionInput>, PreSelectionTestUncheckedUpdateWithoutSelectionTestQuestionInput>
   }
 
-  export type UserCreateNestedOneWithoutJobApplicationInput = {
-    create?: XOR<UserCreateWithoutJobApplicationInput, UserUncheckedCreateWithoutJobApplicationInput>
-    connectOrCreate?: UserCreateOrConnectWithoutJobApplicationInput
-    connect?: UserWhereUniqueInput
-  }
-
   export type JobCreateNestedOneWithoutJobApplicationInput = {
     create?: XOR<JobCreateWithoutJobApplicationInput, JobUncheckedCreateWithoutJobApplicationInput>
     connectOrCreate?: JobCreateOrConnectWithoutJobApplicationInput
     connect?: JobWhereUniqueInput
   }
 
-  export type EnumJobApplicationStatusFieldUpdateOperationsInput = {
-    set?: $Enums.JobApplicationStatus
-  }
-
-  export type UserUpdateOneRequiredWithoutJobApplicationNestedInput = {
+  export type UserCreateNestedOneWithoutJobApplicationInput = {
     create?: XOR<UserCreateWithoutJobApplicationInput, UserUncheckedCreateWithoutJobApplicationInput>
     connectOrCreate?: UserCreateOrConnectWithoutJobApplicationInput
-    upsert?: UserUpsertWithoutJobApplicationInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutJobApplicationInput, UserUpdateWithoutJobApplicationInput>, UserUncheckedUpdateWithoutJobApplicationInput>
+  }
+
+  export type EnumJobApplicationStatusFieldUpdateOperationsInput = {
+    set?: $Enums.JobApplicationStatus
   }
 
   export type JobUpdateOneRequiredWithoutJobApplicationNestedInput = {
@@ -27918,10 +28700,68 @@ export namespace Prisma {
     update?: XOR<XOR<JobUpdateToOneWithWhereWithoutJobApplicationInput, JobUpdateWithoutJobApplicationInput>, JobUncheckedUpdateWithoutJobApplicationInput>
   }
 
-  export type UserCreateNestedOneWithoutTransactionInput = {
-    create?: XOR<UserCreateWithoutTransactionInput, UserUncheckedCreateWithoutTransactionInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTransactionInput
+  export type UserUpdateOneRequiredWithoutJobApplicationNestedInput = {
+    create?: XOR<UserCreateWithoutJobApplicationInput, UserUncheckedCreateWithoutJobApplicationInput>
+    connectOrCreate?: UserCreateOrConnectWithoutJobApplicationInput
+    upsert?: UserUpsertWithoutJobApplicationInput
     connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutJobApplicationInput, UserUpdateWithoutJobApplicationInput>, UserUncheckedUpdateWithoutJobApplicationInput>
+  }
+
+  export type UserCreateNestedOneWithoutInterviewInput = {
+    create?: XOR<UserCreateWithoutInterviewInput, UserUncheckedCreateWithoutInterviewInput>
+    connectOrCreate?: UserCreateOrConnectWithoutInterviewInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type JobCreateNestedOneWithoutInterviewInput = {
+    create?: XOR<JobCreateWithoutInterviewInput, JobUncheckedCreateWithoutInterviewInput>
+    connectOrCreate?: JobCreateOrConnectWithoutInterviewInput
+    connect?: JobWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutInterviewNestedInput = {
+    create?: XOR<UserCreateWithoutInterviewInput, UserUncheckedCreateWithoutInterviewInput>
+    connectOrCreate?: UserCreateOrConnectWithoutInterviewInput
+    upsert?: UserUpsertWithoutInterviewInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutInterviewInput, UserUpdateWithoutInterviewInput>, UserUncheckedUpdateWithoutInterviewInput>
+  }
+
+  export type JobUpdateOneRequiredWithoutInterviewNestedInput = {
+    create?: XOR<JobCreateWithoutInterviewInput, JobUncheckedCreateWithoutInterviewInput>
+    connectOrCreate?: JobCreateOrConnectWithoutInterviewInput
+    upsert?: JobUpsertWithoutInterviewInput
+    connect?: JobWhereUniqueInput
+    update?: XOR<XOR<JobUpdateToOneWithWhereWithoutInterviewInput, JobUpdateWithoutInterviewInput>, JobUncheckedUpdateWithoutInterviewInput>
+  }
+
+  export type UserCreateNestedOneWithoutReviewInput = {
+    create?: XOR<UserCreateWithoutReviewInput, UserUncheckedCreateWithoutReviewInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReviewInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type JobCreateNestedOneWithoutReviewInput = {
+    create?: XOR<JobCreateWithoutReviewInput, JobUncheckedCreateWithoutReviewInput>
+    connectOrCreate?: JobCreateOrConnectWithoutReviewInput
+    connect?: JobWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutReviewNestedInput = {
+    create?: XOR<UserCreateWithoutReviewInput, UserUncheckedCreateWithoutReviewInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReviewInput
+    upsert?: UserUpsertWithoutReviewInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReviewInput, UserUpdateWithoutReviewInput>, UserUncheckedUpdateWithoutReviewInput>
+  }
+
+  export type JobUpdateOneRequiredWithoutReviewNestedInput = {
+    create?: XOR<JobCreateWithoutReviewInput, JobUncheckedCreateWithoutReviewInput>
+    connectOrCreate?: JobCreateOrConnectWithoutReviewInput
+    upsert?: JobUpsertWithoutReviewInput
+    connect?: JobWhereUniqueInput
+    update?: XOR<XOR<JobUpdateToOneWithWhereWithoutReviewInput, JobUpdateWithoutReviewInput>, JobUncheckedUpdateWithoutReviewInput>
   }
 
   export type SubscriptionCreateNestedOneWithoutTransactionInput = {
@@ -27930,16 +28770,14 @@ export namespace Prisma {
     connect?: SubscriptionWhereUniqueInput
   }
 
-  export type EnumTransactionStatusFieldUpdateOperationsInput = {
-    set?: $Enums.TransactionStatus
-  }
-
-  export type UserUpdateOneRequiredWithoutTransactionNestedInput = {
+  export type UserCreateNestedOneWithoutTransactionInput = {
     create?: XOR<UserCreateWithoutTransactionInput, UserUncheckedCreateWithoutTransactionInput>
     connectOrCreate?: UserCreateOrConnectWithoutTransactionInput
-    upsert?: UserUpsertWithoutTransactionInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTransactionInput, UserUpdateWithoutTransactionInput>, UserUncheckedUpdateWithoutTransactionInput>
+  }
+
+  export type EnumTransactionStatusFieldUpdateOperationsInput = {
+    set?: $Enums.TransactionStatus
   }
 
   export type SubscriptionUpdateOneRequiredWithoutTransactionNestedInput = {
@@ -27950,6 +28788,14 @@ export namespace Prisma {
     update?: XOR<XOR<SubscriptionUpdateToOneWithWhereWithoutTransactionInput, SubscriptionUpdateWithoutTransactionInput>, SubscriptionUncheckedUpdateWithoutTransactionInput>
   }
 
+  export type UserUpdateOneRequiredWithoutTransactionNestedInput = {
+    create?: XOR<UserCreateWithoutTransactionInput, UserUncheckedCreateWithoutTransactionInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTransactionInput
+    upsert?: UserUpsertWithoutTransactionInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTransactionInput, UserUpdateWithoutTransactionInput>, UserUncheckedUpdateWithoutTransactionInput>
+  }
+
   export type AssessmentQuestionCreateNestedManyWithoutAssessmentInput = {
     create?: XOR<AssessmentQuestionCreateWithoutAssessmentInput, AssessmentQuestionUncheckedCreateWithoutAssessmentInput> | AssessmentQuestionCreateWithoutAssessmentInput[] | AssessmentQuestionUncheckedCreateWithoutAssessmentInput[]
     connectOrCreate?: AssessmentQuestionCreateOrConnectWithoutAssessmentInput | AssessmentQuestionCreateOrConnectWithoutAssessmentInput[]
@@ -27957,11 +28803,25 @@ export namespace Prisma {
     connect?: AssessmentQuestionWhereUniqueInput | AssessmentQuestionWhereUniqueInput[]
   }
 
+  export type UserAssessmentCreateNestedManyWithoutAssessmentInput = {
+    create?: XOR<UserAssessmentCreateWithoutAssessmentInput, UserAssessmentUncheckedCreateWithoutAssessmentInput> | UserAssessmentCreateWithoutAssessmentInput[] | UserAssessmentUncheckedCreateWithoutAssessmentInput[]
+    connectOrCreate?: UserAssessmentCreateOrConnectWithoutAssessmentInput | UserAssessmentCreateOrConnectWithoutAssessmentInput[]
+    createMany?: UserAssessmentCreateManyAssessmentInputEnvelope
+    connect?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+  }
+
   export type AssessmentQuestionUncheckedCreateNestedManyWithoutAssessmentInput = {
     create?: XOR<AssessmentQuestionCreateWithoutAssessmentInput, AssessmentQuestionUncheckedCreateWithoutAssessmentInput> | AssessmentQuestionCreateWithoutAssessmentInput[] | AssessmentQuestionUncheckedCreateWithoutAssessmentInput[]
     connectOrCreate?: AssessmentQuestionCreateOrConnectWithoutAssessmentInput | AssessmentQuestionCreateOrConnectWithoutAssessmentInput[]
     createMany?: AssessmentQuestionCreateManyAssessmentInputEnvelope
     connect?: AssessmentQuestionWhereUniqueInput | AssessmentQuestionWhereUniqueInput[]
+  }
+
+  export type UserAssessmentUncheckedCreateNestedManyWithoutAssessmentInput = {
+    create?: XOR<UserAssessmentCreateWithoutAssessmentInput, UserAssessmentUncheckedCreateWithoutAssessmentInput> | UserAssessmentCreateWithoutAssessmentInput[] | UserAssessmentUncheckedCreateWithoutAssessmentInput[]
+    connectOrCreate?: UserAssessmentCreateOrConnectWithoutAssessmentInput | UserAssessmentCreateOrConnectWithoutAssessmentInput[]
+    createMany?: UserAssessmentCreateManyAssessmentInputEnvelope
+    connect?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
   }
 
   export type AssessmentQuestionUpdateManyWithoutAssessmentNestedInput = {
@@ -27978,6 +28838,20 @@ export namespace Prisma {
     deleteMany?: AssessmentQuestionScalarWhereInput | AssessmentQuestionScalarWhereInput[]
   }
 
+  export type UserAssessmentUpdateManyWithoutAssessmentNestedInput = {
+    create?: XOR<UserAssessmentCreateWithoutAssessmentInput, UserAssessmentUncheckedCreateWithoutAssessmentInput> | UserAssessmentCreateWithoutAssessmentInput[] | UserAssessmentUncheckedCreateWithoutAssessmentInput[]
+    connectOrCreate?: UserAssessmentCreateOrConnectWithoutAssessmentInput | UserAssessmentCreateOrConnectWithoutAssessmentInput[]
+    upsert?: UserAssessmentUpsertWithWhereUniqueWithoutAssessmentInput | UserAssessmentUpsertWithWhereUniqueWithoutAssessmentInput[]
+    createMany?: UserAssessmentCreateManyAssessmentInputEnvelope
+    set?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+    disconnect?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+    delete?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+    connect?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+    update?: UserAssessmentUpdateWithWhereUniqueWithoutAssessmentInput | UserAssessmentUpdateWithWhereUniqueWithoutAssessmentInput[]
+    updateMany?: UserAssessmentUpdateManyWithWhereWithoutAssessmentInput | UserAssessmentUpdateManyWithWhereWithoutAssessmentInput[]
+    deleteMany?: UserAssessmentScalarWhereInput | UserAssessmentScalarWhereInput[]
+  }
+
   export type AssessmentQuestionUncheckedUpdateManyWithoutAssessmentNestedInput = {
     create?: XOR<AssessmentQuestionCreateWithoutAssessmentInput, AssessmentQuestionUncheckedCreateWithoutAssessmentInput> | AssessmentQuestionCreateWithoutAssessmentInput[] | AssessmentQuestionUncheckedCreateWithoutAssessmentInput[]
     connectOrCreate?: AssessmentQuestionCreateOrConnectWithoutAssessmentInput | AssessmentQuestionCreateOrConnectWithoutAssessmentInput[]
@@ -27992,22 +28866,66 @@ export namespace Prisma {
     deleteMany?: AssessmentQuestionScalarWhereInput | AssessmentQuestionScalarWhereInput[]
   }
 
+  export type UserAssessmentUncheckedUpdateManyWithoutAssessmentNestedInput = {
+    create?: XOR<UserAssessmentCreateWithoutAssessmentInput, UserAssessmentUncheckedCreateWithoutAssessmentInput> | UserAssessmentCreateWithoutAssessmentInput[] | UserAssessmentUncheckedCreateWithoutAssessmentInput[]
+    connectOrCreate?: UserAssessmentCreateOrConnectWithoutAssessmentInput | UserAssessmentCreateOrConnectWithoutAssessmentInput[]
+    upsert?: UserAssessmentUpsertWithWhereUniqueWithoutAssessmentInput | UserAssessmentUpsertWithWhereUniqueWithoutAssessmentInput[]
+    createMany?: UserAssessmentCreateManyAssessmentInputEnvelope
+    set?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+    disconnect?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+    delete?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+    connect?: UserAssessmentWhereUniqueInput | UserAssessmentWhereUniqueInput[]
+    update?: UserAssessmentUpdateWithWhereUniqueWithoutAssessmentInput | UserAssessmentUpdateWithWhereUniqueWithoutAssessmentInput[]
+    updateMany?: UserAssessmentUpdateManyWithWhereWithoutAssessmentInput | UserAssessmentUpdateManyWithWhereWithoutAssessmentInput[]
+    deleteMany?: UserAssessmentScalarWhereInput | UserAssessmentScalarWhereInput[]
+  }
+
   export type CertificateCreateNestedOneWithoutUserAssessmentInput = {
     create?: XOR<CertificateCreateWithoutUserAssessmentInput, CertificateUncheckedCreateWithoutUserAssessmentInput>
     connectOrCreate?: CertificateCreateOrConnectWithoutUserAssessmentInput
     connect?: CertificateWhereUniqueInput
   }
 
+  export type UserCreateNestedOneWithoutUserAssessmentInput = {
+    create?: XOR<UserCreateWithoutUserAssessmentInput, UserUncheckedCreateWithoutUserAssessmentInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserAssessmentInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type AssessmentCreateNestedOneWithoutUserAssessmentInput = {
+    create?: XOR<AssessmentCreateWithoutUserAssessmentInput, AssessmentUncheckedCreateWithoutUserAssessmentInput>
+    connectOrCreate?: AssessmentCreateOrConnectWithoutUserAssessmentInput
+    connect?: AssessmentWhereUniqueInput
+  }
+
   export type NullableEnumUserAssessmentStatusFieldUpdateOperationsInput = {
     set?: $Enums.UserAssessmentStatus | null
   }
 
-  export type CertificateUpdateOneRequiredWithoutUserAssessmentNestedInput = {
+  export type CertificateUpdateOneWithoutUserAssessmentNestedInput = {
     create?: XOR<CertificateCreateWithoutUserAssessmentInput, CertificateUncheckedCreateWithoutUserAssessmentInput>
     connectOrCreate?: CertificateCreateOrConnectWithoutUserAssessmentInput
     upsert?: CertificateUpsertWithoutUserAssessmentInput
+    disconnect?: CertificateWhereInput | boolean
+    delete?: CertificateWhereInput | boolean
     connect?: CertificateWhereUniqueInput
     update?: XOR<XOR<CertificateUpdateToOneWithWhereWithoutUserAssessmentInput, CertificateUpdateWithoutUserAssessmentInput>, CertificateUncheckedUpdateWithoutUserAssessmentInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutUserAssessmentNestedInput = {
+    create?: XOR<UserCreateWithoutUserAssessmentInput, UserUncheckedCreateWithoutUserAssessmentInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserAssessmentInput
+    upsert?: UserUpsertWithoutUserAssessmentInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserAssessmentInput, UserUpdateWithoutUserAssessmentInput>, UserUncheckedUpdateWithoutUserAssessmentInput>
+  }
+
+  export type AssessmentUpdateOneRequiredWithoutUserAssessmentNestedInput = {
+    create?: XOR<AssessmentCreateWithoutUserAssessmentInput, AssessmentUncheckedCreateWithoutUserAssessmentInput>
+    connectOrCreate?: AssessmentCreateOrConnectWithoutUserAssessmentInput
+    upsert?: AssessmentUpsertWithoutUserAssessmentInput
+    connect?: AssessmentWhereUniqueInput
+    update?: XOR<XOR<AssessmentUpdateToOneWithWhereWithoutUserAssessmentInput, AssessmentUpdateWithoutUserAssessmentInput>, AssessmentUncheckedUpdateWithoutUserAssessmentInput>
   }
 
   export type AssessmentQuestionCreateoptionsInput = {
@@ -28075,24 +28993,16 @@ export namespace Prisma {
     deleteMany?: UserAssessmentScalarWhereInput | UserAssessmentScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutUserSubscriptionInput = {
-    create?: XOR<UserCreateWithoutUserSubscriptionInput, UserUncheckedCreateWithoutUserSubscriptionInput>
-    connectOrCreate?: UserCreateOrConnectWithoutUserSubscriptionInput
-    connect?: UserWhereUniqueInput
-  }
-
   export type SubscriptionCreateNestedOneWithoutUserSubscriptionInput = {
     create?: XOR<SubscriptionCreateWithoutUserSubscriptionInput, SubscriptionUncheckedCreateWithoutUserSubscriptionInput>
     connectOrCreate?: SubscriptionCreateOrConnectWithoutUserSubscriptionInput
     connect?: SubscriptionWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutUserSubscriptionNestedInput = {
+  export type UserCreateNestedOneWithoutUserSubscriptionInput = {
     create?: XOR<UserCreateWithoutUserSubscriptionInput, UserUncheckedCreateWithoutUserSubscriptionInput>
     connectOrCreate?: UserCreateOrConnectWithoutUserSubscriptionInput
-    upsert?: UserUpsertWithoutUserSubscriptionInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserSubscriptionInput, UserUpdateWithoutUserSubscriptionInput>, UserUncheckedUpdateWithoutUserSubscriptionInput>
   }
 
   export type SubscriptionUpdateOneRequiredWithoutUserSubscriptionNestedInput = {
@@ -28101,6 +29011,14 @@ export namespace Prisma {
     upsert?: SubscriptionUpsertWithoutUserSubscriptionInput
     connect?: SubscriptionWhereUniqueInput
     update?: XOR<XOR<SubscriptionUpdateToOneWithWhereWithoutUserSubscriptionInput, SubscriptionUpdateWithoutUserSubscriptionInput>, SubscriptionUncheckedUpdateWithoutUserSubscriptionInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutUserSubscriptionNestedInput = {
+    create?: XOR<UserCreateWithoutUserSubscriptionInput, UserUncheckedCreateWithoutUserSubscriptionInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserSubscriptionInput
+    upsert?: UserUpsertWithoutUserSubscriptionInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserSubscriptionInput, UserUpdateWithoutUserSubscriptionInput>, UserUncheckedUpdateWithoutUserSubscriptionInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -28468,28 +29386,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type LocationCreateWithoutUserInput = {
-    location: string
-    displayLocation: string
-    latitude: number
-    longitude: number
-    Job?: JobCreateNestedManyWithoutLocationInput
-  }
-
-  export type LocationUncheckedCreateWithoutUserInput = {
-    id?: number
-    location: string
-    displayLocation: string
-    latitude: number
-    longitude: number
-    Job?: JobUncheckedCreateNestedManyWithoutLocationInput
-  }
-
-  export type LocationCreateOrConnectWithoutUserInput = {
-    where: LocationWhereUniqueInput
-    create: XOR<LocationCreateWithoutUserInput, LocationUncheckedCreateWithoutUserInput>
-  }
-
   export type JobApplicationCreateWithoutUserInput = {
     resume: string
     expectedSalary: number
@@ -28522,7 +29418,40 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ReviewCreateWithoutUserInput = {
+    review: string
+    CultureRating: number
+    balanceRating: number
+    facilityRating: number
+    careerRating: number
+    salary: number
+    createdAt?: Date | string
+    job: JobCreateNestedOneWithoutReviewInput
+  }
+
+  export type ReviewUncheckedCreateWithoutUserInput = {
+    jobId: string
+    review: string
+    CultureRating: number
+    balanceRating: number
+    facilityRating: number
+    careerRating: number
+    salary: number
+    createdAt?: Date | string
+  }
+
+  export type ReviewCreateOrConnectWithoutUserInput = {
+    where: ReviewWhereUniqueInput
+    create: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput>
+  }
+
+  export type ReviewCreateManyUserInputEnvelope = {
+    data: ReviewCreateManyUserInput | ReviewCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type TransactionCreateWithoutUserInput = {
+    id?: string
     amount: number
     status: $Enums.TransactionStatus
     createdAt?: Date | string
@@ -28531,6 +29460,7 @@ export namespace Prisma {
   }
 
   export type TransactionUncheckedCreateWithoutUserInput = {
+    id?: string
     subscriptionId: number
     amount: number
     status: $Enums.TransactionStatus
@@ -28545,6 +29475,55 @@ export namespace Prisma {
 
   export type TransactionCreateManyUserInputEnvelope = {
     data: TransactionCreateManyUserInput | TransactionCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LocationCreateWithoutUserInput = {
+    city: string
+    province: string
+    latitude: number
+    longitude: number
+    Job?: JobCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationUncheckedCreateWithoutUserInput = {
+    id?: number
+    city: string
+    province: string
+    latitude: number
+    longitude: number
+    Job?: JobUncheckedCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationCreateOrConnectWithoutUserInput = {
+    where: LocationWhereUniqueInput
+    create: XOR<LocationCreateWithoutUserInput, LocationUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserAssessmentCreateWithoutUserInput = {
+    score?: number
+    status?: $Enums.UserAssessmentStatus | null
+    endTime: Date | string
+    certificate?: CertificateCreateNestedOneWithoutUserAssessmentInput
+    assessment: AssessmentCreateNestedOneWithoutUserAssessmentInput
+  }
+
+  export type UserAssessmentUncheckedCreateWithoutUserInput = {
+    id?: number
+    assessmentId: number
+    score?: number
+    certificateId?: number | null
+    status?: $Enums.UserAssessmentStatus | null
+    endTime: Date | string
+  }
+
+  export type UserAssessmentCreateOrConnectWithoutUserInput = {
+    where: UserAssessmentWhereUniqueInput
+    create: XOR<UserAssessmentCreateWithoutUserInput, UserAssessmentUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserAssessmentCreateManyUserInputEnvelope = {
+    data: UserAssessmentCreateManyUserInput | UserAssessmentCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -28578,6 +29557,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type InterviewCreateWithoutUserInput = {
+    startTime: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    job: JobCreateNestedOneWithoutInterviewInput
+  }
+
+  export type InterviewUncheckedCreateWithoutUserInput = {
+    jobId: string
+    startTime: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InterviewCreateOrConnectWithoutUserInput = {
+    where: InterviewWhereUniqueInput
+    create: XOR<InterviewCreateWithoutUserInput, InterviewUncheckedCreateWithoutUserInput>
+  }
+
+  export type InterviewCreateManyUserInputEnvelope = {
+    data: InterviewCreateManyUserInput | InterviewCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CurriculumVitaeUpsertWithWhereUniqueWithoutUserInput = {
     where: CurriculumVitaeWhereUniqueInput
     update: XOR<CurriculumVitaeUpdateWithoutUserInput, CurriculumVitaeUncheckedUpdateWithoutUserInput>
@@ -28606,34 +29609,6 @@ export namespace Prisma {
     education?: StringFilter<"CurriculumVitae"> | string
     createdAt?: DateTimeFilter<"CurriculumVitae"> | Date | string
     updatedAt?: DateTimeFilter<"CurriculumVitae"> | Date | string
-  }
-
-  export type LocationUpsertWithoutUserInput = {
-    update: XOR<LocationUpdateWithoutUserInput, LocationUncheckedUpdateWithoutUserInput>
-    create: XOR<LocationCreateWithoutUserInput, LocationUncheckedCreateWithoutUserInput>
-    where?: LocationWhereInput
-  }
-
-  export type LocationUpdateToOneWithWhereWithoutUserInput = {
-    where?: LocationWhereInput
-    data: XOR<LocationUpdateWithoutUserInput, LocationUncheckedUpdateWithoutUserInput>
-  }
-
-  export type LocationUpdateWithoutUserInput = {
-    location?: StringFieldUpdateOperationsInput | string
-    displayLocation?: StringFieldUpdateOperationsInput | string
-    latitude?: FloatFieldUpdateOperationsInput | number
-    longitude?: FloatFieldUpdateOperationsInput | number
-    Job?: JobUpdateManyWithoutLocationNestedInput
-  }
-
-  export type LocationUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    location?: StringFieldUpdateOperationsInput | string
-    displayLocation?: StringFieldUpdateOperationsInput | string
-    latitude?: FloatFieldUpdateOperationsInput | number
-    longitude?: FloatFieldUpdateOperationsInput | number
-    Job?: JobUncheckedUpdateManyWithoutLocationNestedInput
   }
 
   export type JobApplicationUpsertWithWhereUniqueWithoutUserInput = {
@@ -28667,6 +29642,37 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"JobApplication"> | Date | string
   }
 
+  export type ReviewUpsertWithWhereUniqueWithoutUserInput = {
+    where: ReviewWhereUniqueInput
+    update: XOR<ReviewUpdateWithoutUserInput, ReviewUncheckedUpdateWithoutUserInput>
+    create: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput>
+  }
+
+  export type ReviewUpdateWithWhereUniqueWithoutUserInput = {
+    where: ReviewWhereUniqueInput
+    data: XOR<ReviewUpdateWithoutUserInput, ReviewUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ReviewUpdateManyWithWhereWithoutUserInput = {
+    where: ReviewScalarWhereInput
+    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ReviewScalarWhereInput = {
+    AND?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+    OR?: ReviewScalarWhereInput[]
+    NOT?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+    userId?: IntFilter<"Review"> | number
+    jobId?: StringFilter<"Review"> | string
+    review?: StringFilter<"Review"> | string
+    CultureRating?: IntFilter<"Review"> | number
+    balanceRating?: IntFilter<"Review"> | number
+    facilityRating?: IntFilter<"Review"> | number
+    careerRating?: IntFilter<"Review"> | number
+    salary?: IntFilter<"Review"> | number
+    createdAt?: DateTimeFilter<"Review"> | Date | string
+  }
+
   export type TransactionUpsertWithWhereUniqueWithoutUserInput = {
     where: TransactionWhereUniqueInput
     update: XOR<TransactionUpdateWithoutUserInput, TransactionUncheckedUpdateWithoutUserInput>
@@ -28687,12 +29693,70 @@ export namespace Prisma {
     AND?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
     OR?: TransactionScalarWhereInput[]
     NOT?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+    id?: StringFilter<"Transaction"> | string
     userId?: IntFilter<"Transaction"> | number
     subscriptionId?: IntFilter<"Transaction"> | number
     amount?: IntFilter<"Transaction"> | number
     status?: EnumTransactionStatusFilter<"Transaction"> | $Enums.TransactionStatus
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     updatedAt?: DateTimeFilter<"Transaction"> | Date | string
+  }
+
+  export type LocationUpsertWithoutUserInput = {
+    update: XOR<LocationUpdateWithoutUserInput, LocationUncheckedUpdateWithoutUserInput>
+    create: XOR<LocationCreateWithoutUserInput, LocationUncheckedCreateWithoutUserInput>
+    where?: LocationWhereInput
+  }
+
+  export type LocationUpdateToOneWithWhereWithoutUserInput = {
+    where?: LocationWhereInput
+    data: XOR<LocationUpdateWithoutUserInput, LocationUncheckedUpdateWithoutUserInput>
+  }
+
+  export type LocationUpdateWithoutUserInput = {
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    Job?: JobUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    Job?: JobUncheckedUpdateManyWithoutLocationNestedInput
+  }
+
+  export type UserAssessmentUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserAssessmentWhereUniqueInput
+    update: XOR<UserAssessmentUpdateWithoutUserInput, UserAssessmentUncheckedUpdateWithoutUserInput>
+    create: XOR<UserAssessmentCreateWithoutUserInput, UserAssessmentUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserAssessmentUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserAssessmentWhereUniqueInput
+    data: XOR<UserAssessmentUpdateWithoutUserInput, UserAssessmentUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserAssessmentUpdateManyWithWhereWithoutUserInput = {
+    where: UserAssessmentScalarWhereInput
+    data: XOR<UserAssessmentUpdateManyMutationInput, UserAssessmentUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserAssessmentScalarWhereInput = {
+    AND?: UserAssessmentScalarWhereInput | UserAssessmentScalarWhereInput[]
+    OR?: UserAssessmentScalarWhereInput[]
+    NOT?: UserAssessmentScalarWhereInput | UserAssessmentScalarWhereInput[]
+    id?: IntFilter<"UserAssessment"> | number
+    userId?: IntFilter<"UserAssessment"> | number
+    assessmentId?: IntFilter<"UserAssessment"> | number
+    score?: IntFilter<"UserAssessment"> | number
+    certificateId?: IntNullableFilter<"UserAssessment"> | number | null
+    status?: EnumUserAssessmentStatusNullableFilter<"UserAssessment"> | $Enums.UserAssessmentStatus | null
+    endTime?: DateTimeFilter<"UserAssessment"> | Date | string
   }
 
   export type UserSubscriptionUpsertWithWhereUniqueWithoutUserInput = {
@@ -28725,6 +29789,33 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"UserSubscription"> | Date | string
   }
 
+  export type InterviewUpsertWithWhereUniqueWithoutUserInput = {
+    where: InterviewWhereUniqueInput
+    update: XOR<InterviewUpdateWithoutUserInput, InterviewUncheckedUpdateWithoutUserInput>
+    create: XOR<InterviewCreateWithoutUserInput, InterviewUncheckedCreateWithoutUserInput>
+  }
+
+  export type InterviewUpdateWithWhereUniqueWithoutUserInput = {
+    where: InterviewWhereUniqueInput
+    data: XOR<InterviewUpdateWithoutUserInput, InterviewUncheckedUpdateWithoutUserInput>
+  }
+
+  export type InterviewUpdateManyWithWhereWithoutUserInput = {
+    where: InterviewScalarWhereInput
+    data: XOR<InterviewUpdateManyMutationInput, InterviewUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type InterviewScalarWhereInput = {
+    AND?: InterviewScalarWhereInput | InterviewScalarWhereInput[]
+    OR?: InterviewScalarWhereInput[]
+    NOT?: InterviewScalarWhereInput | InterviewScalarWhereInput[]
+    userId?: IntFilter<"Interview"> | number
+    jobId?: StringFilter<"Interview"> | string
+    startTime?: DateTimeFilter<"Interview"> | Date | string
+    createdAt?: DateTimeFilter<"Interview"> | Date | string
+    updatedAt?: DateTimeFilter<"Interview"> | Date | string
+  }
+
   export type JobCreateWithoutAdminInput = {
     id?: string
     title: string
@@ -28739,9 +29830,12 @@ export namespace Prisma {
     tags?: JobCreatetagsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
     location: LocationCreateNestedOneWithoutJobInput
-    PreSelectionTest?: PreSelectionTestCreateNestedManyWithoutJobInput
     JobApplication?: JobApplicationCreateNestedManyWithoutJobInput
+    PreSelectionTest?: PreSelectionTestCreateNestedManyWithoutJobInput
+    Review?: ReviewCreateNestedManyWithoutJobInput
+    Interview?: InterviewCreateNestedManyWithoutJobInput
   }
 
   export type JobUncheckedCreateWithoutAdminInput = {
@@ -28759,8 +29853,11 @@ export namespace Prisma {
     locationId: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    PreSelectionTest?: PreSelectionTestUncheckedCreateNestedManyWithoutJobInput
+    isActive?: boolean
     JobApplication?: JobApplicationUncheckedCreateNestedManyWithoutJobInput
+    PreSelectionTest?: PreSelectionTestUncheckedCreateNestedManyWithoutJobInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutJobInput
+    Interview?: InterviewUncheckedCreateNestedManyWithoutJobInput
   }
 
   export type JobCreateOrConnectWithoutAdminInput = {
@@ -28808,18 +29905,19 @@ export namespace Prisma {
     locationId?: IntFilter<"Job"> | number
     createdAt?: DateTimeFilter<"Job"> | Date | string
     updatedAt?: DateTimeFilter<"Job"> | Date | string
+    isActive?: BoolFilter<"Job"> | boolean
   }
 
   export type AdminCreateWithoutJobInput = {
     companyName: string
     email: string
     password: string
-    noHandphone: string
     description: string
     isVerified?: boolean
     logo?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    noHandphone: string
   }
 
   export type AdminUncheckedCreateWithoutJobInput = {
@@ -28827,12 +29925,12 @@ export namespace Prisma {
     companyName: string
     email: string
     password: string
-    noHandphone: string
     description: string
     isVerified?: boolean
     logo?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    noHandphone: string
   }
 
   export type AdminCreateOrConnectWithoutJobInput = {
@@ -28841,8 +29939,8 @@ export namespace Prisma {
   }
 
   export type LocationCreateWithoutJobInput = {
-    location: string
-    displayLocation: string
+    city: string
+    province: string
     latitude: number
     longitude: number
     User?: UserCreateNestedManyWithoutLocationInput
@@ -28850,8 +29948,8 @@ export namespace Prisma {
 
   export type LocationUncheckedCreateWithoutJobInput = {
     id?: number
-    location: string
-    displayLocation: string
+    city: string
+    province: string
     latitude: number
     longitude: number
     User?: UserUncheckedCreateNestedManyWithoutLocationInput
@@ -28860,31 +29958,6 @@ export namespace Prisma {
   export type LocationCreateOrConnectWithoutJobInput = {
     where: LocationWhereUniqueInput
     create: XOR<LocationCreateWithoutJobInput, LocationUncheckedCreateWithoutJobInput>
-  }
-
-  export type PreSelectionTestCreateWithoutJobInput = {
-    title: string
-    description: string
-    createdAt?: Date | string
-    SelectionTestQuestion?: SelectionTestQuestionCreateNestedManyWithoutPreSelectionTestInput
-  }
-
-  export type PreSelectionTestUncheckedCreateWithoutJobInput = {
-    id?: number
-    title: string
-    description: string
-    createdAt?: Date | string
-    SelectionTestQuestion?: SelectionTestQuestionUncheckedCreateNestedManyWithoutPreSelectionTestInput
-  }
-
-  export type PreSelectionTestCreateOrConnectWithoutJobInput = {
-    where: PreSelectionTestWhereUniqueInput
-    create: XOR<PreSelectionTestCreateWithoutJobInput, PreSelectionTestUncheckedCreateWithoutJobInput>
-  }
-
-  export type PreSelectionTestCreateManyJobInputEnvelope = {
-    data: PreSelectionTestCreateManyJobInput | PreSelectionTestCreateManyJobInput[]
-    skipDuplicates?: boolean
   }
 
   export type JobApplicationCreateWithoutJobInput = {
@@ -28919,6 +29992,87 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type PreSelectionTestCreateWithoutJobInput = {
+    title: string
+    description: string
+    createdAt?: Date | string
+    SelectionTestQuestion?: SelectionTestQuestionCreateNestedManyWithoutPreSelectionTestInput
+  }
+
+  export type PreSelectionTestUncheckedCreateWithoutJobInput = {
+    id?: number
+    title: string
+    description: string
+    createdAt?: Date | string
+    SelectionTestQuestion?: SelectionTestQuestionUncheckedCreateNestedManyWithoutPreSelectionTestInput
+  }
+
+  export type PreSelectionTestCreateOrConnectWithoutJobInput = {
+    where: PreSelectionTestWhereUniqueInput
+    create: XOR<PreSelectionTestCreateWithoutJobInput, PreSelectionTestUncheckedCreateWithoutJobInput>
+  }
+
+  export type PreSelectionTestCreateManyJobInputEnvelope = {
+    data: PreSelectionTestCreateManyJobInput | PreSelectionTestCreateManyJobInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ReviewCreateWithoutJobInput = {
+    review: string
+    CultureRating: number
+    balanceRating: number
+    facilityRating: number
+    careerRating: number
+    salary: number
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutReviewInput
+  }
+
+  export type ReviewUncheckedCreateWithoutJobInput = {
+    userId: number
+    review: string
+    CultureRating: number
+    balanceRating: number
+    facilityRating: number
+    careerRating: number
+    salary: number
+    createdAt?: Date | string
+  }
+
+  export type ReviewCreateOrConnectWithoutJobInput = {
+    where: ReviewWhereUniqueInput
+    create: XOR<ReviewCreateWithoutJobInput, ReviewUncheckedCreateWithoutJobInput>
+  }
+
+  export type ReviewCreateManyJobInputEnvelope = {
+    data: ReviewCreateManyJobInput | ReviewCreateManyJobInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type InterviewCreateWithoutJobInput = {
+    startTime: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutInterviewInput
+  }
+
+  export type InterviewUncheckedCreateWithoutJobInput = {
+    userId: number
+    startTime: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InterviewCreateOrConnectWithoutJobInput = {
+    where: InterviewWhereUniqueInput
+    create: XOR<InterviewCreateWithoutJobInput, InterviewUncheckedCreateWithoutJobInput>
+  }
+
+  export type InterviewCreateManyJobInputEnvelope = {
+    data: InterviewCreateManyJobInput | InterviewCreateManyJobInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AdminUpsertWithoutJobInput = {
     update: XOR<AdminUpdateWithoutJobInput, AdminUncheckedUpdateWithoutJobInput>
     create: XOR<AdminCreateWithoutJobInput, AdminUncheckedCreateWithoutJobInput>
@@ -28934,12 +30088,12 @@ export namespace Prisma {
     companyName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    noHandphone?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    noHandphone?: StringFieldUpdateOperationsInput | string
   }
 
   export type AdminUncheckedUpdateWithoutJobInput = {
@@ -28947,12 +30101,12 @@ export namespace Prisma {
     companyName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    noHandphone?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     logo?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    noHandphone?: StringFieldUpdateOperationsInput | string
   }
 
   export type LocationUpsertWithoutJobInput = {
@@ -28967,8 +30121,8 @@ export namespace Prisma {
   }
 
   export type LocationUpdateWithoutJobInput = {
-    location?: StringFieldUpdateOperationsInput | string
-    displayLocation?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     User?: UserUpdateManyWithoutLocationNestedInput
@@ -28976,11 +30130,27 @@ export namespace Prisma {
 
   export type LocationUncheckedUpdateWithoutJobInput = {
     id?: IntFieldUpdateOperationsInput | number
-    location?: StringFieldUpdateOperationsInput | string
-    displayLocation?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     User?: UserUncheckedUpdateManyWithoutLocationNestedInput
+  }
+
+  export type JobApplicationUpsertWithWhereUniqueWithoutJobInput = {
+    where: JobApplicationWhereUniqueInput
+    update: XOR<JobApplicationUpdateWithoutJobInput, JobApplicationUncheckedUpdateWithoutJobInput>
+    create: XOR<JobApplicationCreateWithoutJobInput, JobApplicationUncheckedCreateWithoutJobInput>
+  }
+
+  export type JobApplicationUpdateWithWhereUniqueWithoutJobInput = {
+    where: JobApplicationWhereUniqueInput
+    data: XOR<JobApplicationUpdateWithoutJobInput, JobApplicationUncheckedUpdateWithoutJobInput>
+  }
+
+  export type JobApplicationUpdateManyWithWhereWithoutJobInput = {
+    where: JobApplicationScalarWhereInput
+    data: XOR<JobApplicationUpdateManyMutationInput, JobApplicationUncheckedUpdateManyWithoutJobInput>
   }
 
   export type PreSelectionTestUpsertWithWhereUniqueWithoutJobInput = {
@@ -29010,20 +30180,36 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"PreSelectionTest"> | Date | string
   }
 
-  export type JobApplicationUpsertWithWhereUniqueWithoutJobInput = {
-    where: JobApplicationWhereUniqueInput
-    update: XOR<JobApplicationUpdateWithoutJobInput, JobApplicationUncheckedUpdateWithoutJobInput>
-    create: XOR<JobApplicationCreateWithoutJobInput, JobApplicationUncheckedCreateWithoutJobInput>
+  export type ReviewUpsertWithWhereUniqueWithoutJobInput = {
+    where: ReviewWhereUniqueInput
+    update: XOR<ReviewUpdateWithoutJobInput, ReviewUncheckedUpdateWithoutJobInput>
+    create: XOR<ReviewCreateWithoutJobInput, ReviewUncheckedCreateWithoutJobInput>
   }
 
-  export type JobApplicationUpdateWithWhereUniqueWithoutJobInput = {
-    where: JobApplicationWhereUniqueInput
-    data: XOR<JobApplicationUpdateWithoutJobInput, JobApplicationUncheckedUpdateWithoutJobInput>
+  export type ReviewUpdateWithWhereUniqueWithoutJobInput = {
+    where: ReviewWhereUniqueInput
+    data: XOR<ReviewUpdateWithoutJobInput, ReviewUncheckedUpdateWithoutJobInput>
   }
 
-  export type JobApplicationUpdateManyWithWhereWithoutJobInput = {
-    where: JobApplicationScalarWhereInput
-    data: XOR<JobApplicationUpdateManyMutationInput, JobApplicationUncheckedUpdateManyWithoutJobInput>
+  export type ReviewUpdateManyWithWhereWithoutJobInput = {
+    where: ReviewScalarWhereInput
+    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutJobInput>
+  }
+
+  export type InterviewUpsertWithWhereUniqueWithoutJobInput = {
+    where: InterviewWhereUniqueInput
+    update: XOR<InterviewUpdateWithoutJobInput, InterviewUncheckedUpdateWithoutJobInput>
+    create: XOR<InterviewCreateWithoutJobInput, InterviewUncheckedCreateWithoutJobInput>
+  }
+
+  export type InterviewUpdateWithWhereUniqueWithoutJobInput = {
+    where: InterviewWhereUniqueInput
+    data: XOR<InterviewUpdateWithoutJobInput, InterviewUncheckedUpdateWithoutJobInput>
+  }
+
+  export type InterviewUpdateManyWithWhereWithoutJobInput = {
+    where: InterviewScalarWhereInput
+    data: XOR<InterviewUpdateManyMutationInput, InterviewUncheckedUpdateManyWithoutJobInput>
   }
 
   export type UserCreateWithoutCurriculumVitaeInput = {
@@ -29038,10 +30224,13 @@ export namespace Prisma {
     lastEdu?: $Enums.LastEdu | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    location?: LocationCreateNestedOneWithoutUserInput
     JobApplication?: JobApplicationCreateNestedManyWithoutUserInput
+    Review?: ReviewCreateNestedManyWithoutUserInput
     Transaction?: TransactionCreateNestedManyWithoutUserInput
+    location?: LocationCreateNestedOneWithoutUserInput
+    UserAssessment?: UserAssessmentCreateNestedManyWithoutUserInput
     UserSubscription?: UserSubscriptionCreateNestedManyWithoutUserInput
+    Interview?: InterviewCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCurriculumVitaeInput = {
@@ -29059,8 +30248,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     JobApplication?: JobApplicationUncheckedCreateNestedManyWithoutUserInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutUserInput
     Transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    UserAssessment?: UserAssessmentUncheckedCreateNestedManyWithoutUserInput
     UserSubscription?: UserSubscriptionUncheckedCreateNestedManyWithoutUserInput
+    Interview?: InterviewUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCurriculumVitaeInput = {
@@ -29091,10 +30283,13 @@ export namespace Prisma {
     lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    location?: LocationUpdateOneWithoutUserNestedInput
     JobApplication?: JobApplicationUpdateManyWithoutUserNestedInput
+    Review?: ReviewUpdateManyWithoutUserNestedInput
     Transaction?: TransactionUpdateManyWithoutUserNestedInput
+    location?: LocationUpdateOneWithoutUserNestedInput
+    UserAssessment?: UserAssessmentUpdateManyWithoutUserNestedInput
     UserSubscription?: UserSubscriptionUpdateManyWithoutUserNestedInput
+    Interview?: InterviewUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCurriculumVitaeInput = {
@@ -29112,55 +30307,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     JobApplication?: JobApplicationUncheckedUpdateManyWithoutUserNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     Transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    UserAssessment?: UserAssessmentUncheckedUpdateManyWithoutUserNestedInput
     UserSubscription?: UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserCreateWithoutLocationInput = {
-    username: string
-    fullname?: string | null
-    email: string
-    password: string
-    isVerified?: boolean
-    avatar?: string
-    gender?: $Enums.Gender | null
-    dob?: Date | string | null
-    lastEdu?: $Enums.LastEdu | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    CurriculumVitae?: CurriculumVitaeCreateNestedManyWithoutUserInput
-    JobApplication?: JobApplicationCreateNestedManyWithoutUserInput
-    Transaction?: TransactionCreateNestedManyWithoutUserInput
-    UserSubscription?: UserSubscriptionCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutLocationInput = {
-    id?: number
-    username: string
-    fullname?: string | null
-    email: string
-    password: string
-    isVerified?: boolean
-    avatar?: string
-    gender?: $Enums.Gender | null
-    dob?: Date | string | null
-    lastEdu?: $Enums.LastEdu | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    CurriculumVitae?: CurriculumVitaeUncheckedCreateNestedManyWithoutUserInput
-    JobApplication?: JobApplicationUncheckedCreateNestedManyWithoutUserInput
-    Transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
-    UserSubscription?: UserSubscriptionUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutLocationInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutLocationInput, UserUncheckedCreateWithoutLocationInput>
-  }
-
-  export type UserCreateManyLocationInputEnvelope = {
-    data: UserCreateManyLocationInput | UserCreateManyLocationInput[]
-    skipDuplicates?: boolean
+    Interview?: InterviewUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type JobCreateWithoutLocationInput = {
@@ -29177,9 +30328,12 @@ export namespace Prisma {
     tags?: JobCreatetagsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
     admin: AdminCreateNestedOneWithoutJobInput
-    PreSelectionTest?: PreSelectionTestCreateNestedManyWithoutJobInput
     JobApplication?: JobApplicationCreateNestedManyWithoutJobInput
+    PreSelectionTest?: PreSelectionTestCreateNestedManyWithoutJobInput
+    Review?: ReviewCreateNestedManyWithoutJobInput
+    Interview?: InterviewCreateNestedManyWithoutJobInput
   }
 
   export type JobUncheckedCreateWithoutLocationInput = {
@@ -29197,8 +30351,11 @@ export namespace Prisma {
     tags?: JobCreatetagsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    PreSelectionTest?: PreSelectionTestUncheckedCreateNestedManyWithoutJobInput
+    isActive?: boolean
     JobApplication?: JobApplicationUncheckedCreateNestedManyWithoutJobInput
+    PreSelectionTest?: PreSelectionTestUncheckedCreateNestedManyWithoutJobInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutJobInput
+    Interview?: InterviewUncheckedCreateNestedManyWithoutJobInput
   }
 
   export type JobCreateOrConnectWithoutLocationInput = {
@@ -29209,6 +30366,75 @@ export namespace Prisma {
   export type JobCreateManyLocationInputEnvelope = {
     data: JobCreateManyLocationInput | JobCreateManyLocationInput[]
     skipDuplicates?: boolean
+  }
+
+  export type UserCreateWithoutLocationInput = {
+    username: string
+    fullname?: string | null
+    email: string
+    password: string
+    isVerified?: boolean
+    avatar?: string
+    gender?: $Enums.Gender | null
+    dob?: Date | string | null
+    lastEdu?: $Enums.LastEdu | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    CurriculumVitae?: CurriculumVitaeCreateNestedManyWithoutUserInput
+    JobApplication?: JobApplicationCreateNestedManyWithoutUserInput
+    Review?: ReviewCreateNestedManyWithoutUserInput
+    Transaction?: TransactionCreateNestedManyWithoutUserInput
+    UserAssessment?: UserAssessmentCreateNestedManyWithoutUserInput
+    UserSubscription?: UserSubscriptionCreateNestedManyWithoutUserInput
+    Interview?: InterviewCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutLocationInput = {
+    id?: number
+    username: string
+    fullname?: string | null
+    email: string
+    password: string
+    isVerified?: boolean
+    avatar?: string
+    gender?: $Enums.Gender | null
+    dob?: Date | string | null
+    lastEdu?: $Enums.LastEdu | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    CurriculumVitae?: CurriculumVitaeUncheckedCreateNestedManyWithoutUserInput
+    JobApplication?: JobApplicationUncheckedCreateNestedManyWithoutUserInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    Transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    UserAssessment?: UserAssessmentUncheckedCreateNestedManyWithoutUserInput
+    UserSubscription?: UserSubscriptionUncheckedCreateNestedManyWithoutUserInput
+    Interview?: InterviewUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutLocationInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutLocationInput, UserUncheckedCreateWithoutLocationInput>
+  }
+
+  export type UserCreateManyLocationInputEnvelope = {
+    data: UserCreateManyLocationInput | UserCreateManyLocationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type JobUpsertWithWhereUniqueWithoutLocationInput = {
+    where: JobWhereUniqueInput
+    update: XOR<JobUpdateWithoutLocationInput, JobUncheckedUpdateWithoutLocationInput>
+    create: XOR<JobCreateWithoutLocationInput, JobUncheckedCreateWithoutLocationInput>
+  }
+
+  export type JobUpdateWithWhereUniqueWithoutLocationInput = {
+    where: JobWhereUniqueInput
+    data: XOR<JobUpdateWithoutLocationInput, JobUncheckedUpdateWithoutLocationInput>
+  }
+
+  export type JobUpdateManyWithWhereWithoutLocationInput = {
+    where: JobScalarWhereInput
+    data: XOR<JobUpdateManyMutationInput, JobUncheckedUpdateManyWithoutLocationInput>
   }
 
   export type UserUpsertWithWhereUniqueWithoutLocationInput = {
@@ -29246,23 +30472,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
   }
 
-  export type JobUpsertWithWhereUniqueWithoutLocationInput = {
-    where: JobWhereUniqueInput
-    update: XOR<JobUpdateWithoutLocationInput, JobUncheckedUpdateWithoutLocationInput>
-    create: XOR<JobCreateWithoutLocationInput, JobUncheckedCreateWithoutLocationInput>
-  }
-
-  export type JobUpdateWithWhereUniqueWithoutLocationInput = {
-    where: JobWhereUniqueInput
-    data: XOR<JobUpdateWithoutLocationInput, JobUncheckedUpdateWithoutLocationInput>
-  }
-
-  export type JobUpdateManyWithWhereWithoutLocationInput = {
-    where: JobScalarWhereInput
-    data: XOR<JobUpdateManyMutationInput, JobUncheckedUpdateManyWithoutLocationInput>
-  }
-
   export type TransactionCreateWithoutSubscriptionInput = {
+    id?: string
     amount: number
     status: $Enums.TransactionStatus
     createdAt?: Date | string
@@ -29271,6 +30482,7 @@ export namespace Prisma {
   }
 
   export type TransactionUncheckedCreateWithoutSubscriptionInput = {
+    id?: string
     userId: number
     amount: number
     status: $Enums.TransactionStatus
@@ -29364,9 +30576,12 @@ export namespace Prisma {
     tags?: JobCreatetagsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
     admin: AdminCreateNestedOneWithoutJobInput
     location: LocationCreateNestedOneWithoutJobInput
     JobApplication?: JobApplicationCreateNestedManyWithoutJobInput
+    Review?: ReviewCreateNestedManyWithoutJobInput
+    Interview?: InterviewCreateNestedManyWithoutJobInput
   }
 
   export type JobUncheckedCreateWithoutPreSelectionTestInput = {
@@ -29385,7 +30600,10 @@ export namespace Prisma {
     locationId: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
     JobApplication?: JobApplicationUncheckedCreateNestedManyWithoutJobInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutJobInput
+    Interview?: InterviewUncheckedCreateNestedManyWithoutJobInput
   }
 
   export type JobCreateOrConnectWithoutPreSelectionTestInput = {
@@ -29441,9 +30659,12 @@ export namespace Prisma {
     tags?: JobUpdatetagsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     admin?: AdminUpdateOneRequiredWithoutJobNestedInput
     location?: LocationUpdateOneRequiredWithoutJobNestedInput
     JobApplication?: JobApplicationUpdateManyWithoutJobNestedInput
+    Review?: ReviewUpdateManyWithoutJobNestedInput
+    Interview?: InterviewUpdateManyWithoutJobNestedInput
   }
 
   export type JobUncheckedUpdateWithoutPreSelectionTestInput = {
@@ -29462,7 +30683,10 @@ export namespace Prisma {
     locationId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     JobApplication?: JobApplicationUncheckedUpdateManyWithoutJobNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutJobNestedInput
+    Interview?: InterviewUncheckedUpdateManyWithoutJobNestedInput
   }
 
   export type SelectionTestQuestionUpsertWithWhereUniqueWithoutPreSelectionTestInput = {
@@ -29538,48 +30762,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserCreateWithoutJobApplicationInput = {
-    username: string
-    fullname?: string | null
-    email: string
-    password: string
-    isVerified?: boolean
-    avatar?: string
-    gender?: $Enums.Gender | null
-    dob?: Date | string | null
-    lastEdu?: $Enums.LastEdu | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    CurriculumVitae?: CurriculumVitaeCreateNestedManyWithoutUserInput
-    location?: LocationCreateNestedOneWithoutUserInput
-    Transaction?: TransactionCreateNestedManyWithoutUserInput
-    UserSubscription?: UserSubscriptionCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutJobApplicationInput = {
-    id?: number
-    username: string
-    fullname?: string | null
-    email: string
-    password: string
-    isVerified?: boolean
-    avatar?: string
-    gender?: $Enums.Gender | null
-    dob?: Date | string | null
-    lastEdu?: $Enums.LastEdu | null
-    domicileId?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    CurriculumVitae?: CurriculumVitaeUncheckedCreateNestedManyWithoutUserInput
-    Transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
-    UserSubscription?: UserSubscriptionUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutJobApplicationInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutJobApplicationInput, UserUncheckedCreateWithoutJobApplicationInput>
-  }
-
   export type JobCreateWithoutJobApplicationInput = {
     id?: string
     title: string
@@ -29594,9 +30776,12 @@ export namespace Prisma {
     tags?: JobCreatetagsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
     admin: AdminCreateNestedOneWithoutJobInput
     location: LocationCreateNestedOneWithoutJobInput
     PreSelectionTest?: PreSelectionTestCreateNestedManyWithoutJobInput
+    Review?: ReviewCreateNestedManyWithoutJobInput
+    Interview?: InterviewCreateNestedManyWithoutJobInput
   }
 
   export type JobUncheckedCreateWithoutJobApplicationInput = {
@@ -29615,7 +30800,10 @@ export namespace Prisma {
     locationId: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
     PreSelectionTest?: PreSelectionTestUncheckedCreateNestedManyWithoutJobInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutJobInput
+    Interview?: InterviewUncheckedCreateNestedManyWithoutJobInput
   }
 
   export type JobCreateOrConnectWithoutJobApplicationInput = {
@@ -29623,52 +30811,52 @@ export namespace Prisma {
     create: XOR<JobCreateWithoutJobApplicationInput, JobUncheckedCreateWithoutJobApplicationInput>
   }
 
-  export type UserUpsertWithoutJobApplicationInput = {
-    update: XOR<UserUpdateWithoutJobApplicationInput, UserUncheckedUpdateWithoutJobApplicationInput>
+  export type UserCreateWithoutJobApplicationInput = {
+    username: string
+    fullname?: string | null
+    email: string
+    password: string
+    isVerified?: boolean
+    avatar?: string
+    gender?: $Enums.Gender | null
+    dob?: Date | string | null
+    lastEdu?: $Enums.LastEdu | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    CurriculumVitae?: CurriculumVitaeCreateNestedManyWithoutUserInput
+    Review?: ReviewCreateNestedManyWithoutUserInput
+    Transaction?: TransactionCreateNestedManyWithoutUserInput
+    location?: LocationCreateNestedOneWithoutUserInput
+    UserAssessment?: UserAssessmentCreateNestedManyWithoutUserInput
+    UserSubscription?: UserSubscriptionCreateNestedManyWithoutUserInput
+    Interview?: InterviewCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutJobApplicationInput = {
+    id?: number
+    username: string
+    fullname?: string | null
+    email: string
+    password: string
+    isVerified?: boolean
+    avatar?: string
+    gender?: $Enums.Gender | null
+    dob?: Date | string | null
+    lastEdu?: $Enums.LastEdu | null
+    domicileId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    CurriculumVitae?: CurriculumVitaeUncheckedCreateNestedManyWithoutUserInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    Transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    UserAssessment?: UserAssessmentUncheckedCreateNestedManyWithoutUserInput
+    UserSubscription?: UserSubscriptionUncheckedCreateNestedManyWithoutUserInput
+    Interview?: InterviewUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutJobApplicationInput = {
+    where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutJobApplicationInput, UserUncheckedCreateWithoutJobApplicationInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutJobApplicationInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutJobApplicationInput, UserUncheckedUpdateWithoutJobApplicationInput>
-  }
-
-  export type UserUpdateWithoutJobApplicationInput = {
-    username?: StringFieldUpdateOperationsInput | string
-    fullname?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: StringFieldUpdateOperationsInput | string
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    CurriculumVitae?: CurriculumVitaeUpdateManyWithoutUserNestedInput
-    location?: LocationUpdateOneWithoutUserNestedInput
-    Transaction?: TransactionUpdateManyWithoutUserNestedInput
-    UserSubscription?: UserSubscriptionUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutJobApplicationInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    username?: StringFieldUpdateOperationsInput | string
-    fullname?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: StringFieldUpdateOperationsInput | string
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
-    domicileId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    CurriculumVitae?: CurriculumVitaeUncheckedUpdateManyWithoutUserNestedInput
-    Transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
-    UserSubscription?: UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type JobUpsertWithoutJobApplicationInput = {
@@ -29696,9 +30884,12 @@ export namespace Prisma {
     tags?: JobUpdatetagsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     admin?: AdminUpdateOneRequiredWithoutJobNestedInput
     location?: LocationUpdateOneRequiredWithoutJobNestedInput
     PreSelectionTest?: PreSelectionTestUpdateManyWithoutJobNestedInput
+    Review?: ReviewUpdateManyWithoutJobNestedInput
+    Interview?: InterviewUpdateManyWithoutJobNestedInput
   }
 
   export type JobUncheckedUpdateWithoutJobApplicationInput = {
@@ -29717,10 +30908,67 @@ export namespace Prisma {
     locationId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     PreSelectionTest?: PreSelectionTestUncheckedUpdateManyWithoutJobNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutJobNestedInput
+    Interview?: InterviewUncheckedUpdateManyWithoutJobNestedInput
   }
 
-  export type UserCreateWithoutTransactionInput = {
+  export type UserUpsertWithoutJobApplicationInput = {
+    update: XOR<UserUpdateWithoutJobApplicationInput, UserUncheckedUpdateWithoutJobApplicationInput>
+    create: XOR<UserCreateWithoutJobApplicationInput, UserUncheckedCreateWithoutJobApplicationInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutJobApplicationInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutJobApplicationInput, UserUncheckedUpdateWithoutJobApplicationInput>
+  }
+
+  export type UserUpdateWithoutJobApplicationInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    avatar?: StringFieldUpdateOperationsInput | string
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CurriculumVitae?: CurriculumVitaeUpdateManyWithoutUserNestedInput
+    Review?: ReviewUpdateManyWithoutUserNestedInput
+    Transaction?: TransactionUpdateManyWithoutUserNestedInput
+    location?: LocationUpdateOneWithoutUserNestedInput
+    UserAssessment?: UserAssessmentUpdateManyWithoutUserNestedInput
+    UserSubscription?: UserSubscriptionUpdateManyWithoutUserNestedInput
+    Interview?: InterviewUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutJobApplicationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    avatar?: StringFieldUpdateOperationsInput | string
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
+    domicileId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CurriculumVitae?: CurriculumVitaeUncheckedUpdateManyWithoutUserNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    Transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    UserAssessment?: UserAssessmentUncheckedUpdateManyWithoutUserNestedInput
+    UserSubscription?: UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+    Interview?: InterviewUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutInterviewInput = {
     username: string
     fullname?: string | null
     email: string
@@ -29733,12 +30981,15 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     CurriculumVitae?: CurriculumVitaeCreateNestedManyWithoutUserInput
-    location?: LocationCreateNestedOneWithoutUserInput
     JobApplication?: JobApplicationCreateNestedManyWithoutUserInput
+    Review?: ReviewCreateNestedManyWithoutUserInput
+    Transaction?: TransactionCreateNestedManyWithoutUserInput
+    location?: LocationCreateNestedOneWithoutUserInput
+    UserAssessment?: UserAssessmentCreateNestedManyWithoutUserInput
     UserSubscription?: UserSubscriptionCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutTransactionInput = {
+  export type UserUncheckedCreateWithoutInterviewInput = {
     id?: number
     username: string
     fullname?: string | null
@@ -29754,12 +31005,379 @@ export namespace Prisma {
     updatedAt?: Date | string
     CurriculumVitae?: CurriculumVitaeUncheckedCreateNestedManyWithoutUserInput
     JobApplication?: JobApplicationUncheckedCreateNestedManyWithoutUserInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    Transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    UserAssessment?: UserAssessmentUncheckedCreateNestedManyWithoutUserInput
     UserSubscription?: UserSubscriptionUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutTransactionInput = {
+  export type UserCreateOrConnectWithoutInterviewInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutTransactionInput, UserUncheckedCreateWithoutTransactionInput>
+    create: XOR<UserCreateWithoutInterviewInput, UserUncheckedCreateWithoutInterviewInput>
+  }
+
+  export type JobCreateWithoutInterviewInput = {
+    id?: string
+    title: string
+    banner?: string | null
+    category: $Enums.JobCategory
+    role: string
+    salary?: number | null
+    description: string
+    endDate: Date | string
+    isPublished?: boolean
+    isTestActive?: boolean
+    tags?: JobCreatetagsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    isActive?: boolean
+    admin: AdminCreateNestedOneWithoutJobInput
+    location: LocationCreateNestedOneWithoutJobInput
+    JobApplication?: JobApplicationCreateNestedManyWithoutJobInput
+    PreSelectionTest?: PreSelectionTestCreateNestedManyWithoutJobInput
+    Review?: ReviewCreateNestedManyWithoutJobInput
+  }
+
+  export type JobUncheckedCreateWithoutInterviewInput = {
+    id?: string
+    title: string
+    adminId: number
+    banner?: string | null
+    category: $Enums.JobCategory
+    role: string
+    salary?: number | null
+    description: string
+    endDate: Date | string
+    isPublished?: boolean
+    isTestActive?: boolean
+    tags?: JobCreatetagsInput | string[]
+    locationId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    isActive?: boolean
+    JobApplication?: JobApplicationUncheckedCreateNestedManyWithoutJobInput
+    PreSelectionTest?: PreSelectionTestUncheckedCreateNestedManyWithoutJobInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutJobInput
+  }
+
+  export type JobCreateOrConnectWithoutInterviewInput = {
+    where: JobWhereUniqueInput
+    create: XOR<JobCreateWithoutInterviewInput, JobUncheckedCreateWithoutInterviewInput>
+  }
+
+  export type UserUpsertWithoutInterviewInput = {
+    update: XOR<UserUpdateWithoutInterviewInput, UserUncheckedUpdateWithoutInterviewInput>
+    create: XOR<UserCreateWithoutInterviewInput, UserUncheckedCreateWithoutInterviewInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutInterviewInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutInterviewInput, UserUncheckedUpdateWithoutInterviewInput>
+  }
+
+  export type UserUpdateWithoutInterviewInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    avatar?: StringFieldUpdateOperationsInput | string
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CurriculumVitae?: CurriculumVitaeUpdateManyWithoutUserNestedInput
+    JobApplication?: JobApplicationUpdateManyWithoutUserNestedInput
+    Review?: ReviewUpdateManyWithoutUserNestedInput
+    Transaction?: TransactionUpdateManyWithoutUserNestedInput
+    location?: LocationUpdateOneWithoutUserNestedInput
+    UserAssessment?: UserAssessmentUpdateManyWithoutUserNestedInput
+    UserSubscription?: UserSubscriptionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutInterviewInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    avatar?: StringFieldUpdateOperationsInput | string
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
+    domicileId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CurriculumVitae?: CurriculumVitaeUncheckedUpdateManyWithoutUserNestedInput
+    JobApplication?: JobApplicationUncheckedUpdateManyWithoutUserNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    Transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    UserAssessment?: UserAssessmentUncheckedUpdateManyWithoutUserNestedInput
+    UserSubscription?: UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type JobUpsertWithoutInterviewInput = {
+    update: XOR<JobUpdateWithoutInterviewInput, JobUncheckedUpdateWithoutInterviewInput>
+    create: XOR<JobCreateWithoutInterviewInput, JobUncheckedCreateWithoutInterviewInput>
+    where?: JobWhereInput
+  }
+
+  export type JobUpdateToOneWithWhereWithoutInterviewInput = {
+    where?: JobWhereInput
+    data: XOR<JobUpdateWithoutInterviewInput, JobUncheckedUpdateWithoutInterviewInput>
+  }
+
+  export type JobUpdateWithoutInterviewInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: EnumJobCategoryFieldUpdateOperationsInput | $Enums.JobCategory
+    role?: StringFieldUpdateOperationsInput | string
+    salary?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: StringFieldUpdateOperationsInput | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    isTestActive?: BoolFieldUpdateOperationsInput | boolean
+    tags?: JobUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    admin?: AdminUpdateOneRequiredWithoutJobNestedInput
+    location?: LocationUpdateOneRequiredWithoutJobNestedInput
+    JobApplication?: JobApplicationUpdateManyWithoutJobNestedInput
+    PreSelectionTest?: PreSelectionTestUpdateManyWithoutJobNestedInput
+    Review?: ReviewUpdateManyWithoutJobNestedInput
+  }
+
+  export type JobUncheckedUpdateWithoutInterviewInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    adminId?: IntFieldUpdateOperationsInput | number
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: EnumJobCategoryFieldUpdateOperationsInput | $Enums.JobCategory
+    role?: StringFieldUpdateOperationsInput | string
+    salary?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: StringFieldUpdateOperationsInput | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    isTestActive?: BoolFieldUpdateOperationsInput | boolean
+    tags?: JobUpdatetagsInput | string[]
+    locationId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    JobApplication?: JobApplicationUncheckedUpdateManyWithoutJobNestedInput
+    PreSelectionTest?: PreSelectionTestUncheckedUpdateManyWithoutJobNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutJobNestedInput
+  }
+
+  export type UserCreateWithoutReviewInput = {
+    username: string
+    fullname?: string | null
+    email: string
+    password: string
+    isVerified?: boolean
+    avatar?: string
+    gender?: $Enums.Gender | null
+    dob?: Date | string | null
+    lastEdu?: $Enums.LastEdu | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    CurriculumVitae?: CurriculumVitaeCreateNestedManyWithoutUserInput
+    JobApplication?: JobApplicationCreateNestedManyWithoutUserInput
+    Transaction?: TransactionCreateNestedManyWithoutUserInput
+    location?: LocationCreateNestedOneWithoutUserInput
+    UserAssessment?: UserAssessmentCreateNestedManyWithoutUserInput
+    UserSubscription?: UserSubscriptionCreateNestedManyWithoutUserInput
+    Interview?: InterviewCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutReviewInput = {
+    id?: number
+    username: string
+    fullname?: string | null
+    email: string
+    password: string
+    isVerified?: boolean
+    avatar?: string
+    gender?: $Enums.Gender | null
+    dob?: Date | string | null
+    lastEdu?: $Enums.LastEdu | null
+    domicileId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    CurriculumVitae?: CurriculumVitaeUncheckedCreateNestedManyWithoutUserInput
+    JobApplication?: JobApplicationUncheckedCreateNestedManyWithoutUserInput
+    Transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    UserAssessment?: UserAssessmentUncheckedCreateNestedManyWithoutUserInput
+    UserSubscription?: UserSubscriptionUncheckedCreateNestedManyWithoutUserInput
+    Interview?: InterviewUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutReviewInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReviewInput, UserUncheckedCreateWithoutReviewInput>
+  }
+
+  export type JobCreateWithoutReviewInput = {
+    id?: string
+    title: string
+    banner?: string | null
+    category: $Enums.JobCategory
+    role: string
+    salary?: number | null
+    description: string
+    endDate: Date | string
+    isPublished?: boolean
+    isTestActive?: boolean
+    tags?: JobCreatetagsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    isActive?: boolean
+    admin: AdminCreateNestedOneWithoutJobInput
+    location: LocationCreateNestedOneWithoutJobInput
+    JobApplication?: JobApplicationCreateNestedManyWithoutJobInput
+    PreSelectionTest?: PreSelectionTestCreateNestedManyWithoutJobInput
+    Interview?: InterviewCreateNestedManyWithoutJobInput
+  }
+
+  export type JobUncheckedCreateWithoutReviewInput = {
+    id?: string
+    title: string
+    adminId: number
+    banner?: string | null
+    category: $Enums.JobCategory
+    role: string
+    salary?: number | null
+    description: string
+    endDate: Date | string
+    isPublished?: boolean
+    isTestActive?: boolean
+    tags?: JobCreatetagsInput | string[]
+    locationId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    isActive?: boolean
+    JobApplication?: JobApplicationUncheckedCreateNestedManyWithoutJobInput
+    PreSelectionTest?: PreSelectionTestUncheckedCreateNestedManyWithoutJobInput
+    Interview?: InterviewUncheckedCreateNestedManyWithoutJobInput
+  }
+
+  export type JobCreateOrConnectWithoutReviewInput = {
+    where: JobWhereUniqueInput
+    create: XOR<JobCreateWithoutReviewInput, JobUncheckedCreateWithoutReviewInput>
+  }
+
+  export type UserUpsertWithoutReviewInput = {
+    update: XOR<UserUpdateWithoutReviewInput, UserUncheckedUpdateWithoutReviewInput>
+    create: XOR<UserCreateWithoutReviewInput, UserUncheckedCreateWithoutReviewInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutReviewInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReviewInput, UserUncheckedUpdateWithoutReviewInput>
+  }
+
+  export type UserUpdateWithoutReviewInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    avatar?: StringFieldUpdateOperationsInput | string
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CurriculumVitae?: CurriculumVitaeUpdateManyWithoutUserNestedInput
+    JobApplication?: JobApplicationUpdateManyWithoutUserNestedInput
+    Transaction?: TransactionUpdateManyWithoutUserNestedInput
+    location?: LocationUpdateOneWithoutUserNestedInput
+    UserAssessment?: UserAssessmentUpdateManyWithoutUserNestedInput
+    UserSubscription?: UserSubscriptionUpdateManyWithoutUserNestedInput
+    Interview?: InterviewUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutReviewInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    avatar?: StringFieldUpdateOperationsInput | string
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
+    domicileId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CurriculumVitae?: CurriculumVitaeUncheckedUpdateManyWithoutUserNestedInput
+    JobApplication?: JobApplicationUncheckedUpdateManyWithoutUserNestedInput
+    Transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    UserAssessment?: UserAssessmentUncheckedUpdateManyWithoutUserNestedInput
+    UserSubscription?: UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+    Interview?: InterviewUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type JobUpsertWithoutReviewInput = {
+    update: XOR<JobUpdateWithoutReviewInput, JobUncheckedUpdateWithoutReviewInput>
+    create: XOR<JobCreateWithoutReviewInput, JobUncheckedCreateWithoutReviewInput>
+    where?: JobWhereInput
+  }
+
+  export type JobUpdateToOneWithWhereWithoutReviewInput = {
+    where?: JobWhereInput
+    data: XOR<JobUpdateWithoutReviewInput, JobUncheckedUpdateWithoutReviewInput>
+  }
+
+  export type JobUpdateWithoutReviewInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: EnumJobCategoryFieldUpdateOperationsInput | $Enums.JobCategory
+    role?: StringFieldUpdateOperationsInput | string
+    salary?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: StringFieldUpdateOperationsInput | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    isTestActive?: BoolFieldUpdateOperationsInput | boolean
+    tags?: JobUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    admin?: AdminUpdateOneRequiredWithoutJobNestedInput
+    location?: LocationUpdateOneRequiredWithoutJobNestedInput
+    JobApplication?: JobApplicationUpdateManyWithoutJobNestedInput
+    PreSelectionTest?: PreSelectionTestUpdateManyWithoutJobNestedInput
+    Interview?: InterviewUpdateManyWithoutJobNestedInput
+  }
+
+  export type JobUncheckedUpdateWithoutReviewInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    adminId?: IntFieldUpdateOperationsInput | number
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: EnumJobCategoryFieldUpdateOperationsInput | $Enums.JobCategory
+    role?: StringFieldUpdateOperationsInput | string
+    salary?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: StringFieldUpdateOperationsInput | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    isTestActive?: BoolFieldUpdateOperationsInput | boolean
+    tags?: JobUpdatetagsInput | string[]
+    locationId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    JobApplication?: JobApplicationUncheckedUpdateManyWithoutJobNestedInput
+    PreSelectionTest?: PreSelectionTestUncheckedUpdateManyWithoutJobNestedInput
+    Interview?: InterviewUncheckedUpdateManyWithoutJobNestedInput
   }
 
   export type SubscriptionCreateWithoutTransactionInput = {
@@ -29786,52 +31404,52 @@ export namespace Prisma {
     create: XOR<SubscriptionCreateWithoutTransactionInput, SubscriptionUncheckedCreateWithoutTransactionInput>
   }
 
-  export type UserUpsertWithoutTransactionInput = {
-    update: XOR<UserUpdateWithoutTransactionInput, UserUncheckedUpdateWithoutTransactionInput>
+  export type UserCreateWithoutTransactionInput = {
+    username: string
+    fullname?: string | null
+    email: string
+    password: string
+    isVerified?: boolean
+    avatar?: string
+    gender?: $Enums.Gender | null
+    dob?: Date | string | null
+    lastEdu?: $Enums.LastEdu | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    CurriculumVitae?: CurriculumVitaeCreateNestedManyWithoutUserInput
+    JobApplication?: JobApplicationCreateNestedManyWithoutUserInput
+    Review?: ReviewCreateNestedManyWithoutUserInput
+    location?: LocationCreateNestedOneWithoutUserInput
+    UserAssessment?: UserAssessmentCreateNestedManyWithoutUserInput
+    UserSubscription?: UserSubscriptionCreateNestedManyWithoutUserInput
+    Interview?: InterviewCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutTransactionInput = {
+    id?: number
+    username: string
+    fullname?: string | null
+    email: string
+    password: string
+    isVerified?: boolean
+    avatar?: string
+    gender?: $Enums.Gender | null
+    dob?: Date | string | null
+    lastEdu?: $Enums.LastEdu | null
+    domicileId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    CurriculumVitae?: CurriculumVitaeUncheckedCreateNestedManyWithoutUserInput
+    JobApplication?: JobApplicationUncheckedCreateNestedManyWithoutUserInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    UserAssessment?: UserAssessmentUncheckedCreateNestedManyWithoutUserInput
+    UserSubscription?: UserSubscriptionUncheckedCreateNestedManyWithoutUserInput
+    Interview?: InterviewUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutTransactionInput = {
+    where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutTransactionInput, UserUncheckedCreateWithoutTransactionInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutTransactionInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutTransactionInput, UserUncheckedUpdateWithoutTransactionInput>
-  }
-
-  export type UserUpdateWithoutTransactionInput = {
-    username?: StringFieldUpdateOperationsInput | string
-    fullname?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: StringFieldUpdateOperationsInput | string
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    CurriculumVitae?: CurriculumVitaeUpdateManyWithoutUserNestedInput
-    location?: LocationUpdateOneWithoutUserNestedInput
-    JobApplication?: JobApplicationUpdateManyWithoutUserNestedInput
-    UserSubscription?: UserSubscriptionUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutTransactionInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    username?: StringFieldUpdateOperationsInput | string
-    fullname?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: StringFieldUpdateOperationsInput | string
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
-    domicileId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    CurriculumVitae?: CurriculumVitaeUncheckedUpdateManyWithoutUserNestedInput
-    JobApplication?: JobApplicationUncheckedUpdateManyWithoutUserNestedInput
-    UserSubscription?: UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SubscriptionUpsertWithoutTransactionInput = {
@@ -29864,6 +31482,60 @@ export namespace Prisma {
     UserSubscription?: UserSubscriptionUncheckedUpdateManyWithoutSubscriptionNestedInput
   }
 
+  export type UserUpsertWithoutTransactionInput = {
+    update: XOR<UserUpdateWithoutTransactionInput, UserUncheckedUpdateWithoutTransactionInput>
+    create: XOR<UserCreateWithoutTransactionInput, UserUncheckedCreateWithoutTransactionInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTransactionInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTransactionInput, UserUncheckedUpdateWithoutTransactionInput>
+  }
+
+  export type UserUpdateWithoutTransactionInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    avatar?: StringFieldUpdateOperationsInput | string
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CurriculumVitae?: CurriculumVitaeUpdateManyWithoutUserNestedInput
+    JobApplication?: JobApplicationUpdateManyWithoutUserNestedInput
+    Review?: ReviewUpdateManyWithoutUserNestedInput
+    location?: LocationUpdateOneWithoutUserNestedInput
+    UserAssessment?: UserAssessmentUpdateManyWithoutUserNestedInput
+    UserSubscription?: UserSubscriptionUpdateManyWithoutUserNestedInput
+    Interview?: InterviewUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTransactionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    avatar?: StringFieldUpdateOperationsInput | string
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
+    domicileId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CurriculumVitae?: CurriculumVitaeUncheckedUpdateManyWithoutUserNestedInput
+    JobApplication?: JobApplicationUncheckedUpdateManyWithoutUserNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    UserAssessment?: UserAssessmentUncheckedUpdateManyWithoutUserNestedInput
+    UserSubscription?: UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+    Interview?: InterviewUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type AssessmentQuestionCreateWithoutAssessmentInput = {
     question: string
     options?: AssessmentQuestionCreateoptionsInput | string[]
@@ -29884,6 +31556,33 @@ export namespace Prisma {
 
   export type AssessmentQuestionCreateManyAssessmentInputEnvelope = {
     data: AssessmentQuestionCreateManyAssessmentInput | AssessmentQuestionCreateManyAssessmentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserAssessmentCreateWithoutAssessmentInput = {
+    score?: number
+    status?: $Enums.UserAssessmentStatus | null
+    endTime: Date | string
+    certificate?: CertificateCreateNestedOneWithoutUserAssessmentInput
+    User: UserCreateNestedOneWithoutUserAssessmentInput
+  }
+
+  export type UserAssessmentUncheckedCreateWithoutAssessmentInput = {
+    id?: number
+    userId: number
+    score?: number
+    certificateId?: number | null
+    status?: $Enums.UserAssessmentStatus | null
+    endTime: Date | string
+  }
+
+  export type UserAssessmentCreateOrConnectWithoutAssessmentInput = {
+    where: UserAssessmentWhereUniqueInput
+    create: XOR<UserAssessmentCreateWithoutAssessmentInput, UserAssessmentUncheckedCreateWithoutAssessmentInput>
+  }
+
+  export type UserAssessmentCreateManyAssessmentInputEnvelope = {
+    data: UserAssessmentCreateManyAssessmentInput | UserAssessmentCreateManyAssessmentInput[]
     skipDuplicates?: boolean
   }
 
@@ -29914,6 +31613,22 @@ export namespace Prisma {
     correctAnswer?: IntFilter<"AssessmentQuestion"> | number
   }
 
+  export type UserAssessmentUpsertWithWhereUniqueWithoutAssessmentInput = {
+    where: UserAssessmentWhereUniqueInput
+    update: XOR<UserAssessmentUpdateWithoutAssessmentInput, UserAssessmentUncheckedUpdateWithoutAssessmentInput>
+    create: XOR<UserAssessmentCreateWithoutAssessmentInput, UserAssessmentUncheckedCreateWithoutAssessmentInput>
+  }
+
+  export type UserAssessmentUpdateWithWhereUniqueWithoutAssessmentInput = {
+    where: UserAssessmentWhereUniqueInput
+    data: XOR<UserAssessmentUpdateWithoutAssessmentInput, UserAssessmentUncheckedUpdateWithoutAssessmentInput>
+  }
+
+  export type UserAssessmentUpdateManyWithWhereWithoutAssessmentInput = {
+    where: UserAssessmentScalarWhereInput
+    data: XOR<UserAssessmentUpdateManyMutationInput, UserAssessmentUncheckedUpdateManyWithoutAssessmentInput>
+  }
+
   export type CertificateCreateWithoutUserAssessmentInput = {
     CertificateUrl: string
     badgeName: string
@@ -29932,6 +31647,76 @@ export namespace Prisma {
   export type CertificateCreateOrConnectWithoutUserAssessmentInput = {
     where: CertificateWhereUniqueInput
     create: XOR<CertificateCreateWithoutUserAssessmentInput, CertificateUncheckedCreateWithoutUserAssessmentInput>
+  }
+
+  export type UserCreateWithoutUserAssessmentInput = {
+    username: string
+    fullname?: string | null
+    email: string
+    password: string
+    isVerified?: boolean
+    avatar?: string
+    gender?: $Enums.Gender | null
+    dob?: Date | string | null
+    lastEdu?: $Enums.LastEdu | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    CurriculumVitae?: CurriculumVitaeCreateNestedManyWithoutUserInput
+    JobApplication?: JobApplicationCreateNestedManyWithoutUserInput
+    Review?: ReviewCreateNestedManyWithoutUserInput
+    Transaction?: TransactionCreateNestedManyWithoutUserInput
+    location?: LocationCreateNestedOneWithoutUserInput
+    UserSubscription?: UserSubscriptionCreateNestedManyWithoutUserInput
+    Interview?: InterviewCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutUserAssessmentInput = {
+    id?: number
+    username: string
+    fullname?: string | null
+    email: string
+    password: string
+    isVerified?: boolean
+    avatar?: string
+    gender?: $Enums.Gender | null
+    dob?: Date | string | null
+    lastEdu?: $Enums.LastEdu | null
+    domicileId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    CurriculumVitae?: CurriculumVitaeUncheckedCreateNestedManyWithoutUserInput
+    JobApplication?: JobApplicationUncheckedCreateNestedManyWithoutUserInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    Transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    UserSubscription?: UserSubscriptionUncheckedCreateNestedManyWithoutUserInput
+    Interview?: InterviewUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutUserAssessmentInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUserAssessmentInput, UserUncheckedCreateWithoutUserAssessmentInput>
+  }
+
+  export type AssessmentCreateWithoutUserAssessmentInput = {
+    title: string
+    description: string
+    isActive?: boolean
+    createdAt?: Date | string
+    AssessmentQuestion?: AssessmentQuestionCreateNestedManyWithoutAssessmentInput
+  }
+
+  export type AssessmentUncheckedCreateWithoutUserAssessmentInput = {
+    id?: number
+    title: string
+    description: string
+    isActive?: boolean
+    createdAt?: Date | string
+    AssessmentQuestion?: AssessmentQuestionUncheckedCreateNestedManyWithoutAssessmentInput
+  }
+
+  export type AssessmentCreateOrConnectWithoutUserAssessmentInput = {
+    where: AssessmentWhereUniqueInput
+    create: XOR<AssessmentCreateWithoutUserAssessmentInput, AssessmentUncheckedCreateWithoutUserAssessmentInput>
   }
 
   export type CertificateUpsertWithoutUserAssessmentInput = {
@@ -29960,17 +31745,103 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UserUpsertWithoutUserAssessmentInput = {
+    update: XOR<UserUpdateWithoutUserAssessmentInput, UserUncheckedUpdateWithoutUserAssessmentInput>
+    create: XOR<UserCreateWithoutUserAssessmentInput, UserUncheckedCreateWithoutUserAssessmentInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUserAssessmentInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUserAssessmentInput, UserUncheckedUpdateWithoutUserAssessmentInput>
+  }
+
+  export type UserUpdateWithoutUserAssessmentInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    avatar?: StringFieldUpdateOperationsInput | string
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CurriculumVitae?: CurriculumVitaeUpdateManyWithoutUserNestedInput
+    JobApplication?: JobApplicationUpdateManyWithoutUserNestedInput
+    Review?: ReviewUpdateManyWithoutUserNestedInput
+    Transaction?: TransactionUpdateManyWithoutUserNestedInput
+    location?: LocationUpdateOneWithoutUserNestedInput
+    UserSubscription?: UserSubscriptionUpdateManyWithoutUserNestedInput
+    Interview?: InterviewUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUserAssessmentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    avatar?: StringFieldUpdateOperationsInput | string
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
+    domicileId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CurriculumVitae?: CurriculumVitaeUncheckedUpdateManyWithoutUserNestedInput
+    JobApplication?: JobApplicationUncheckedUpdateManyWithoutUserNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    Transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    UserSubscription?: UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+    Interview?: InterviewUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type AssessmentUpsertWithoutUserAssessmentInput = {
+    update: XOR<AssessmentUpdateWithoutUserAssessmentInput, AssessmentUncheckedUpdateWithoutUserAssessmentInput>
+    create: XOR<AssessmentCreateWithoutUserAssessmentInput, AssessmentUncheckedCreateWithoutUserAssessmentInput>
+    where?: AssessmentWhereInput
+  }
+
+  export type AssessmentUpdateToOneWithWhereWithoutUserAssessmentInput = {
+    where?: AssessmentWhereInput
+    data: XOR<AssessmentUpdateWithoutUserAssessmentInput, AssessmentUncheckedUpdateWithoutUserAssessmentInput>
+  }
+
+  export type AssessmentUpdateWithoutUserAssessmentInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    AssessmentQuestion?: AssessmentQuestionUpdateManyWithoutAssessmentNestedInput
+  }
+
+  export type AssessmentUncheckedUpdateWithoutUserAssessmentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    AssessmentQuestion?: AssessmentQuestionUncheckedUpdateManyWithoutAssessmentNestedInput
+  }
+
   export type AssessmentCreateWithoutAssessmentQuestionInput = {
     title: string
     description: string
+    isActive?: boolean
     createdAt?: Date | string
+    UserAssessment?: UserAssessmentCreateNestedManyWithoutAssessmentInput
   }
 
   export type AssessmentUncheckedCreateWithoutAssessmentQuestionInput = {
     id?: number
     title: string
     description: string
+    isActive?: boolean
     createdAt?: Date | string
+    UserAssessment?: UserAssessmentUncheckedCreateNestedManyWithoutAssessmentInput
   }
 
   export type AssessmentCreateOrConnectWithoutAssessmentQuestionInput = {
@@ -29992,25 +31863,30 @@ export namespace Prisma {
   export type AssessmentUpdateWithoutAssessmentQuestionInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UserAssessment?: UserAssessmentUpdateManyWithoutAssessmentNestedInput
   }
 
   export type AssessmentUncheckedUpdateWithoutAssessmentQuestionInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UserAssessment?: UserAssessmentUncheckedUpdateManyWithoutAssessmentNestedInput
   }
 
   export type UserAssessmentCreateWithoutCertificateInput = {
-    userId: number
-    assessmentId: number
     score?: number
     status?: $Enums.UserAssessmentStatus | null
     endTime: Date | string
+    User: UserCreateNestedOneWithoutUserAssessmentInput
+    assessment: AssessmentCreateNestedOneWithoutUserAssessmentInput
   }
 
   export type UserAssessmentUncheckedCreateWithoutCertificateInput = {
+    id?: number
     userId: number
     assessmentId: number
     score?: number
@@ -30044,60 +31920,6 @@ export namespace Prisma {
     data: XOR<UserAssessmentUpdateManyMutationInput, UserAssessmentUncheckedUpdateManyWithoutCertificateInput>
   }
 
-  export type UserAssessmentScalarWhereInput = {
-    AND?: UserAssessmentScalarWhereInput | UserAssessmentScalarWhereInput[]
-    OR?: UserAssessmentScalarWhereInput[]
-    NOT?: UserAssessmentScalarWhereInput | UserAssessmentScalarWhereInput[]
-    userId?: IntFilter<"UserAssessment"> | number
-    assessmentId?: IntFilter<"UserAssessment"> | number
-    score?: IntFilter<"UserAssessment"> | number
-    certificateId?: IntFilter<"UserAssessment"> | number
-    status?: EnumUserAssessmentStatusNullableFilter<"UserAssessment"> | $Enums.UserAssessmentStatus | null
-    endTime?: DateTimeFilter<"UserAssessment"> | Date | string
-  }
-
-  export type UserCreateWithoutUserSubscriptionInput = {
-    username: string
-    fullname?: string | null
-    email: string
-    password: string
-    isVerified?: boolean
-    avatar?: string
-    gender?: $Enums.Gender | null
-    dob?: Date | string | null
-    lastEdu?: $Enums.LastEdu | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    CurriculumVitae?: CurriculumVitaeCreateNestedManyWithoutUserInput
-    location?: LocationCreateNestedOneWithoutUserInput
-    JobApplication?: JobApplicationCreateNestedManyWithoutUserInput
-    Transaction?: TransactionCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutUserSubscriptionInput = {
-    id?: number
-    username: string
-    fullname?: string | null
-    email: string
-    password: string
-    isVerified?: boolean
-    avatar?: string
-    gender?: $Enums.Gender | null
-    dob?: Date | string | null
-    lastEdu?: $Enums.LastEdu | null
-    domicileId?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    CurriculumVitae?: CurriculumVitaeUncheckedCreateNestedManyWithoutUserInput
-    JobApplication?: JobApplicationUncheckedCreateNestedManyWithoutUserInput
-    Transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutUserSubscriptionInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutUserSubscriptionInput, UserUncheckedCreateWithoutUserSubscriptionInput>
-  }
-
   export type SubscriptionCreateWithoutUserSubscriptionInput = {
     category: $Enums.SubscriptionCategory
     price: number
@@ -30122,52 +31944,52 @@ export namespace Prisma {
     create: XOR<SubscriptionCreateWithoutUserSubscriptionInput, SubscriptionUncheckedCreateWithoutUserSubscriptionInput>
   }
 
-  export type UserUpsertWithoutUserSubscriptionInput = {
-    update: XOR<UserUpdateWithoutUserSubscriptionInput, UserUncheckedUpdateWithoutUserSubscriptionInput>
+  export type UserCreateWithoutUserSubscriptionInput = {
+    username: string
+    fullname?: string | null
+    email: string
+    password: string
+    isVerified?: boolean
+    avatar?: string
+    gender?: $Enums.Gender | null
+    dob?: Date | string | null
+    lastEdu?: $Enums.LastEdu | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    CurriculumVitae?: CurriculumVitaeCreateNestedManyWithoutUserInput
+    JobApplication?: JobApplicationCreateNestedManyWithoutUserInput
+    Review?: ReviewCreateNestedManyWithoutUserInput
+    Transaction?: TransactionCreateNestedManyWithoutUserInput
+    location?: LocationCreateNestedOneWithoutUserInput
+    UserAssessment?: UserAssessmentCreateNestedManyWithoutUserInput
+    Interview?: InterviewCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutUserSubscriptionInput = {
+    id?: number
+    username: string
+    fullname?: string | null
+    email: string
+    password: string
+    isVerified?: boolean
+    avatar?: string
+    gender?: $Enums.Gender | null
+    dob?: Date | string | null
+    lastEdu?: $Enums.LastEdu | null
+    domicileId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    CurriculumVitae?: CurriculumVitaeUncheckedCreateNestedManyWithoutUserInput
+    JobApplication?: JobApplicationUncheckedCreateNestedManyWithoutUserInput
+    Review?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    Transaction?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    UserAssessment?: UserAssessmentUncheckedCreateNestedManyWithoutUserInput
+    Interview?: InterviewUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutUserSubscriptionInput = {
+    where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutUserSubscriptionInput, UserUncheckedCreateWithoutUserSubscriptionInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutUserSubscriptionInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutUserSubscriptionInput, UserUncheckedUpdateWithoutUserSubscriptionInput>
-  }
-
-  export type UserUpdateWithoutUserSubscriptionInput = {
-    username?: StringFieldUpdateOperationsInput | string
-    fullname?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: StringFieldUpdateOperationsInput | string
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    CurriculumVitae?: CurriculumVitaeUpdateManyWithoutUserNestedInput
-    location?: LocationUpdateOneWithoutUserNestedInput
-    JobApplication?: JobApplicationUpdateManyWithoutUserNestedInput
-    Transaction?: TransactionUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutUserSubscriptionInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    username?: StringFieldUpdateOperationsInput | string
-    fullname?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: StringFieldUpdateOperationsInput | string
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
-    domicileId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    CurriculumVitae?: CurriculumVitaeUncheckedUpdateManyWithoutUserNestedInput
-    JobApplication?: JobApplicationUncheckedUpdateManyWithoutUserNestedInput
-    Transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SubscriptionUpsertWithoutUserSubscriptionInput = {
@@ -30200,6 +32022,60 @@ export namespace Prisma {
     Transaction?: TransactionUncheckedUpdateManyWithoutSubscriptionNestedInput
   }
 
+  export type UserUpsertWithoutUserSubscriptionInput = {
+    update: XOR<UserUpdateWithoutUserSubscriptionInput, UserUncheckedUpdateWithoutUserSubscriptionInput>
+    create: XOR<UserCreateWithoutUserSubscriptionInput, UserUncheckedCreateWithoutUserSubscriptionInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUserSubscriptionInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUserSubscriptionInput, UserUncheckedUpdateWithoutUserSubscriptionInput>
+  }
+
+  export type UserUpdateWithoutUserSubscriptionInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    avatar?: StringFieldUpdateOperationsInput | string
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CurriculumVitae?: CurriculumVitaeUpdateManyWithoutUserNestedInput
+    JobApplication?: JobApplicationUpdateManyWithoutUserNestedInput
+    Review?: ReviewUpdateManyWithoutUserNestedInput
+    Transaction?: TransactionUpdateManyWithoutUserNestedInput
+    location?: LocationUpdateOneWithoutUserNestedInput
+    UserAssessment?: UserAssessmentUpdateManyWithoutUserNestedInput
+    Interview?: InterviewUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUserSubscriptionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    avatar?: StringFieldUpdateOperationsInput | string
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
+    domicileId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CurriculumVitae?: CurriculumVitaeUncheckedUpdateManyWithoutUserNestedInput
+    JobApplication?: JobApplicationUncheckedUpdateManyWithoutUserNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    Transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    UserAssessment?: UserAssessmentUncheckedUpdateManyWithoutUserNestedInput
+    Interview?: InterviewUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type CurriculumVitaeCreateManyUserInput = {
     id?: number
     summary: string
@@ -30221,12 +32097,33 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type ReviewCreateManyUserInput = {
+    jobId: string
+    review: string
+    CultureRating: number
+    balanceRating: number
+    facilityRating: number
+    careerRating: number
+    salary: number
+    createdAt?: Date | string
+  }
+
   export type TransactionCreateManyUserInput = {
+    id?: string
     subscriptionId: number
     amount: number
     status: $Enums.TransactionStatus
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type UserAssessmentCreateManyUserInput = {
+    id?: number
+    assessmentId: number
+    score?: number
+    certificateId?: number | null
+    status?: $Enums.UserAssessmentStatus | null
+    endTime: Date | string
   }
 
   export type UserSubscriptionCreateManyUserInput = {
@@ -30235,6 +32132,13 @@ export namespace Prisma {
     endDate: Date | string
     isActive?: boolean
     assessmentCount?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InterviewCreateManyUserInput = {
+    jobId: string
+    startTime: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -30301,7 +32205,41 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ReviewUpdateWithoutUserInput = {
+    review?: StringFieldUpdateOperationsInput | string
+    CultureRating?: IntFieldUpdateOperationsInput | number
+    balanceRating?: IntFieldUpdateOperationsInput | number
+    facilityRating?: IntFieldUpdateOperationsInput | number
+    careerRating?: IntFieldUpdateOperationsInput | number
+    salary?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    job?: JobUpdateOneRequiredWithoutReviewNestedInput
+  }
+
+  export type ReviewUncheckedUpdateWithoutUserInput = {
+    jobId?: StringFieldUpdateOperationsInput | string
+    review?: StringFieldUpdateOperationsInput | string
+    CultureRating?: IntFieldUpdateOperationsInput | number
+    balanceRating?: IntFieldUpdateOperationsInput | number
+    facilityRating?: IntFieldUpdateOperationsInput | number
+    careerRating?: IntFieldUpdateOperationsInput | number
+    salary?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewUncheckedUpdateManyWithoutUserInput = {
+    jobId?: StringFieldUpdateOperationsInput | string
+    review?: StringFieldUpdateOperationsInput | string
+    CultureRating?: IntFieldUpdateOperationsInput | number
+    balanceRating?: IntFieldUpdateOperationsInput | number
+    facilityRating?: IntFieldUpdateOperationsInput | number
+    careerRating?: IntFieldUpdateOperationsInput | number
+    salary?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type TransactionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
     status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30310,6 +32248,7 @@ export namespace Prisma {
   }
 
   export type TransactionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
     subscriptionId?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
     status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
@@ -30318,11 +32257,38 @@ export namespace Prisma {
   }
 
   export type TransactionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
     subscriptionId?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
     status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserAssessmentUpdateWithoutUserInput = {
+    score?: IntFieldUpdateOperationsInput | number
+    status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificate?: CertificateUpdateOneWithoutUserAssessmentNestedInput
+    assessment?: AssessmentUpdateOneRequiredWithoutUserAssessmentNestedInput
+  }
+
+  export type UserAssessmentUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    assessmentId?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    certificateId?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserAssessmentUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    assessmentId?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    certificateId?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserSubscriptionUpdateWithoutUserInput = {
@@ -30355,6 +32321,27 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type InterviewUpdateWithoutUserInput = {
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    job?: JobUpdateOneRequiredWithoutInterviewNestedInput
+  }
+
+  export type InterviewUncheckedUpdateWithoutUserInput = {
+    jobId?: StringFieldUpdateOperationsInput | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InterviewUncheckedUpdateManyWithoutUserInput = {
+    jobId?: StringFieldUpdateOperationsInput | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type JobCreateManyAdminInput = {
     id?: string
     title: string
@@ -30370,6 +32357,7 @@ export namespace Prisma {
     locationId: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
   }
 
   export type JobUpdateWithoutAdminInput = {
@@ -30386,9 +32374,12 @@ export namespace Prisma {
     tags?: JobUpdatetagsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     location?: LocationUpdateOneRequiredWithoutJobNestedInput
-    PreSelectionTest?: PreSelectionTestUpdateManyWithoutJobNestedInput
     JobApplication?: JobApplicationUpdateManyWithoutJobNestedInput
+    PreSelectionTest?: PreSelectionTestUpdateManyWithoutJobNestedInput
+    Review?: ReviewUpdateManyWithoutJobNestedInput
+    Interview?: InterviewUpdateManyWithoutJobNestedInput
   }
 
   export type JobUncheckedUpdateWithoutAdminInput = {
@@ -30406,8 +32397,11 @@ export namespace Prisma {
     locationId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    PreSelectionTest?: PreSelectionTestUncheckedUpdateManyWithoutJobNestedInput
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     JobApplication?: JobApplicationUncheckedUpdateManyWithoutJobNestedInput
+    PreSelectionTest?: PreSelectionTestUncheckedUpdateManyWithoutJobNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutJobNestedInput
+    Interview?: InterviewUncheckedUpdateManyWithoutJobNestedInput
   }
 
   export type JobUncheckedUpdateManyWithoutAdminInput = {
@@ -30425,13 +32419,7 @@ export namespace Prisma {
     locationId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PreSelectionTestCreateManyJobInput = {
-    id?: number
-    title: string
-    description: string
-    createdAt?: Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type JobApplicationCreateManyJobInput = {
@@ -30445,26 +32433,29 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
-  export type PreSelectionTestUpdateWithoutJobInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    SelectionTestQuestion?: SelectionTestQuestionUpdateManyWithoutPreSelectionTestNestedInput
+  export type PreSelectionTestCreateManyJobInput = {
+    id?: number
+    title: string
+    description: string
+    createdAt?: Date | string
   }
 
-  export type PreSelectionTestUncheckedUpdateWithoutJobInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    SelectionTestQuestion?: SelectionTestQuestionUncheckedUpdateManyWithoutPreSelectionTestNestedInput
+  export type ReviewCreateManyJobInput = {
+    userId: number
+    review: string
+    CultureRating: number
+    balanceRating: number
+    facilityRating: number
+    careerRating: number
+    salary: number
+    createdAt?: Date | string
   }
 
-  export type PreSelectionTestUncheckedUpdateManyWithoutJobInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type InterviewCreateManyJobInput = {
+    userId: number
+    startTime: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type JobApplicationUpdateWithoutJobInput = {
@@ -30500,19 +32491,80 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserCreateManyLocationInput = {
-    id?: number
-    username: string
-    fullname?: string | null
-    email: string
-    password: string
-    isVerified?: boolean
-    avatar?: string
-    gender?: $Enums.Gender | null
-    dob?: Date | string | null
-    lastEdu?: $Enums.LastEdu | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type PreSelectionTestUpdateWithoutJobInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    SelectionTestQuestion?: SelectionTestQuestionUpdateManyWithoutPreSelectionTestNestedInput
+  }
+
+  export type PreSelectionTestUncheckedUpdateWithoutJobInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    SelectionTestQuestion?: SelectionTestQuestionUncheckedUpdateManyWithoutPreSelectionTestNestedInput
+  }
+
+  export type PreSelectionTestUncheckedUpdateManyWithoutJobInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewUpdateWithoutJobInput = {
+    review?: StringFieldUpdateOperationsInput | string
+    CultureRating?: IntFieldUpdateOperationsInput | number
+    balanceRating?: IntFieldUpdateOperationsInput | number
+    facilityRating?: IntFieldUpdateOperationsInput | number
+    careerRating?: IntFieldUpdateOperationsInput | number
+    salary?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutReviewNestedInput
+  }
+
+  export type ReviewUncheckedUpdateWithoutJobInput = {
+    userId?: IntFieldUpdateOperationsInput | number
+    review?: StringFieldUpdateOperationsInput | string
+    CultureRating?: IntFieldUpdateOperationsInput | number
+    balanceRating?: IntFieldUpdateOperationsInput | number
+    facilityRating?: IntFieldUpdateOperationsInput | number
+    careerRating?: IntFieldUpdateOperationsInput | number
+    salary?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewUncheckedUpdateManyWithoutJobInput = {
+    userId?: IntFieldUpdateOperationsInput | number
+    review?: StringFieldUpdateOperationsInput | string
+    CultureRating?: IntFieldUpdateOperationsInput | number
+    balanceRating?: IntFieldUpdateOperationsInput | number
+    facilityRating?: IntFieldUpdateOperationsInput | number
+    careerRating?: IntFieldUpdateOperationsInput | number
+    salary?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InterviewUpdateWithoutJobInput = {
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutInterviewNestedInput
+  }
+
+  export type InterviewUncheckedUpdateWithoutJobInput = {
+    userId?: IntFieldUpdateOperationsInput | number
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InterviewUncheckedUpdateManyWithoutJobInput = {
+    userId?: IntFieldUpdateOperationsInput | number
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type JobCreateManyLocationInput = {
@@ -30530,58 +32582,22 @@ export namespace Prisma {
     tags?: JobCreatetagsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
+    isActive?: boolean
   }
 
-  export type UserUpdateWithoutLocationInput = {
-    username?: StringFieldUpdateOperationsInput | string
-    fullname?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: StringFieldUpdateOperationsInput | string
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    CurriculumVitae?: CurriculumVitaeUpdateManyWithoutUserNestedInput
-    JobApplication?: JobApplicationUpdateManyWithoutUserNestedInput
-    Transaction?: TransactionUpdateManyWithoutUserNestedInput
-    UserSubscription?: UserSubscriptionUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutLocationInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    username?: StringFieldUpdateOperationsInput | string
-    fullname?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: StringFieldUpdateOperationsInput | string
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    CurriculumVitae?: CurriculumVitaeUncheckedUpdateManyWithoutUserNestedInput
-    JobApplication?: JobApplicationUncheckedUpdateManyWithoutUserNestedInput
-    Transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
-    UserSubscription?: UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateManyWithoutLocationInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    username?: StringFieldUpdateOperationsInput | string
-    fullname?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    avatar?: StringFieldUpdateOperationsInput | string
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type UserCreateManyLocationInput = {
+    id?: number
+    username: string
+    fullname?: string | null
+    email: string
+    password: string
+    isVerified?: boolean
+    avatar?: string
+    gender?: $Enums.Gender | null
+    dob?: Date | string | null
+    lastEdu?: $Enums.LastEdu | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type JobUpdateWithoutLocationInput = {
@@ -30598,9 +32614,12 @@ export namespace Prisma {
     tags?: JobUpdatetagsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     admin?: AdminUpdateOneRequiredWithoutJobNestedInput
-    PreSelectionTest?: PreSelectionTestUpdateManyWithoutJobNestedInput
     JobApplication?: JobApplicationUpdateManyWithoutJobNestedInput
+    PreSelectionTest?: PreSelectionTestUpdateManyWithoutJobNestedInput
+    Review?: ReviewUpdateManyWithoutJobNestedInput
+    Interview?: InterviewUpdateManyWithoutJobNestedInput
   }
 
   export type JobUncheckedUpdateWithoutLocationInput = {
@@ -30618,8 +32637,11 @@ export namespace Prisma {
     tags?: JobUpdatetagsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    PreSelectionTest?: PreSelectionTestUncheckedUpdateManyWithoutJobNestedInput
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     JobApplication?: JobApplicationUncheckedUpdateManyWithoutJobNestedInput
+    PreSelectionTest?: PreSelectionTestUncheckedUpdateManyWithoutJobNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutJobNestedInput
+    Interview?: InterviewUncheckedUpdateManyWithoutJobNestedInput
   }
 
   export type JobUncheckedUpdateManyWithoutLocationInput = {
@@ -30637,9 +32659,69 @@ export namespace Prisma {
     tags?: JobUpdatetagsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type UserUpdateWithoutLocationInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    avatar?: StringFieldUpdateOperationsInput | string
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CurriculumVitae?: CurriculumVitaeUpdateManyWithoutUserNestedInput
+    JobApplication?: JobApplicationUpdateManyWithoutUserNestedInput
+    Review?: ReviewUpdateManyWithoutUserNestedInput
+    Transaction?: TransactionUpdateManyWithoutUserNestedInput
+    UserAssessment?: UserAssessmentUpdateManyWithoutUserNestedInput
+    UserSubscription?: UserSubscriptionUpdateManyWithoutUserNestedInput
+    Interview?: InterviewUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutLocationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    avatar?: StringFieldUpdateOperationsInput | string
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CurriculumVitae?: CurriculumVitaeUncheckedUpdateManyWithoutUserNestedInput
+    JobApplication?: JobApplicationUncheckedUpdateManyWithoutUserNestedInput
+    Review?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    Transaction?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    UserAssessment?: UserAssessmentUncheckedUpdateManyWithoutUserNestedInput
+    UserSubscription?: UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+    Interview?: InterviewUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateManyWithoutLocationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    avatar?: StringFieldUpdateOperationsInput | string
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastEdu?: NullableEnumLastEduFieldUpdateOperationsInput | $Enums.LastEdu | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TransactionCreateManySubscriptionInput = {
+    id?: string
     userId: number
     amount: number
     status: $Enums.TransactionStatus
@@ -30658,6 +32740,7 @@ export namespace Prisma {
   }
 
   export type TransactionUpdateWithoutSubscriptionInput = {
+    id?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
     status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30666,6 +32749,7 @@ export namespace Prisma {
   }
 
   export type TransactionUncheckedUpdateWithoutSubscriptionInput = {
+    id?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
     status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
@@ -30674,6 +32758,7 @@ export namespace Prisma {
   }
 
   export type TransactionUncheckedUpdateManyWithoutSubscriptionInput = {
+    id?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
     status?: EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
@@ -30745,6 +32830,15 @@ export namespace Prisma {
     correctAnswer: number
   }
 
+  export type UserAssessmentCreateManyAssessmentInput = {
+    id?: number
+    userId: number
+    score?: number
+    certificateId?: number | null
+    status?: $Enums.UserAssessmentStatus | null
+    endTime: Date | string
+  }
+
   export type AssessmentQuestionUpdateWithoutAssessmentInput = {
     question?: StringFieldUpdateOperationsInput | string
     options?: AssessmentQuestionUpdateoptionsInput | string[]
@@ -30765,7 +32859,34 @@ export namespace Prisma {
     correctAnswer?: IntFieldUpdateOperationsInput | number
   }
 
+  export type UserAssessmentUpdateWithoutAssessmentInput = {
+    score?: IntFieldUpdateOperationsInput | number
+    status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificate?: CertificateUpdateOneWithoutUserAssessmentNestedInput
+    User?: UserUpdateOneRequiredWithoutUserAssessmentNestedInput
+  }
+
+  export type UserAssessmentUncheckedUpdateWithoutAssessmentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    certificateId?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserAssessmentUncheckedUpdateManyWithoutAssessmentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    certificateId?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserAssessmentCreateManyCertificateInput = {
+    id?: number
     userId: number
     assessmentId: number
     score?: number
@@ -30774,14 +32895,15 @@ export namespace Prisma {
   }
 
   export type UserAssessmentUpdateWithoutCertificateInput = {
-    userId?: IntFieldUpdateOperationsInput | number
-    assessmentId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
     status?: NullableEnumUserAssessmentStatusFieldUpdateOperationsInput | $Enums.UserAssessmentStatus | null
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    User?: UserUpdateOneRequiredWithoutUserAssessmentNestedInput
+    assessment?: AssessmentUpdateOneRequiredWithoutUserAssessmentNestedInput
   }
 
   export type UserAssessmentUncheckedUpdateWithoutCertificateInput = {
+    id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     assessmentId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
@@ -30790,6 +32912,7 @@ export namespace Prisma {
   }
 
   export type UserAssessmentUncheckedUpdateManyWithoutCertificateInput = {
+    id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     assessmentId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
