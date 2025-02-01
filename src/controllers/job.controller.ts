@@ -9,11 +9,9 @@ export class JobController {
     try {
       const limit = 10;
       const { sort = "asc", page = "1", search } = req.query;
-
       const filter: Prisma.JobWhereInput = {
         AND: [{ adminId: 2 }, { isActive: true }],
       };
-
       if (search) {
         const isEnumValid = Object.values(JobCategory).includes(
           search as JobCategory
@@ -23,20 +21,14 @@ export class JobController {
           ...(isEnumValid ? [{ category: search as JobCategory }] : []),
         ];
       }
-
       const jobs = await prisma.job.findMany({
         where: filter,
         skip: +limit * (+page - 1),
-        select: {
-          id: true,
-          title: true,
-          category: true,
-          isPublished: true,
-          isTestActive: true,
+        include: {
+          location: { select: { city: true, province: true } },
         },
         orderBy: { createdAt: sort as Prisma.SortOrder },
       });
-
       res.status(200).send({ result: jobs });
     } catch (err) {
       console.log(err);
@@ -51,7 +43,6 @@ export class JobController {
         const { secure_url } = await cloudinaryUpload(req.file, "jobsBanner");
         req.body.banner = secure_url;
       }
-
       let location = await prisma.location.findFirst({
         where: { city: req.body.city },
       });
@@ -73,14 +64,12 @@ export class JobController {
           },
         });
       }
-
       if (req.body.salary) {
         req.body.salary = Number(req.body.salary);
       }
       req.body.tags = req.body.tags.trim().split(",");
       delete req.body.city;
       delete req.body.province;
-
       await prisma.job.create({
         data: { ...req.body, adminId, locationId: location.id },
       });
@@ -116,6 +105,41 @@ export class JobController {
 
   async jobEdit(req: Request, res: Response) {
     try {
+      if (req.file) {
+        const { secure_url } = await cloudinaryUpload(req.file, "jobsBanner");
+        req.body.banner = secure_url;
+      }
+      if (req.body.salary) {
+        req.body.salary = Number(req.body.salary);
+      }
+      if (req.body.location) {
+        let location = await prisma.location.findFirst({
+          where: { city: req.body.city },
+        });
+        if (!location) {
+          const { data } = await axios.get(
+            `https://api.opencagedata.com/geocode/v1/json?q=${req.body.city
+              .split(" ")
+              .join("+")}+${req.body.province
+              .split(" ")
+              .join("+")}&key=bcf87dd591a44c57b21a10bed03f5daa`
+          );
+          const { geometry } = data.results[0];
+          location = await prisma.location.create({
+            data: {
+              city: req.body.city,
+              province: req.body.province,
+              latitude: geometry.lat,
+              longitude: geometry.lng,
+            },
+          });
+        }
+        delete req.body.city;
+        delete req.body.province;
+      }
+      if (req.body.tags) {
+        req.body.tags = req.body.tags.trim().split(",");
+      }
       await prisma.job.update({ data: req.body, where: { id: req.params.id } });
       res.status(200).send({ message: "your job jas been edited" });
     } catch (err) {
