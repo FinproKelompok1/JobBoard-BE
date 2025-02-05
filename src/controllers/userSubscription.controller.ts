@@ -30,26 +30,4 @@ export class UserSubscriptionController {
       });
     }
   }
-  async renewUseSubscription(req: Request, res: Response) {
-    try {
-      const { subscriptionId, amount } = req.body;
-      const userId = 1;
-      const { id } = await prisma.transaction.create({
-        data: {
-          userId,
-          subscriptionId,
-          amount,
-          status: "pending",
-        },
-      });
-      res.status(201).send({
-        message: "Transaction created successfully",
-        transactionId: id,
-      });
-    } catch (error) {
-      res.status(500).send({
-        message: "Server error: Unable to create transaction.",
-      });
-    }
-  }
 }
