@@ -1,4 +1,4 @@
-declare class AnyNull extends NullTypesEnumValue {
+Ydeclare class AnyNull extends NullTypesEnumValue {
 }
 
 declare type Args<T, F extends Operation> = T extends {
