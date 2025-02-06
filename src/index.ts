@@ -16,10 +16,8 @@ app.use(express.json());
 app.use(
   cors({
     origin: process.env.BASE_URL_FE!,
-    // credentials: true,
   })
 );
-// app.use(cors());
 export const upload = multer({ storage: multer.memoryStorage() });
 
 const jobRouter = new JobRouter();
