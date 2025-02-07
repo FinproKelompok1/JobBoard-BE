@@ -2,16 +2,6 @@ import { Request, Response } from "express";
 import prisma from "../prisma";
 
 export class ScheduleController {
-  async getSchedules(req: Request, res: Response) {
-    try {
-      const schedules = await prisma.interview.findMany();
-      res.status(200).send({ result: schedules });
-    } catch (err) {
-      console.log(err);
-      res.status(400).send(err);
-    }
-  }
-
   async getApplicantSchedule(req: Request, res: Response) {
     try {
       const startTime = await prisma.interview.findFirst({
@@ -46,6 +36,23 @@ export class ScheduleController {
         data: req.body.data,
       });
       res.status(200).send({ message: "Your date has been rescheduled" });
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  }
+
+  async deleteSchedule(req: Request, res: Response) {
+    try {
+      await prisma.interview.delete({
+        where: {
+          userId_jobId: {
+            userId: Number(req.query.userId),
+            jobId: req.query.jobId as string,
+          },
+        },
+      });
+      res.status(200).send({ message: "Your schedule has been deleted" });
     } catch (err) {
       console.log(err);
       res.status(400).send(err);

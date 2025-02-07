@@ -12,12 +12,12 @@ export class ScheduleRouter {
   }
 
   private initializeRoutes() {
-    this.router.get("/", this.scheduleController.getSchedules);
     this.router.post("/", this.scheduleController.createSchedule);
     this.router.post(
       "/applicant-schedule",
       this.scheduleController.getApplicantSchedule
     );
+    this.router.delete("/delete", this.scheduleController.deleteSchedule);
   }
 
   getRoutes(): Router {
