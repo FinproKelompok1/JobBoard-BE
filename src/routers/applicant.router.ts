@@ -13,6 +13,7 @@ export class ApplicantRouter {
 
   private initializeRoutes() {
     this.router.patch("/", this.applicantController.setApplicantStatus);
+    this.router.patch("/review", this.applicantController.setRejectedReview);
     
     this.router.get("/:id", this.applicantController.getApplicants);
     this.router.get('/total/:id',this.applicantController.getTotalApplicants)

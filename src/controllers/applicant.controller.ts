@@ -73,6 +73,7 @@ export class ApplicantController {
           expectedSalary: true,
           resume: true,
           status: true,
+          rejectedReview: true,
           user: {
             select: {
               avatar: true,
@@ -122,6 +123,21 @@ export class ApplicantController {
         _count: { _all: true },
       });
       res.status(200).send({ result: total._count._all });
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  }
+
+  async setRejectedReview(req: Request, res: Response) {
+    try {
+      await prisma.jobApplication.update({
+        where: {
+          userId_jobId: { userId: req.body.userId, jobId: req.body.jobId },
+        },
+        data: { rejectedReview: req.body.rejectedReview },
+      });
+      res.status(200).send({ message: "Your review has been set" });
     } catch (err) {
       console.log(err);
       res.status(400).send(err);
