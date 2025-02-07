@@ -12,6 +12,21 @@ export class ScheduleController {
     }
   }
 
+  async getApplicantSchedule(req: Request, res: Response) {
+    try {
+      const startTime = await prisma.interview.findFirst({
+        where: {
+          AND: [{ jobId: req.body.jobId }, { userId: req.body.userId }],
+        },
+        select: { startTime: true },
+      });
+      res.status(200).send({ result: startTime });
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  }
+
   async createSchedule(req: Request, res: Response) {
     try {
       await prisma.interview.create({ data: req.body });
