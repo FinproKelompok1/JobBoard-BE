@@ -8,6 +8,7 @@ import { TransactionRouter } from "./routers/transaction.router";
 import { UserSubscriptionRouter } from "./routers/userSubscription.router";
 import "./services/subscriptionCron";
 import { CvRouter } from "./routers/cv.router";
+import { AssessmentRouter } from "./routers/assessment.router";
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ const subscriptionRouter = new SubscriptionRouter();
 const transactionRouter = new TransactionRouter();
 const userSubscriptionRouter = new UserSubscriptionRouter();
 const cvRouter = new CvRouter();
+const assessmentRouter = new AssessmentRouter();
 
 app.get("/api", (req: Request, res: Response) => {
   res.status(200).send("Connected to Talent Bridge API");
@@ -38,6 +40,7 @@ app.use("/api/subscriptions", subscriptionRouter.getRouter());
 app.use("/api/transactions", transactionRouter.getRouter());
 app.use("/api/user-subscription", userSubscriptionRouter.getRouter());
 app.use("/api/cv", cvRouter.getRouter());
+app.use("/api/assessments", assessmentRouter.getRouter());
 
 app.listen(PORT, () =>
   console.log(`Your server is running on http://localhost:${PORT}/api`)

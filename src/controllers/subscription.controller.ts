@@ -23,7 +23,13 @@ export class SubscriptionController {
   async getSubscriptions(req: Request, res: Response) {
     try {
       const subscriptions = await prisma.subscription.findMany({
-        select: { id: true, category: true, price: true, feature: true },
+        select: {
+          id: true,
+          category: true,
+          price: true,
+          feature: true,
+          UserSubscription: { select: { userId: true, isActive: true } },
+        },
       });
 
       res.status(200).send({ subscriptions });
