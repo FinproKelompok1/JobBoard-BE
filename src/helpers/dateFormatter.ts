@@ -4,3 +4,12 @@ export function dateFormatter(age: number, currentDate: Date) {
 
   return `${age}-${month}-${day}T00:00:00Z`;
 }
+
+export function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("id-ID", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+}
