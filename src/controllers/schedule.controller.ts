@@ -33,9 +33,9 @@ export class ScheduleController {
         where: {
           userId_jobId: { userId: req.body.userId, jobId: req.body.jobId },
         },
-        data: req.body.data,
+        data: { startTime: req.body.startTime },
       });
-      res.status(200).send({ message: "Your date has been rescheduled" });
+      res.status(200).send({ message: "Your interview has been rescheduled" });
     } catch (err) {
       console.log(err);
       res.status(400).send(err);

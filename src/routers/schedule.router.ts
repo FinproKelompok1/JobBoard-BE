@@ -13,6 +13,7 @@ export class ScheduleRouter {
 
   private initializeRoutes() {
     this.router.post("/", this.scheduleController.createSchedule);
+    this.router.patch("/", this.scheduleController.updateSchedule);
     this.router.post(
       "/applicant-schedule",
       this.scheduleController.getApplicantSchedule
