@@ -3,6 +3,7 @@ dotenv.config();
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import multer from "multer";
+import "./services/interviewScheduleCron";
 import { JobRouter } from "./routers/job.router";
 import { SubscriptionRouter } from "./routers/subscription.router";
 import { TransactionRouter } from "./routers/transaction.router";
