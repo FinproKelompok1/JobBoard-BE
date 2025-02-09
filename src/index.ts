@@ -10,6 +10,7 @@ import { TransactionRouter } from "./routers/transaction.router";
 import { ApplicantRouter } from "./routers/applicant.router";
 import { PreselectionRouter } from "./routers/preselection.router";
 import { ScheduleRouter } from "./routers/schedule.router";
+import { AnalyticRouter } from "./routers/analytic.router";
 
 const PORT: number = 8000;
 const app: Application = express();
@@ -27,6 +28,7 @@ const subscriptionRouter = new SubscriptionRouter();
 const transactionRouter = new TransactionRouter();
 const preselectionRouter = new PreselectionRouter();
 const scheduleRouter = new ScheduleRouter();
+const analyticRouter = new AnalyticRouter();
 
 app.get("/api", (req: Request, res: Response) => {
   res.status(200).send("Server Connected Serves API");
@@ -38,6 +40,7 @@ app.use("/api/subscriptions", subscriptionRouter.getRouter());
 app.use("/api/transactions", transactionRouter.getRouter());
 app.use("/api/preselection", preselectionRouter.getRoutes());
 app.use("/api/schedule", scheduleRouter.getRoutes());
+app.use("/api/analytics", analyticRouter.getRoutes());
 
 app.listen(PORT, () =>
   console.log(`Your server is running on http://localhost:${PORT}/api`)
