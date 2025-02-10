@@ -6,7 +6,7 @@ import { dateFormatter } from "../helpers/dateFormatter";
 export class ApplicantController {
   async getApplicants(req: Request, res: Response) {
     try {
-      const limit = 10;
+      const limit = 7;
       const {
         sort = "asc",
         page = "1",
@@ -63,8 +63,15 @@ export class ApplicantController {
         };
       }
 
+      const totalApplicants = await prisma.jobApplication.aggregate({
+        where: filter,
+        _count: { _all: true },
+      });
+      const totalPage = Math.ceil(totalApplicants._count._all / +limit);
+
       const applicants = await prisma.jobApplication.findMany({
         where: filter,
+        take: limit,
         skip: +limit * (+page - 1),
         orderBy: { createdAt: sort as Prisma.SortOrder },
         select: {
@@ -85,7 +92,7 @@ export class ApplicantController {
           },
         },
       });
-      res.status(200).send({ result: applicants });
+      res.status(200).send({ result: { page, totalPage, applicants } });
     } catch (err) {
       console.log(err);
       res.status(200).send(err);

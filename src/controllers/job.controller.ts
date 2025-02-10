@@ -7,7 +7,7 @@ import { JobCategory, Prisma } from "../../prisma/generated/client";
 export class JobController {
   async getJobs(req: Request, res: Response) {
     try {
-      const limit = 10;
+      const limit = 7;
       const { sort = "asc", page = "1", search } = req.query;
       const filter: Prisma.JobWhereInput = {
         AND: [{ adminId: 2 }, { isActive: true }],
@@ -21,15 +21,21 @@ export class JobController {
           ...(isEnumValid ? [{ category: search as JobCategory }] : []),
         ];
       }
+      const totalJobs = await prisma.job.aggregate({
+        where: filter,
+        _count: { _all: true },
+      });
+      const totalPage = Math.ceil(totalJobs._count._all / +limit);
       const jobs = await prisma.job.findMany({
         where: filter,
+        take: limit,
         skip: +limit * (+page - 1),
         include: {
           location: { select: { city: true, province: true } },
         },
         orderBy: { createdAt: sort as Prisma.SortOrder },
       });
-      res.status(200).send({ result: jobs });
+      res.status(200).send({ result: { page, totalPage, jobs } });
     } catch (err) {
       console.log(err);
       res.status(400).send(err);

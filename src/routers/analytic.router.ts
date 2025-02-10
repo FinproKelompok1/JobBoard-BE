@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { AnalyticController } from "src/controllers/analytic.controller";
+import { AnalyticController } from "../controllers/analytic.controller";
 
 export class AnalyticRouter {
   private router: Router;
@@ -12,7 +12,9 @@ export class AnalyticRouter {
   }
 
   private initializeRoutes() {
-    this.router.get("/", this.analyticController.getTotalGender);
+    this.router.get("/total-demographics", this.analyticController.getTotalDemographics);
+    this.router.get("/salary-trends", this.analyticController.getSalaryTrends);
+    this.router.get("/applicant-interest", this.analyticController.getApplicantInterest);
   }
 
   getRoutes(): Router {
