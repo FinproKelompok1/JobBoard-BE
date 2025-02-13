@@ -1,14 +1,16 @@
 import dotenv from "dotenv";
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-import { JobRouter } from "./routers/job.router";
 import multer from "multer";
+import "./services/subscriptionCron";
+import { JobRouter } from "./routers/job.router";
 import { SubscriptionRouter } from "./routers/subscription.router";
 import { TransactionRouter } from "./routers/transaction.router";
 import { UserSubscriptionRouter } from "./routers/userSubscription.router";
-import "./services/subscriptionCron";
 import { CvRouter } from "./routers/cv.router";
 import { AssessmentRouter } from "./routers/assessment.router";
+import { AssessmentQuestionRouter } from "./routers/assessmentQuestion.router";
+import { UserAssessmentRouter } from "./routers/userAssessment.router";
 
 dotenv.config();
 
@@ -30,6 +32,8 @@ const transactionRouter = new TransactionRouter();
 const userSubscriptionRouter = new UserSubscriptionRouter();
 const cvRouter = new CvRouter();
 const assessmentRouter = new AssessmentRouter();
+const assessmentQuestionRouter = new AssessmentQuestionRouter();
+const userAssessmentRouter = new UserAssessmentRouter();
 
 app.get("/api", (req: Request, res: Response) => {
   res.status(200).send("Connected to Talent Bridge API");
@@ -38,9 +42,11 @@ app.get("/api", (req: Request, res: Response) => {
 app.use("/api/jobs", jobRouter.getRoutes());
 app.use("/api/subscriptions", subscriptionRouter.getRouter());
 app.use("/api/transactions", transactionRouter.getRouter());
-app.use("/api/user-subscription", userSubscriptionRouter.getRouter());
+app.use("/api/user-subscriptions", userSubscriptionRouter.getRouter());
 app.use("/api/cv", cvRouter.getRouter());
 app.use("/api/assessments", assessmentRouter.getRouter());
+app.use("/api/assessment-questions", assessmentQuestionRouter.getRouter());
+app.use("/api/user-assessments", userAssessmentRouter.getRouter());
 
 app.listen(PORT, () =>
   console.log(`Your server is running on http://localhost:${PORT}/api`)

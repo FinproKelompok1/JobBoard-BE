@@ -18,7 +18,6 @@ cron.schedule("0 0 * * * *", async () => {
 
   try {
     const allSubs = await prisma.userSubscription.findMany();
-    console.log("All subscriptions:", allSubs);
 
     const soonExpiredSubs = await prisma.userSubscription.findMany({
       where: {

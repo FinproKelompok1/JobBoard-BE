@@ -51,7 +51,6 @@ export class AssessmentController {
 
       const assessment = await prisma.assessment.findUnique({
         where: { id: +assessmentId },
-        select: { id: true, title: true, description: true, isActive: true },
       });
 
       res.status(200).send({ assessment });
