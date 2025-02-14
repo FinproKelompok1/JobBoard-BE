@@ -10,7 +10,7 @@ export class AnalyticController {
         where: { JobApplication: { some: {} } },
       });
 
-      const age = await prisma.$queryRaw<{ age: number; total: number }[]>`
+      const ageRaw = await prisma.$queryRaw<{ age: number; total: number }[]>`
         SELECT
           EXTRACT(YEAR FROM AGE(u.dob)) AS age,
           CAST(COUNT(*) AS INT) AS total
@@ -21,6 +21,27 @@ export class AnalyticController {
         GROUP BY age
         ORDER BY age;
       `;
+      const formattedAge = [
+        { age: "<18", total: 0 },
+        { age: "18-25", total: 0 },
+        { age: "26-32", total: 0 },
+        { age: "33-40", total: 0 },
+        { age: "40<", total: 0 },
+      ];
+      for (const item of ageRaw) {
+        const { age, total } = item;
+        if (age < 18) {
+          formattedAge[0].total += total;
+        } else if (age >= 18 && age <= 25) {
+          formattedAge[1].total += total;
+        } else if (age >= 26 && age <= 32) {
+          formattedAge[2].total += total;
+        } else if (age >= 33 && age <= 40) {
+          formattedAge[3].total += total;
+        } else {
+          formattedAge[4].total += total;
+        }
+      }
 
       const location = await prisma.$queryRaw<
         { city: string; total: number }[]
@@ -37,7 +58,7 @@ export class AnalyticController {
 
       res.status(200).send({
         result: {
-          age,
+          age: formattedAge,
           gender: [
             { total: gender[0]._count._all, type: gender[0].gender },
             { total: gender[1]._count._all, type: gender[1].gender },
