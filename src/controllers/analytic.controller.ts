@@ -4,20 +4,26 @@ import prisma from "../prisma";
 export class AnalyticController {
   async getTotalDemographics(req: Request, res: Response) {
     try {
-      const gender = await prisma.user.groupBy({
-        by: ["gender"],
-        _count: { _all: true },
-        where: { JobApplication: { some: {} } },
-      });
+      const adminId = 2;
+      const gender = await prisma.$queryRaw<{ type: string; total: number }[]>`
+        SELECT u."gender" AS "type", CAST(COUNT(*) AS INT) AS total
+        FROM "JobApplication" ja
+        JOIN "User" u on ja."userId" = u."id"
+        JOIN "Job" j on ja."jobId" = j."id"
+        JOIN "Admin" a on j."adminId" = a."id"
+        WHERE a."id" = ${adminId}
+        GROUP BY "type"
+      `;
 
       const ageRaw = await prisma.$queryRaw<{ age: number; total: number }[]>`
         SELECT
           EXTRACT(YEAR FROM AGE(u.dob)) AS age,
           CAST(COUNT(*) AS INT) AS total
-        FROM "User" AS u
-        WHERE EXISTS (
-          SELECT 1 FROM "JobApplication" AS j WHERE j."userId" = u."id"
-        )
+        FROM "JobApplication" AS ja
+        JOIN "User" u on ja."userId" = u."id"
+        JOIN "Job" j on ja."jobId" = j."id"
+        JOIN "Admin" a on j."adminId" = a."id"
+        WHERE a."id" = ${adminId}
         GROUP BY age
       `;
       const formattedAge = [
@@ -46,11 +52,12 @@ export class AnalyticController {
         { city: string; total: number }[]
       >`
         SELECT l.city, CAST(COUNT(*) AS INT) AS total
-        FROM "User" u
+        FROM "JobApplication" ja
+        JOIN "Job" j on ja."jobId" = j."id"
+        JOIN "Admin" a on j."adminId" = a."id"
+        JOIN "User" u on ja."userId" = u."id"
         JOIN "Location" l ON u."domicileId" = l."id"
-        WHERE EXISTS (
-          SELECT 1 FROM "JobApplication" j WHERE j."userId" = u."id"
-        )
+        WHERE a."id" = ${adminId}
         GROUP BY l.city
       `;
 
@@ -63,19 +70,19 @@ export class AnalyticController {
       >`
         SELECT u."lastEdu" AS education, CAST(COUNT(*) AS INT) AS total
         FROM "JobApplication" ja
+        JOIN "Job" j on ja."jobId" = j."id"
         JOIN "User" u on ja."userId" = u."id"
+        JOIN "Admin" a on j."adminId" = a."id"
+        WHERE a."id" = ${adminId}
         GROUP BY u."lastEdu"
       `;
 
       res.status(200).send({
         result: {
           age: formattedAge,
-          gender: [
-            { total: gender[0]._count._all, type: gender[0].gender },
-            { total: gender[1]._count._all, type: gender[1].gender },
-          ],
+          gender,
           location,
-          education
+          education,
         },
       });
     } catch (err) {
@@ -86,12 +93,15 @@ export class AnalyticController {
 
   async getSalaryTrends(req: Request, res: Response) {
     try {
+      const adminId = 2;
       const basedOnJobRole = await prisma.$queryRaw<
         { role: string; avgSalary: number }[]
       >`
         SELECT j.role, CAST(AVG(r.salary) AS INT) AS avgSalary
         FROM "Job" j
         JOIN "Review" r ON j."id" = r."jobId"
+        JOIN "Admin" a on j."adminId" = a."id"
+        WHERE a."id" = ${adminId}
         GROUP BY j.role
       `;
 
@@ -102,6 +112,8 @@ export class AnalyticController {
         FROM "Job" j
         JOIN "Review" r ON j."id" = r."jobId"
         JOIN "Location" l ON j."locationId" = l."id"
+        JOIN "Admin" a on j."adminId" = a."id"
+        WHERE a."id" = ${adminId}
         GROUP BY l.city
       `;
 
@@ -114,6 +126,7 @@ export class AnalyticController {
 
   async getApplicantInterest(req: Request, res: Response) {
     try {
+      const adminId = 2;
       const basedOnJobCategory = await prisma.$queryRaw<
         {
           category: string;
@@ -123,12 +136,28 @@ export class AnalyticController {
         SELECT j.category, CAST(COUNT(*) AS INT) AS total
         FROM "JobApplication" ja
         JOIN "Job" j on ja."jobId" = j."id"
+        JOIN "Admin" a on j."adminId" = a."id"
+        WHERE a."id" = ${adminId}
+        GROUP BY j.category
+      `;
+
+      const basedOnExpectedSalary = await prisma.$queryRaw<
+        {
+          category: string;
+          avgSalary: number;
+        }[]
+      >`
+        SELECT j.category, CAST(AVG(ja."expectedSalary") AS INT) AS avgSalary
+        FROM "JobApplication" ja
+        JOIN "Job" j on ja."jobId" = j."id"
+        JOIN "Admin" a on j."adminId" = a."id"
+        WHERE a."id" = ${adminId}
         GROUP BY j.category
       `;
 
       res
         .status(200)
-        .send({ result: { basedOnJobCategory } });
+        .send({ result: { basedOnJobCategory, basedOnExpectedSalary } });
     } catch (err) {
       console.log(err);
       res.status(400).send(err);
