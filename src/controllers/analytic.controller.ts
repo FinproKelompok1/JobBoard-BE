@@ -19,7 +19,6 @@ export class AnalyticController {
           SELECT 1 FROM "JobApplication" AS j WHERE j."userId" = u."id"
         )
         GROUP BY age
-        ORDER BY age;
       `;
       const formattedAge = [
         { age: "<18", total: 0 },
@@ -53,7 +52,19 @@ export class AnalyticController {
           SELECT 1 FROM "JobApplication" j WHERE j."userId" = u."id"
         )
         GROUP BY l.city
-        ORDER BY total DESC;
+      `;
+
+      const education = await prisma.$queryRaw<
+        {
+          education: string;
+          total: number;
+          avgSalary: number;
+        }[]
+      >`
+        SELECT u."lastEdu" AS education, CAST(COUNT(*) AS INT) AS total
+        FROM "JobApplication" ja
+        JOIN "User" u on ja."userId" = u."id"
+        GROUP BY u."lastEdu"
       `;
 
       res.status(200).send({
@@ -64,6 +75,7 @@ export class AnalyticController {
             { total: gender[1]._count._all, type: gender[1].gender },
           ],
           location,
+          education
         },
       });
     } catch (err) {
@@ -77,22 +89,20 @@ export class AnalyticController {
       const basedOnJobRole = await prisma.$queryRaw<
         { role: string; avgSalary: number }[]
       >`
-        SELECT j.role, AVG(r.salary) AS avgSalary
+        SELECT j.role, CAST(AVG(r.salary) AS INT) AS avgSalary
         FROM "Job" j
         JOIN "Review" r ON j."id" = r."jobId"
         GROUP BY j.role
-        ORDER BY avgSalary DESC;
       `;
 
       const basedOnJobLocation = await prisma.$queryRaw<
         { city: string; avgSalary: number }[]
       >`
-        SELECT l.city, AVG(r.salary) AS avgSalary
+        SELECT l.city, CAST(AVG(r.salary) AS INT) AS avgSalary
         FROM "Job" j
         JOIN "Review" r ON j."id" = r."jobId"
         JOIN "Location" l ON j."locationId" = l."id"
         GROUP BY l.city
-        ORDER BY avgSalary DESC;
       `;
 
       res.status(200).send({ result: { basedOnJobRole, basedOnJobLocation } });
@@ -114,10 +124,11 @@ export class AnalyticController {
         FROM "JobApplication" ja
         JOIN "Job" j on ja."jobId" = j."id"
         GROUP BY j.category
-        ORDER BY total DESC
       `;
 
-      res.status(200).send({ result: { basedOnJobCategory } });
+      res
+        .status(200)
+        .send({ result: { basedOnJobCategory } });
     } catch (err) {
       console.log(err);
       res.status(400).send(err);
