@@ -31,22 +31,6 @@ export class AssessmentQuestionController {
     }
   }
 
-  async getAssessmentQuestionById(req: Request, res: Response) {
-    try {
-      const assessmentQuestionId = req.params.assessmentQuestionId;
-      const assessmentQuestion = await prisma.assessmentQuestion.findUnique({
-        where: { id: +assessmentQuestionId },
-      });
-
-      res.status(200).send({ assessmentQuestion });
-    } catch (error) {
-      console.error("Error retrieving question by ID:", error);
-      res
-        .status(500)
-        .send({ message: "Server error: Unable to retrieve question by ID." });
-    }
-  }
-
   async editAssessmentQuestion(req: Request, res: Response) {
     try {
       const assessmentQuestionId = req.params.assessmentQuestionId;
@@ -80,25 +64,6 @@ export class AssessmentQuestionController {
       console.error("Error updating assessment question:", error);
       res.status(500).send({
         message: "Server error: Unable to assessment question.",
-      });
-    }
-  }
-
-  async deleteAssessmentQuestion(req: Request, res: Response) {
-    try {
-      const assessmentQuestionId = req.params.assessmentQuestionId;
-
-      await prisma.subscription.delete({
-        where: { id: +assessmentQuestionId },
-      });
-
-      res.status(200).send({
-        message: `Subscription ID ${assessmentQuestionId} deleted successfully`,
-      });
-    } catch (error) {
-      console.error("Error deleting subscription:", error);
-      res.status(500).send({
-        message: "Server error: Unable to delete subscription.",
       });
     }
   }

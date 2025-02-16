@@ -16,10 +16,7 @@ export class AssessmentQuestionRouter {
       "/",
       this.assessmentQuestionController.createAssessmentQuestion
     );
-    this.router.get(
-      "/:assessmentQuestionId",
-      this.assessmentQuestionController.getAssessmentQuestionById
-    );
+
     this.router.patch(
       "/:assessmentQuestionId",
       this.assessmentQuestionController.editAssessmentQuestion

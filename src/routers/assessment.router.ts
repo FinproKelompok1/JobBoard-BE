@@ -15,10 +15,6 @@ export class AssessmentRouter {
     this.router.post("/", this.assessmentController.createAssessment);
     this.router.get("/", this.assessmentController.getAssessment);
 
-    this.router.post(
-      "/:assessmentId/questions",
-      this.assessmentController.createAssessmentQuestion
-    );
     this.router.get(
       "/:assessmentId/questions",
       this.assessmentController.getAssessmentQuestion

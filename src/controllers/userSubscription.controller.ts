@@ -22,6 +22,7 @@ export class UserSubscriptionController {
           },
         },
       });
+
       res.status(200).send({ userSubscription: user?.UserSubscription });
     } catch (error) {
       console.error("Error retrieving user subscription:", error);

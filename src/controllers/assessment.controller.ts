@@ -33,6 +33,7 @@ export class AssessmentController {
           description: true,
           isActive: true,
           AssessmentQuestion: { select: { question: true } },
+          UserAssessment: { select: { User: { select: { username: true } } } },
         },
       });
 
@@ -62,60 +63,21 @@ export class AssessmentController {
     }
   }
 
-  async createAssessmentQuestion(req: Request, res: Response) {
-    try {
-      const assessmentId = req.params.assessmentId;
-      const { question, options, correctAnswer } = req.body;
-
-      const optionsArray: string[] = options.map((option: string) =>
-        option.trim()
-      );
-
-      const correctAnswerIndex = "abcd".indexOf(correctAnswer.toLowerCase());
-
-      await prisma.assessmentQuestion.create({
-        data: {
-          assessmentId: +assessmentId,
-          question,
-          options: optionsArray,
-          correctAnswer: correctAnswerIndex,
-        },
-      });
-
-      res.status(201).send({ message: "Question created successfully" });
-    } catch (error) {
-      console.error("Error creating question:", error);
-      res
-        .status(500)
-        .send({ message: "Server error: Unable to create question." });
-    }
-  }
-
   async getAssessmentQuestion(req: Request, res: Response) {
     try {
       const assessmentId = req.params.assessmentId;
-
-      const page = parseInt(req.query.page as string) || 1;
-      const limit = parseInt(req.query.limit as string) || 5;
-      const skip = (page - 1) * limit;
 
       const totalQuestions = await prisma.assessmentQuestion.count({
         where: { assessmentId: +assessmentId },
       });
 
-      const questions = await prisma.assessmentQuestion.findMany({
+      const assessmentQuestions = await prisma.assessmentQuestion.findMany({
         where: { assessmentId: +assessmentId },
-        skip: skip,
-        take: limit,
       });
 
-      const totalPages = Math.ceil(totalQuestions / limit);
-
       res.status(200).send({
-        questions,
+        assessmentQuestions,
         totalQuestions,
-        totalPages,
-        currentPage: page,
       });
     } catch (error) {
       console.error("Error retrieving questions:", error);

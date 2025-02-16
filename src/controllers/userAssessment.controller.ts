@@ -7,6 +7,18 @@ export class UserAssessmentController {
       const userId = 1;
       const assessmentId = +req.params.assessmentId;
 
+      const userSubscription = await prisma.userSubscription.findFirst({
+        where: {
+          userId: userId,
+          isActive: true,
+          subscription: { category: "standard" },
+        },
+        include: { subscription: true },
+      });
+
+      if (userSubscription?.assessmentCount! >= 2)
+        throw { message: "You has reached the maximum assessment limit." };
+
       const endTime = new Date();
       endTime.setMinutes(endTime.getMinutes() + 30);
 
@@ -14,14 +26,23 @@ export class UserAssessmentController {
         data: { userId, assessmentId, endTime },
       });
 
+      await prisma.userSubscription.update({
+        where: {
+          userId_subscriptionId: {
+            userId: userId,
+            subscriptionId: userSubscription?.subscriptionId!,
+          },
+        },
+        data: { assessmentCount: { increment: 1 } },
+      });
+
       res.status(201).send({
-        message: "User assessment created successfully",
         userAssessmentId: id,
       });
     } catch (error) {
       res
         .status(500)
-        .send({ message: "Server error: Unable to create user assessment." });
+        .send(error || "Server error: Unable to create user assessment.");
     }
   }
 
@@ -32,7 +53,20 @@ export class UserAssessmentController {
       const userAssessment = await prisma.userAssessment.findUnique({
         where: { id: userAssessmentId },
         include: {
-          assessment: true,
+          assessment: {
+            select: {
+              title: true,
+              AssessmentQuestion: {
+                select: {
+                  id: true,
+                  question: true,
+                  options: true,
+                  correctAnswer: true,
+                },
+              },
+            },
+          },
+          User: true,
         },
       });
 
