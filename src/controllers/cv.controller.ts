@@ -118,7 +118,6 @@ export class CvController {
       const page = await browser.newPage();
 
       try {
-        console.log("Navigating to:", pageUrl);
         await page.goto(pageUrl, { waitUntil: "networkidle2" });
       } catch (err) {
         console.error("Failed to load page:", err);

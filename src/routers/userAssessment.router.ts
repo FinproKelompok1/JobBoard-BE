@@ -20,6 +20,14 @@ export class UserAssessmentRouter {
       "/:userAssessmentId",
       this.userAssessmentController.getUserAssessmentById
     );
+    this.router.patch(
+      "/:userAssessmentId",
+      this.userAssessmentController.updateUserAssessment
+    );
+    this.router.get(
+      "/download/:username/:userAssessmentId",
+      this.userAssessmentController.downloadCertificate
+    );
   }
 
   getRouter(): Router {
