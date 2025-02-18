@@ -1,7 +1,11 @@
 import dotenv from "dotenv";
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import multer from "multer";
+import passport from "./config/pasport";
+import authRoutes from "./routers/auth.router";
+import { OAuthService } from "../src/services/auth/oauth.service";
 import "./services/interviewReminderCron";
 import "./services/subscriptionCron";
 import { JobRouter } from "./routers/job.router";
@@ -21,10 +25,17 @@ dotenv.config();
 
 const PORT: number = 8000;
 const app: Application = express();
+
+OAuthService.initialize();
+
 app.use(express.json());
+app.use(cookieParser());
+app.use(passport.initialize());
+
 app.use(
   cors({
     origin: process.env.BASE_URL_FE!,
+    credentials: true,
   })
 );
 export const upload = multer({ storage: multer.memoryStorage() });
@@ -46,6 +57,7 @@ app.get("/api", (req: Request, res: Response) => {
   res.status(200).send("Connected to Talent Bridge API");
 });
 
+app.use("/api/auth", authRoutes);
 app.use("/api/jobs", jobRouter.getRoutes());
 app.use("/api/applicants", applicantRouter.getRoutes());
 app.use("/api/jobs", jobRouter.getRoutes());
