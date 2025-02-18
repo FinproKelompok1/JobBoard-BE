@@ -8,6 +8,7 @@ import authRoutes from "./routers/auth.router";
 import { OAuthService } from "../src/services/auth/oauth.service";
 import "./services/interviewReminderCron";
 import "./services/subscriptionCron";
+import userProfileRoutes from "./routers/userProfile.router";
 import { JobRouter } from "./routers/job.router";
 import { SubscriptionRouter } from "./routers/subscription.router";
 import { TransactionRouter } from "./routers/transaction.router";
@@ -57,7 +58,7 @@ app.get("/api", (req: Request, res: Response) => {
   res.status(200).send("Connected to Talent Bridge API");
 });
 
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoutes, userProfileRoutes);
 app.use("/api/jobs", jobRouter.getRoutes());
 app.use("/api/applicants", applicantRouter.getRoutes());
 app.use("/api/jobs", jobRouter.getRoutes());
