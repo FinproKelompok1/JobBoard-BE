@@ -7,6 +7,7 @@ export class TransactionController {
   async createTransaction(req: Request, res: Response) {
     try {
       const { subscriptionId, amount } = req.body;
+      console.log("req body:", req.body);
       const userId = 1;
       const { id } = await prisma.transaction.create({
         data: { userId, subscriptionId, amount, status: "pending" },
@@ -99,8 +100,8 @@ export class TransactionController {
       });
       const subscriptionCategory =
         subscription?.category === "professional"
-          ? "Professional Subscription"
-          : "Standard Subscription";
+          ? "Professional Plan"
+          : "Standard Plan";
       const parameter = {
         transaction_details: {
           order_id: order_id,

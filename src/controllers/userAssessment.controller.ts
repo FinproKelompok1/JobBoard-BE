@@ -101,13 +101,18 @@ export class UserAssessmentController {
           .toLocaleLowerCase()
           .replace(/\s+/g, "-");
 
-        await prisma.certificate.create({
+        const { id } = await prisma.certificate.create({
           data: {
             CertificateUrl: `${process.env.BASE_URL_FE}/certificate/${assessmentTitle}/${userAssessment?.User.username}`,
             badgeName: `${userAssessment?.assessment.title}`,
             badgeIcon:
               "https://res.cloudinary.com/difaukz1b/image/upload/v1739762156/icon/emjf6oektw1l6cywhvpu.png",
           },
+        });
+
+        await prisma.userAssessment.update({
+          where: { id: userAssessmentId },
+          data: { certificateId: id },
         });
       }
 
