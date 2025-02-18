@@ -23,6 +23,7 @@ import { AssessmentQuestionRouter } from "./routers/assessmentQuestion.router";
 import { UserAssessmentRouter } from "./routers/userAssessment.router";
 import { CompanyRouter } from "./routers/company.router";
 import { JobDiscoveryRouter } from "./routers/jobdis.router";
+import applyRouter from "./routers/apply.router";
 
 dotenv.config();
 
@@ -78,6 +79,7 @@ app.use("/api/assessment-questions", assessmentQuestionRouter.getRouter());
 app.use("/api/user-assessments", userAssessmentRouter.getRouter());
 app.use("/api/companies", companyRouter.getRoutes());
 app.use("/api/discover", jobDiscoveryRouter.getRoutes());
+app.use("/api/apply", applyRouter);
 
 app.listen(PORT, () =>
   console.log(`Your server is running on http://localhost:${PORT}/api`)
