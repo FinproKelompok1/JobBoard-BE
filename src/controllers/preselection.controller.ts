@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "../prisma";
+import { IReqBody } from "../types/preselection";
 
 export class PreselectionController {
   async getPreselection(req: Request, res: Response) {
@@ -14,12 +15,22 @@ export class PreselectionController {
     }
   }
 
-  async createPreSelection(req: Request, res: Response) {
+  async createPreSelection(req: Request<{}, {}, IReqBody>, res: Response) {
     try {
-      const preselection = await prisma.preSelectionTest.create({
-        data: req.body,
+      const { title, description, jobId } = req.body;
+      const { id: preSelectionTestId } = await prisma.preSelectionTest.create({
+        data: { title, description, jobId },
       });
-      res.status(200).send({ message: preselection });
+      const formattedQuestions = req.body.preselectionQuestions.map(
+        (question) => ({
+          ...question,
+          preSelectionTestId,
+        })
+      );
+      await prisma.selectionTestQuestion.createMany({
+        data: formattedQuestions,
+      });
+      res.status(200).send({ message: "Test successfully created" });
     } catch (err) {
       console.log(err);
       res.status(400).send(err);
@@ -29,12 +40,12 @@ export class PreselectionController {
   async setActiveTest(req: Request, res: Response) {
     try {
       const { isTestActive } = req.body;
-      console.log(req.body);
       await prisma.job.update({
         where: { id: req.params.id },
         data: { isTestActive },
       });
       res.status(200).send({
+        isThereTest: true,
         message: `Your job test has been ${
           isTestActive ? "activated" : "unactivated"
         }`,
