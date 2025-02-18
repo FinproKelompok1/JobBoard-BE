@@ -23,7 +23,13 @@ export class SubscriptionController {
   async getSubscriptions(req: Request, res: Response) {
     try {
       const subscriptions = await prisma.subscription.findMany({
-        select: { id: true, category: true, price: true, feature: true },
+        select: {
+          id: true,
+          category: true,
+          price: true,
+          feature: true,
+          UserSubscription: { select: { userId: true, isActive: true } },
+        },
       });
 
       res.status(200).send({ subscriptions });
@@ -37,9 +43,9 @@ export class SubscriptionController {
 
   async getSubscriptionById(req: Request, res: Response) {
     try {
-      const id = req.params.subscriptionId;
+      const subscriptionId = req.params.subscriptionId;
       const subscription = await prisma.subscription.findUnique({
-        where: { id: +id },
+        where: { id: +subscriptionId },
         select: { id: true, category: true, price: true, feature: true },
       });
 
@@ -54,7 +60,7 @@ export class SubscriptionController {
 
   async editSubscription(req: Request, res: Response) {
     try {
-      const id = req.params.subscriptionId;
+      const subscriptionIdid = req.params.subscriptionId;
       const { category, price, feature } = req.body;
 
       const data: {
@@ -73,13 +79,13 @@ export class SubscriptionController {
       }
 
       await prisma.subscription.update({
-        where: { id: +id },
+        where: { id: +subscriptionIdid },
         data,
       });
 
-      res
-        .status(200)
-        .send({ message: `Subscription ID ${id} updated successfully` });
+      res.status(200).send({
+        message: `Subscription ID ${subscriptionIdid} updated successfully`,
+      });
     } catch (error) {
       console.error("Error updating subscription:", error);
       res.status(500).send({
@@ -119,7 +125,7 @@ export class SubscriptionController {
               isActive: true,
               subscription: { select: { category: true } },
               user: {
-                select: { email: true },
+                select: { email: true, fullname: true },
               },
             },
           },
