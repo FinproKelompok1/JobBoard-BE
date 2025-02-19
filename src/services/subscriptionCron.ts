@@ -9,17 +9,8 @@ cron.schedule("0 0 * * * *", async () => {
   const startOfTomorrow = dayjs().add(1, "day").startOf("day").toDate();
   const endOfTomorrow = dayjs().add(1, "day").endOf("day").toDate();
 
-  console.log(
-    "Checking for subscriptions expiring between:",
-    startOfTomorrow,
-    "and",
-    endOfTomorrow
-  );
-
   try {
-    const allSubs = await prisma.userSubscription.findMany();
-
-    const soonExpiredSubs = await prisma.userSubscription.findMany({
+    const expiringSubscription = await prisma.userSubscription.findMany({
       where: {
         endDate: {
           gte: startOfTomorrow,
@@ -32,16 +23,14 @@ cron.schedule("0 0 * * * *", async () => {
       },
     });
 
-    soonExpiredSubs.forEach((sub) => {
+    expiringSubscription.forEach((item) => {
       console.log(
-        `Subscription user ID ${sub.userId} and subscription ID ${sub.subscriptionId} ends at:`,
-        sub.endDate
+        `Subscription user ID ${item.userId} and subscription ID ${item.subscriptionId} ends at:`,
+        item.endDate
       );
     });
 
-    console.log("soonExpiredSubs", soonExpiredSubs);
-
-    for (const subscription of soonExpiredSubs) {
+    for (const subscription of expiringSubscription) {
       try {
         await sendInvoiceEmail({
           email: subscription.user.email,
@@ -53,13 +42,14 @@ cron.schedule("0 0 * * * *", async () => {
         );
       } catch (emailError) {
         console.error(
-          `❌ Failed to send email to ${subscription.user.email}:`,
+          `Failed to send email to ${subscription.user.email}:`,
           emailError
         );
       }
     }
 
     const today = new Date();
+
     await prisma.userSubscription.updateMany({
       where: {
         endDate: { lt: today },
@@ -69,9 +59,7 @@ cron.schedule("0 0 * * * *", async () => {
         isActive: false,
       },
     });
-
-    console.log(`Subscriptions status updated at ${new Date()}`);
-  } catch (dbError) {
-    console.error("❌ Error fetching/updating subscriptions:", dbError);
+  } catch (error) {
+    console.error("Error fetching/updating subscriptions:", error);
   }
 });

@@ -16,6 +16,7 @@ import { CvRouter } from "./routers/cv.router";
 import { AssessmentRouter } from "./routers/assessment.router";
 import { AssessmentQuestionRouter } from "./routers/assessmentQuestion.router";
 import { UserAssessmentRouter } from "./routers/userAssessment.router";
+import { ReviewRouter } from "./routers/review.router";
 
 dotenv.config();
 
@@ -41,6 +42,7 @@ const cvRouter = new CvRouter();
 const assessmentRouter = new AssessmentRouter();
 const assessmentQuestionRouter = new AssessmentQuestionRouter();
 const userAssessmentRouter = new UserAssessmentRouter();
+const reviewRouter = new ReviewRouter();
 
 app.get("/api", (req: Request, res: Response) => {
   res.status(200).send("Connected to Talent Bridge API");
@@ -59,6 +61,7 @@ app.use("/api/cv", cvRouter.getRouter());
 app.use("/api/assessments", assessmentRouter.getRouter());
 app.use("/api/assessment-questions", assessmentQuestionRouter.getRouter());
 app.use("/api/user-assessments", userAssessmentRouter.getRouter());
+app.use("/api/reviews", reviewRouter.getRouter());
 
 app.listen(PORT, () =>
   console.log(`Your server is running on http://localhost:${PORT}/api`)
