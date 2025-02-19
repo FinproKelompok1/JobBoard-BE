@@ -23,7 +23,7 @@ import { AssessmentQuestionRouter } from "./routers/assessmentQuestion.router";
 import { UserAssessmentRouter } from "./routers/userAssessment.router";
 import { CompanyRouter } from "./routers/company.router";
 import { JobDiscoveryRouter } from "./routers/jobdis.router";
-import applyRouter from "./routers/apply.router";
+import { ApplyRouter } from "./routers/apply.router";
 
 dotenv.config();
 
@@ -58,6 +58,7 @@ const assessmentQuestionRouter = new AssessmentQuestionRouter();
 const userAssessmentRouter = new UserAssessmentRouter();
 const companyRouter = new CompanyRouter();
 const jobDiscoveryRouter = new JobDiscoveryRouter();
+const applyRouter = new ApplyRouter();
 
 app.get("/api", (req: Request, res: Response) => {
   res.status(200).send("Connected to Talent Bridge API");
@@ -79,7 +80,7 @@ app.use("/api/assessment-questions", assessmentQuestionRouter.getRouter());
 app.use("/api/user-assessments", userAssessmentRouter.getRouter());
 app.use("/api/companies", companyRouter.getRoutes());
 app.use("/api/discover", jobDiscoveryRouter.getRoutes());
-app.use("/api/apply", applyRouter);
+app.use("/api/apply", applyRouter.getRoutes());
 
 app.listen(PORT, () =>
   console.log(`Your server is running on http://localhost:${PORT}/api`)

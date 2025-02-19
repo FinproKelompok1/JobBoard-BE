@@ -20,15 +20,17 @@ export class OAuthController {
         { expiresIn: "24h" }
       );
 
+      // Set the HTTP-only cookie
       res.cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 24 * 60 * 60 * 1000,
+        sameSite: "lax", // Changed to lax for OAuth redirects
+        maxAge: 24 * 60 * 60 * 1000, // 24 hours
         path: "/",
       });
 
-      res.redirect(`${process.env.NEXT_PUBLIC_BASE_URL_FE}/dashboard`);
+      res.json({ user, token });
+      // res.redirect(`${process.env.NEXT_PUBLIC_BASE_URL_FE}/dashboard`);
     } catch (error) {
       console.error("OAuth error:", error);
       res.redirect(

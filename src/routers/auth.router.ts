@@ -9,13 +9,18 @@ import {
 import { UserAuthController } from "../controllers/auth/user.controller";
 import { AdminAuthController } from "../controllers/auth/admin.controller";
 import { DeveloperAuthController } from "../controllers/auth/developer.controller";
-
+import jwt from "jsonwebtoken";
+import { PrismaClient } from "../../prisma/generated/client";
+const JWT_SECRET = process.env.JWT_SECRET!;
+const prisma = new PrismaClient();
 const router = express.Router();
 
+// Initialize controllers
 const userController = new UserAuthController();
 const adminController = new AdminAuthController();
 const developerController = new DeveloperAuthController();
 
+// User Authentication Routes
 router.post("/register/user", userController.register as RequestHandler);
 
 router.post(
@@ -24,14 +29,16 @@ router.post(
   userController.login as RequestHandler
 );
 
+// Admin Authentication Routes
 router.post("/register/admin", adminController.register as RequestHandler);
 
 router.post(
   "/login/admin",
-  requireVerified as RequestHandler,
+  // requireVerified as RequestHandler,
   adminController.login as RequestHandler
 );
 
+// Email Verification Route
 router.get(
   "/verify",
   checkVerificationTimeout as RequestHandler,
@@ -51,6 +58,7 @@ router.get(
   }
 );
 
+// OAuth routes
 router.get(
   "/google",
   passport.authenticate("google", {
@@ -83,6 +91,7 @@ router.get(
   OAuthController.handleCallback as RequestHandler
 );
 
+// Developer routes
 router.post(
   "/developer/login",
   developerController.login.bind(developerController) as RequestHandler
@@ -90,10 +99,11 @@ router.post(
 
 router.post(
   "/developer/2fa/setup",
-  requireAuth as RequestHandler,
+  // requireAuth as RequestHandler,
   developerController.setup2FA.bind(developerController) as RequestHandler
 );
 
+// Logout route
 router.post("/logout", requireAuth as RequestHandler, (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
@@ -103,6 +113,86 @@ router.post("/logout", requireAuth as RequestHandler, (req, res) => {
   res.json({ message: "Logged out successfully" });
 });
 
+router.post(
+  "/verify-oauth",
+  requireAuth as RequestHandler,
+  async (req, res) => {
+    const { type, username, company, phone } = req.body;
+
+    if (req.user === undefined) {
+      throw new Error();
+    }
+
+    if (req.user.role !== "none") {
+      res.status(400).json({ message: "Account already verified" });
+    }
+
+    const oldUser = await prisma.user.findUnique({
+      where: { id: req.user.id },
+    });
+
+    if (!oldUser) {
+      res.status(404).json({ message: "User not found" });
+    }
+
+    if (type === "user") {
+      const updatedUser = await prisma.user.update({
+        where: { id: oldUser?.id },
+        data: {
+          username,
+          isVerified: true,
+        },
+      });
+
+      const token = jwt.sign(
+        {
+          id: oldUser?.id,
+          role: "user",
+        },
+        JWT_SECRET,
+        { expiresIn: "24h" }
+      );
+
+      res.json({
+        message: "User verified successfully",
+        token,
+        user: updatedUser,
+      });
+    } else {
+      const updatedAdmin = await prisma.admin.create({
+        data: {
+          email: oldUser?.email || "",
+          companyName: company,
+          noHandphone: phone,
+          password: oldUser?.password || "",
+          description: "",
+          isVerified: true,
+        },
+      });
+
+      await prisma.user.delete({
+        where: { id: oldUser?.id },
+      });
+
+      const token = jwt.sign(
+        {
+          id: oldUser?.id,
+          role: "admin",
+        },
+        JWT_SECRET,
+        { expiresIn: "24h" }
+      );
+
+      res.json({
+        message: "Company verified successfully",
+        token,
+        user: updatedAdmin,
+      });
+    }
+  }
+);
+
+// OAuth failure route
 router.get("/auth/failure", OAuthController.handleFailure as RequestHandler);
 
 export default router;

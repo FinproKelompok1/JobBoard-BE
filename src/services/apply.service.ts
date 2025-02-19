@@ -1,13 +1,10 @@
+// src/services/apply.service.ts
 import { PrismaClient, JobApplication } from "../../prisma/generated/client";
 import { cloudinaryUpload } from "./cloudinary";
 
+const prisma = new PrismaClient();
+
 export class ApplyService {
-  private prisma: PrismaClient;
-
-  constructor() {
-    this.prisma = new PrismaClient();
-  }
-
   async createApplication(
     userId: number,
     jobId: string,
@@ -15,10 +12,13 @@ export class ApplyService {
     expectedSalary: number
   ): Promise<JobApplication> {
     try {
-      const existingApplication = await this.prisma.jobApplication.findFirst({
+      // Check for existing application
+      const existingApplication = await prisma.jobApplication.findUnique({
         where: {
-          userId,
-          jobId,
+          userId_jobId: {
+            userId,
+            jobId,
+          },
         },
       });
 
@@ -26,71 +26,48 @@ export class ApplyService {
         throw new Error("You have already applied for this job");
       }
 
-      const job = await this.prisma.job.findUnique({
+      // Verify job status
+      const job = await prisma.job.findUnique({
         where: { id: jobId },
       });
 
       if (!job) {
         throw new Error("Job not found");
       }
-
       if (!job.isActive) {
         throw new Error("This job is no longer accepting applications");
       }
-
       if (new Date() > job.endDate) {
         throw new Error("The application deadline has passed");
       }
 
+      // Upload resume to cloudinary
       const uploadResult = await cloudinaryUpload(resume, "resumes");
 
-      const application = await this.prisma.$transaction(async (tx) => {
-        return tx.jobApplication.create({
-          data: {
-            userId,
-            jobId,
-            resume: uploadResult.secure_url,
-            expectedSalary,
-            isTaken: false,
-            status: "processed",
-          },
-          include: {
-            job: {
-              select: {
-                title: true,
-                admin: {
-                  select: {
-                    companyName: true,
-                  },
-                },
-              },
-            },
-          },
-        });
+      // Create application
+      return await prisma.jobApplication.create({
+        data: {
+          userId,
+          jobId,
+          resume: uploadResult.secure_url,
+          expectedSalary,
+          isTaken: false,
+          status: "processed",
+        },
       });
-
-      return application;
     } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-      throw new Error("Failed to create application");
+      throw error;
     }
   }
 
   async getUserApplications(userId: number): Promise<JobApplication[]> {
     try {
-      return await this.prisma.jobApplication.findMany({
+      return await prisma.jobApplication.findMany({
         where: { userId },
         include: {
           job: {
             include: {
-              admin: {
-                select: {
-                  companyName: true,
-                  logo: true,
-                },
-              },
+              admin: true,
               location: true,
             },
           },
@@ -100,11 +77,54 @@ export class ApplyService {
         },
       });
     } catch (error) {
-      throw new Error("Failed to fetch user applications");
+      throw error;
     }
   }
 
-  async destroy() {
-    await this.prisma.$disconnect();
+  async getJobApplications(jobId: string): Promise<JobApplication[]> {
+    try {
+      return await prisma.jobApplication.findMany({
+        where: { jobId },
+        include: {
+          user: {
+            select: {
+              id: true,
+              fullname: true,
+              email: true,
+              avatar: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async updateStatus(
+    userId: number,
+    jobId: string,
+    status: "processed" | "interviewed" | "accepted" | "rejected",
+    rejectedReview?: string
+  ): Promise<JobApplication> {
+    try {
+      return await prisma.jobApplication.update({
+        where: {
+          userId_jobId: {
+            userId,
+            jobId,
+          },
+        },
+        data: {
+          status,
+          rejectedReview,
+        },
+      });
+    } catch (error) {
+      throw error;
+    }
   }
 }

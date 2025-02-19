@@ -39,7 +39,16 @@ export class AdminAuthController {
         maxAge: 24 * 60 * 60 * 1000,
       });
 
-      res.json({ message: "Login successful" });
+      res.json({
+        message: "Login successful",
+        token: token, // kirim token di response body juga
+        admin: {
+          id: admin.id,
+          email: admin.email,
+          companyName: admin.companyName,
+          logo: admin.logo,
+        },
+      });
     } catch (error: any) {
       res.status(401).json({ message: error.message });
     }

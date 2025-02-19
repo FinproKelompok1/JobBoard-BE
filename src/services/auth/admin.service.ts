@@ -45,7 +45,33 @@ export class AdminAuthService {
   async login(email: string, password: string) {
     const admin = await prisma.admin.findUnique({ where: { email } });
     if (!admin) throw new Error("Invalid credentials");
-    if (!admin.isVerified) throw new Error("Email not verified");
+
+    if (!admin.isVerified) {
+      const lastUpdated = new Date(admin.updatedAt);
+      const now = new Date();
+
+      console.log(admin);
+
+      // Cek apakah sudah lebih dari 15 menit sejak terakhir diperbarui
+      if (now.getTime() - lastUpdated.getTime() > 15 * 60 * 1000) {
+        const verificationToken = jwt.sign(
+          { email, type: "admin" },
+          JWT_SECRET,
+          {
+            expiresIn: "15m",
+          }
+        );
+
+        console.log("Send Email Lagi");
+        await emailService.sendVerificationEmail(
+          email,
+          verificationToken,
+          admin.companyName
+        );
+      }
+
+      throw new Error("Please verify your email before logging in.");
+    }
 
     const validPassword = await bcrypt.compare(password, admin.password);
     if (!validPassword) throw new Error("Invalid credentials");
