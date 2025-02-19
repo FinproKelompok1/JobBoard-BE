@@ -142,4 +142,42 @@ export class JobDiscoveryController {
       return res.status(500).json({ message: "Failed to fetch related jobs" });
     }
   }
+
+  async getCompanyDetails(req: Request, res: Response) {
+    try {
+      const id = parseInt(req.params.id); // Convert string to number
+
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid company ID" });
+      }
+
+      const company = await prisma.admin.findUnique({
+        where: {
+          id: id,
+        },
+        include: {
+          Job: {
+            where: {
+              isActive: true,
+              isPublished: true,
+            },
+            include: {
+              location: true,
+            },
+          },
+        },
+      });
+
+      if (!company) {
+        return res.status(404).json({ message: "Company not found" });
+      }
+
+      return res.status(200).json(company);
+    } catch (error) {
+      console.error("Error in getCompanyDetails:", error);
+      return res
+        .status(500)
+        .json({ message: "Failed to fetch company details" });
+    }
+  }
 }

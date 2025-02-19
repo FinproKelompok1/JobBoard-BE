@@ -12,39 +12,62 @@ export class ApplyService {
     expectedSalary: number
   ): Promise<JobApplication> {
     try {
-      // Check for existing application
-      const existingApplication = await prisma.jobApplication.findUnique({
+      // Debug log untuk input
+      console.log("Attempting to create application:", {
+        userId,
+        jobId,
+        salary: expectedSalary,
+      });
+
+      // Cek job validity
+      const job = await prisma.job.findUnique({
         where: {
-          userId_jobId: {
-            userId,
-            jobId,
-          },
+          id: jobId,
+          isActive: true,
+        },
+        select: {
+          id: true,
+          endDate: true,
+          title: true,
         },
       });
 
-      if (existingApplication) {
-        throw new Error("You have already applied for this job");
-      }
-
-      // Verify job status
-      const job = await prisma.job.findUnique({
-        where: { id: jobId },
-      });
-
       if (!job) {
-        throw new Error("Job not found");
+        throw new Error("Job not found or not active");
       }
-      if (!job.isActive) {
-        throw new Error("This job is no longer accepting applications");
-      }
+
       if (new Date() > job.endDate) {
         throw new Error("The application deadline has passed");
       }
 
-      // Upload resume to cloudinary
+      // Cek existing application dengan Query yang lebih spesifik
+      const applications = await prisma.jobApplication.findMany({
+        where: {
+          userId: userId,
+        },
+        select: {
+          jobId: true,
+        },
+      });
+
+      // Debug log untuk applications
+      console.log("Existing applications for user:", applications);
+
+      const hasApplied = applications.some((app) => app.jobId === jobId);
+
+      // Debug log untuk hasil pengecekan
+      console.log("Application check result:", {
+        hasApplied,
+        checkingJobId: jobId,
+      });
+
+      if (hasApplied) {
+        throw new Error("You have already applied for this job");
+      }
+
+      // Proses upload dan create application
       const uploadResult = await cloudinaryUpload(resume, "resumes");
 
-      // Create application
       return await prisma.jobApplication.create({
         data: {
           userId,
@@ -56,6 +79,7 @@ export class ApplyService {
         },
       });
     } catch (error) {
+      console.error("Application creation error:", error);
       throw error;
     }
   }

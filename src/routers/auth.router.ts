@@ -69,7 +69,7 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: `${process.env.NEXT_PUBLIC_BASE_URL_FE}/login?error=google_auth_failed`,
+    failureRedirect: `${process.env.BASE_URL_FE}/login?error=google_auth_failed`,
     session: true,
   }),
   OAuthController.handleCallback
@@ -85,7 +85,7 @@ router.get(
 router.get(
   "/facebook/callback",
   passport.authenticate("facebook", {
-    failureRedirect: `${process.env.NEXT_PUBLIC_BASE_URL_FE}/login?error=facebook_auth_failed`,
+    failureRedirect: `${process.env.BASE_URL_FE}/login?error=facebook_auth_failed`,
     session: true,
   }) as RequestHandler,
   OAuthController.handleCallback as RequestHandler
