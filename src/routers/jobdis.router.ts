@@ -23,6 +23,10 @@ export class JobDiscoveryRouter {
     this.router.get("/:id/related", (req: Request, res: Response) => {
       this.jobDiscoveryController.getRelatedJobs(req, res);
     });
+
+    this.router.get("/company/:id", (req: Request, res: Response) => {
+      this.jobDiscoveryController.getCompanyDetails(req, res);
+    });
   }
 
   getRoutes(): Router {

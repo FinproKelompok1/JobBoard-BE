@@ -54,17 +54,26 @@ export class CompanyController {
   async getCompanyById(req: Request, res: Response) {
     try {
       const { id } = req.params;
+      const companyId = parseInt(id);
+
+      if (isNaN(companyId)) {
+        return res.status(400).json({ message: "Invalid company ID" });
+      }
 
       const company = await prisma.admin.findUnique({
         where: {
-          id: parseInt(id),
-          isVerified: true,
+          id: companyId,
         },
         select: {
           id: true,
           companyName: true,
-          logo: true,
+          email: true, // Tambahkan email
+          noHandphone: true, // Tambahkan noHandphone
           description: true,
+          logo: true,
+          isVerified: true,
+          createdAt: true,
+          updatedAt: true,
           Job: {
             where: {
               isActive: true,
@@ -74,16 +83,6 @@ export class CompanyController {
               location: true,
             },
           },
-          _count: {
-            select: {
-              Job: {
-                where: {
-                  isActive: true,
-                  isPublished: true,
-                },
-              },
-            },
-          },
         },
       });
 
@@ -91,22 +90,19 @@ export class CompanyController {
         return res.status(404).json({ message: "Company not found" });
       }
 
-      const formattedCompany = {
-        id: company.id,
-        companyName: company.companyName,
-        logo: company.logo,
-        description: company.description,
-        jobs: company.Job,
-        jobCount: company._count.Job,
+      // Format response
+      const response = {
+        ...company,
+        jobCount: company.Job.length,
+        jobs: company.Job, // Rename Job to jobs for frontend consistency
       };
 
-      return res.status(200).json(formattedCompany);
+      return res.json(response);
     } catch (error) {
       console.error("Error in getCompanyById:", error);
-      return res.status(500).json({
-        message: "Failed to fetch company details",
-        error: process.env.NODE_ENV === "development" ? error : undefined,
-      });
+      return res
+        .status(500)
+        .json({ message: "Failed to fetch company details" });
     }
   }
 }

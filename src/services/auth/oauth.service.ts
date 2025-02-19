@@ -15,7 +15,7 @@ export class OAuthService {
         {
           clientID: process.env.GOOGLE_CLIENT_ID!,
           clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-          callbackURL: `${process.env.NEXT_PUBLIC_BASE_URL_FE}/auth/google/callback`,
+          callbackURL: `${process.env.BASE_URL_FE}/auth/google/callback`,
         },
         async (accessToken, refreshToken, profile, done) => {
           try {
@@ -33,7 +33,7 @@ export class OAuthService {
         {
           clientID: process.env.FACEBOOK_APP_ID!,
           clientSecret: process.env.FACEBOOK_APP_SECRET!,
-          callbackURL: `${process.env.NEXT_PUBLIC_BASE_URL_FE}/auth/facebook/callback`,
+          callbackURL: `${process.env.BASE_URL_FE}/auth/facebook/callback`,
           profileFields: ["id", "emails", "name"],
         },
         async (accessToken, refreshToken, profile, done) => {
