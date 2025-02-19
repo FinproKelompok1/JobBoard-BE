@@ -59,8 +59,9 @@ export class OAuthService {
   static async handleGoogleLogin(profile: any): Promise<AuthUser> {
     const email = profile.emails[0].value;
     let user = await prisma.user.findUnique({ where: { email } });
+    let admin = await prisma.admin.findUnique({ where: { email } });
 
-    if (!user) {
+    if (!user && !admin) {
       const username = `${profile.displayName
         .toLowerCase()
         .replace(/\s+/g, "")}${Math.random().toString(36).slice(2, 5)}`;
@@ -69,12 +70,30 @@ export class OAuthService {
           email,
           username,
           password: await bcrypt.hash(Math.random().toString(36), SALT_ROUNDS),
-          isVerified: true,
+          isVerified: false,
         },
       });
+
+      return { ...user, role: "none" };
     }
 
-    return { ...user, role: "user" };
+    if (admin) {
+      if (admin.id !== undefined) {
+        return { ...admin, role: admin.isVerified ? "admin" : "none" };
+      } else {
+        throw new Error("Admin ID is undefined");
+      }
+    }
+
+    if (user) {
+      if (user.id !== undefined) {
+        return { ...user, role: user.isVerified ? "user" : "none" };
+      } else {
+        throw new Error("User ID is undefined");
+      }
+    }
+
+    throw new Error("No user or admin found");
   }
 
   static async handleFacebookLogin(profile: any): Promise<AuthUser> {
@@ -95,6 +114,7 @@ export class OAuthService {
       });
     }
 
+    // Add role to the user object
     return { ...user, role: "user" };
   }
 }

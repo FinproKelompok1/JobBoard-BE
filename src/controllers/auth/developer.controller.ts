@@ -36,6 +36,7 @@ export class DeveloperAuthController {
 
       res.json({
         message: "Login successful",
+        token,
         user: {
           id: developer.id,
           email: developer.email,
@@ -50,7 +51,7 @@ export class DeveloperAuthController {
   async setup2FA(req: Request, res: Response) {
     try {
       const developer = await this.developerService.createInitialDeveloper();
-      const setup = await this.developerService.setup2FA();
+      const setup = await this.developerService.setup2FA(); // Removed developer.id parameter
 
       res.json({
         message: "2FA setup successful",

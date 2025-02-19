@@ -1,33 +1,30 @@
 import express from "express";
 import { requireAuth } from "../middleware/auth.middleware";
-import { userProfileController } from "../controllers/auth/userProfile.controller";
+import UserProfileController from "../controllers/auth/userProfile.controller";
 import upload from "../config/multer";
 
 const router = express.Router();
 
+// Get user profile
 router.get(
   "/me",
   requireAuth,
-  userProfileController.getUserProfile.bind(userProfileController)
+  UserProfileController.getUserProfile.bind(UserProfileController)
 );
 
+// Update user profile
 router.put(
   "/:userId",
   requireAuth,
-  userProfileController.updateUserProfile.bind(userProfileController)
+  UserProfileController.updateUserProfile.bind(UserProfileController)
 );
 
-router.put(
-  "/profile/:userId/cv",
-  requireAuth,
-  userProfileController.updateUserCV.bind(userProfileController)
-);
-
+// Upload profile image
 router.post(
   "/upload-image",
   requireAuth,
   upload.single("image"),
-  userProfileController.uploadProfileImage.bind(userProfileController)
+  UserProfileController.uploadProfileImage.bind(UserProfileController)
 );
 
 export default router;

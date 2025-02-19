@@ -17,6 +17,7 @@ export const requireAuth = async (
   next: NextFunction
 ): Promise<void> => {
   try {
+    // Log untuk debugging
     console.log("Headers:", req.headers);
 
     const authHeader = req.headers.authorization;
@@ -61,20 +62,20 @@ export const requireVerified = async (
   }
 };
 
-export const requireDeveloper = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    if (!req.user || req.user.role !== "developer") {
-      return res.status(403).json({ message: "Developer access required" });
-    }
-    next();
-  } catch (error) {
-    res.status(403).json({ message: "Developer access required" });
-  }
-};
+// export const requireDeveloper = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     if (!req.user || req.user.role !== "developer") {
+//       return res.status(403).json({ message: "Developer access required" });
+//     }
+//     next();
+//   } catch (error) {
+//     res.status(403).json({ message: "Developer access required" });
+//   }
+// };
 
 export const checkVerificationTimeout = async (
   req: Request,

@@ -12,6 +12,7 @@ interface OAuthProfile {
   _json: any;
 }
 
+// Custom Request type for OAuth
 interface OAuthRequest extends Omit<Request, "user"> {
   user?: OAuthProfile;
   provider?: "google" | "facebook";
@@ -84,7 +85,9 @@ export class UserAuthController {
         user: {
           id: user.id,
           email: user.email,
+          fullname: user.fullname,
           username: user.username,
+          avatar: user.avatar,
         },
       });
     } catch (error: any) {

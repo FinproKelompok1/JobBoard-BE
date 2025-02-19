@@ -1,4 +1,4 @@
-export type UserRole = "user" | "admin" | "developer";
+export type UserRole = "user" | "admin" | "developer" | "none";
 
 export interface VerificationToken {
   email: string;

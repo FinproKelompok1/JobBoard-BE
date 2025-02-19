@@ -7,11 +7,11 @@ const prisma = new PrismaClient();
 
 interface AuthRequest extends Request {
   user?: AuthUser;
-  file?: any;
+  file?: any; // For now we'll use 'any' and fix the type later if needed
 }
 
-class UserProfileController {
-  public async getUserProfile(req: AuthRequest, res: Response): Promise<void> {
+export class UserProfileController {
+  async getUserProfile(req: AuthRequest, res: Response): Promise<void> {
     try {
       const userId = req.user?.id;
 
@@ -52,10 +52,7 @@ class UserProfileController {
     }
   }
 
-  public async updateUserProfile(
-    req: AuthRequest,
-    res: Response
-  ): Promise<void> {
+  async updateUserProfile(req: AuthRequest, res: Response): Promise<void> {
     try {
       const userId = parseInt(req.params.userId);
       const currentUserId = req.user?.id;
@@ -66,10 +63,12 @@ class UserProfileController {
       }
 
       const {
+        // Profile data
         fullname,
         gender,
         dob,
         lastEdu,
+        // CV data
         summary,
         experience,
         skill,
@@ -77,6 +76,7 @@ class UserProfileController {
       } = req.body;
 
       const updatedUser = await prisma.$transaction(async (prisma) => {
+        // Update user profile
         const user = await prisma.user.update({
           where: { id: userId },
           data: {
@@ -87,11 +87,13 @@ class UserProfileController {
           },
         });
 
+        // First, check if CV exists for this user
         const existingCV = await prisma.curriculumVitae.findFirst({
           where: { userId: userId },
         });
 
         if (existingCV) {
+          // Update existing CV
           await prisma.curriculumVitae.update({
             where: { id: existingCV.id },
             data: {
@@ -102,6 +104,7 @@ class UserProfileController {
             },
           });
         } else {
+          // Create new CV
           await prisma.curriculumVitae.create({
             data: {
               userId: userId,
@@ -113,6 +116,7 @@ class UserProfileController {
           });
         }
 
+        // Return updated user with CV
         return prisma.user.findUnique({
           where: { id: userId },
           include: {
@@ -132,10 +136,7 @@ class UserProfileController {
     }
   }
 
-  public async uploadProfileImage(
-    req: AuthRequest,
-    res: Response
-  ): Promise<void> {
+  async uploadProfileImage(req: AuthRequest, res: Response): Promise<void> {
     try {
       if (!req.file) {
         res.status(400).json({ message: "No file uploaded" });
@@ -180,55 +181,6 @@ class UserProfileController {
       res.status(500).json({ message: "Failed to upload image" });
     }
   }
-
-  public async updateUserCV(req: AuthRequest, res: Response): Promise<void> {
-    try {
-      const userId = parseInt(req.params.userId);
-      const currentUserId = req.user?.id;
-
-      if (!currentUserId || currentUserId !== userId) {
-        res.status(401).json({ message: "Unauthorized" });
-        return;
-      }
-
-      const { summary, experience, skill, education } = req.body;
-
-      const existingCV = await prisma.curriculumVitae.findFirst({
-        where: { userId: userId },
-      });
-
-      let updatedCV;
-      if (existingCV) {
-        updatedCV = await prisma.curriculumVitae.update({
-          where: { id: existingCV.id },
-          data: {
-            summary: summary || "",
-            experience: experience || "",
-            skill: skill || "",
-            education: education || "",
-          },
-        });
-      } else {
-        updatedCV = await prisma.curriculumVitae.create({
-          data: {
-            userId: userId,
-            summary: summary || "",
-            experience: experience || "",
-            skill: skill || "",
-            education: education || "",
-          },
-        });
-      }
-
-      res.status(200).json({
-        success: true,
-        data: updatedCV,
-      });
-    } catch (error) {
-      console.error("Error updating CV:", error);
-      res.status(500).json({ message: "Failed to update CV" });
-    }
-  }
 }
 
-export const userProfileController = new UserProfileController();
+export default new UserProfileController();
