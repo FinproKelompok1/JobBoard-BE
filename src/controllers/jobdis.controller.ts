@@ -6,14 +6,12 @@ export class JobDiscoveryController {
   async discoverJobs(req: Request, res: Response) {
     try {
       const { city, province } = req.query;
-      console.log("Received query params:", { city, province });
 
       const allJobs = await prisma.job.findMany({
         include: {
           location: true,
         },
       });
-      console.log("All jobs in database:", allJobs);
 
       const jobsWithLocation = await prisma.job.findMany({
         where: {

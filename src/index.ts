@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+dotenv.config();
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -25,8 +26,7 @@ import { UserAssessmentRouter } from "./routers/userAssessment.router";
 import { CompanyRouter } from "./routers/company.router";
 import { JobDiscoveryRouter } from "./routers/jobdis.router";
 import { ApplyRouter } from "./routers/apply.router";
-
-dotenv.config();
+import { UserTransactionRouter } from "./routers/userTransaction.router";
 
 const PORT: number = 8000;
 const app: Application = express();
@@ -67,6 +67,7 @@ const userAssessmentRouter = new UserAssessmentRouter();
 const companyRouter = new CompanyRouter();
 const jobDiscoveryRouter = new JobDiscoveryRouter();
 const applyRouter = new ApplyRouter();
+const userTransaction = new UserTransactionRouter();
 
 app.get("/api", (req: Request, res: Response) => {
   res.status(200).send("Connected to Talent Bridge API");
@@ -89,6 +90,7 @@ app.use("/api/user-assessments", userAssessmentRouter.getRouter());
 app.use("/api/companies", companyRouter.getRoutes());
 app.use("/api/discover", jobDiscoveryRouter.getRoutes());
 app.use("/api/apply", applyRouter.getRoutes());
+app.use("/api/user-transactions", userTransaction.getRouter());
 
 app.listen(PORT, () =>
   console.log(`Your server is running on http://localhost:${PORT}/api`)

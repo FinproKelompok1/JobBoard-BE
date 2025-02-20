@@ -38,7 +38,6 @@ export class CompanyController {
         jobCount: company._count.Job,
       }));
 
-      console.log("Sending response:", formattedCompanies);
       return res.status(200).json(formattedCompanies);
     } catch (error) {
       console.error("Error in getCompanies:", error);

@@ -1,18 +1,26 @@
 import { Request, Response } from "express";
 import prisma from "../prisma";
 import dayjs from "dayjs";
+import { AuthUser } from "../types/auth";
 const midtransClient = require("midtrans-client");
-
+interface MulterRequest extends Request {
+  user?: AuthUser;
+}
 export class TransactionController {
-  async createTransaction(req: Request, res: Response) {
+  async createTransaction(req: MulterRequest, res: Response): Promise<void> {
     try {
       const { subscriptionId, amount } = req.body;
-      const userId = 1;
+      const userId = req.user?.id!;
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { username: true },
+      });
       const { id } = await prisma.transaction.create({
         data: { userId, subscriptionId, amount, status: "pending" },
       });
       res.status(201).send({
         message: "Transaction created successfully",
+        username: user?.username,
         transactionId: id,
       });
     } catch (error) {
@@ -55,12 +63,8 @@ export class TransactionController {
           amount: true,
           status: true,
           createdAt: true,
-          user: {
-            select: {
-              fullname: true,
-              email: true,
-            },
-          },
+          updatedAt: true,
+          user: { select: { fullname: true, email: true } },
           subscription: { select: { category: true } },
         },
       });
@@ -71,7 +75,7 @@ export class TransactionController {
       });
     }
   }
-  async getTransactionToken(req: Request, res: Response) {
+  async getTransactionToken(req: Request, res: Response): Promise<void> {
     try {
       const { order_id, gross_amount } = req.body;
       const activeTransaction = await prisma.transaction.findUnique({
@@ -90,7 +94,7 @@ export class TransactionController {
         select: { category: true },
       });
       const user = await prisma.user.findUnique({
-        where: { id: 1 },
+        where: { id: req.user?.id! },
         select: { fullname: true, email: true },
       });
       const snap = new midtransClient.Snap({
