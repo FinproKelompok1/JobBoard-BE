@@ -6,6 +6,7 @@ import multer from "multer";
 import passport from "./config/pasport";
 import authRoutes from "./routers/auth.router";
 import { OAuthService } from "../src/services/auth/oauth.service";
+import session from "express-session";
 import "./services/interviewReminderCron";
 import "./services/subscriptionCron";
 import userProfileRoutes from "./routers/userProfile.router";
@@ -34,6 +35,13 @@ OAuthService.initialize();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(
+  session({
+    secret: "your-secret-key", // Ganti dengan key yang lebih aman
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 app.use(passport.initialize());
 
 app.use(

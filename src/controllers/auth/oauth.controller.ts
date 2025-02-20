@@ -34,9 +34,9 @@ export class OAuthController {
     } catch (error) {
       console.error("OAuth error:", error);
       res.redirect(
-        `${
-          process.env.NEXT_PUBLIC_BASE_URL_FE
-        }/login?error=${encodeURIComponent("Authentication failed")}`
+        `${process.env.BASE_URL_FE}/login?error=${encodeURIComponent(
+          "Authentication failed"
+        )}`
       );
     }
   };
@@ -44,7 +44,7 @@ export class OAuthController {
   static handleFailure = async (req: Request, res: Response) => {
     const error = req.query.error || "Authentication failed";
     res.redirect(
-      `${process.env.NEXT_PUBLIC_BASE_URL_FE}/login?error=${encodeURIComponent(
+      `${process.env.BASE_URL_FE}/login?error=${encodeURIComponent(
         String(error)
       )}`
     );

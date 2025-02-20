@@ -34,7 +34,7 @@ export class EmailService {
   }
 
   async sendVerificationEmail(email: string, token: string, name: string) {
-    const verificationUrl = `${process.env.BASE_URL_FE}/auth/verify?token=${token}`;
+    const verificationUrl = `${process.env.PUBLIC_BASE_URL_FE}/auth/verify?token=${token}`;
 
     const html = await this.compileTemplate("verification", {
       name,
