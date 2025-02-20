@@ -30,8 +30,6 @@ export class CompanyController {
         },
       });
 
-      console.log("Filtered companies:", companies);
-
       const formattedCompanies = companies.map((company) => ({
         id: company.id,
         companyName: company.companyName,

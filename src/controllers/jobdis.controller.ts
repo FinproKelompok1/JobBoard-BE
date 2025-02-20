@@ -32,14 +32,12 @@ export class JobDiscoveryController {
           },
         },
       });
-      console.log("Jobs matching location:", jobsWithLocation);
 
       const locations = await prisma.location.findMany({
         where: {
           city: city as string,
         },
       });
-      console.log("Matching locations:", locations);
 
       return res.status(200).json({
         result: jobsWithLocation,
