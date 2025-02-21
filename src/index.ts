@@ -37,7 +37,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   session({
-    secret: "your-secret-key", // Ganti dengan key yang lebih aman
+    secret: "your-secret-key",
     resave: false,
     saveUninitialized: true,
   })

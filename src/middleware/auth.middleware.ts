@@ -17,7 +17,6 @@ export const requireAuth = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    // Log untuk debugging
     console.log("Headers:", req.headers);
 
     const authHeader = req.headers.authorization;

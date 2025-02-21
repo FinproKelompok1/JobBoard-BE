@@ -4,7 +4,6 @@ import { requireAuth } from "../middleware/auth.middleware";
 import upload from "../config/multer";
 import { AuthUser } from "../types/auth";
 
-// Definisikan interface MulterRequest
 interface MulterRequest extends Request {
   file: Express.Multer.File;
   user?: AuthUser;
@@ -21,7 +20,6 @@ export class ApplyRouter {
   }
 
   private initializeRoutes(): void {
-    // Get user's submitted applications
     this.router.get(
       "/submitted",
       requireAuth,
@@ -30,7 +28,6 @@ export class ApplyRouter {
       }
     );
 
-    // Get all applications for a specific job posting
     this.router.get(
       "/job/:jobId",
       requireAuth,
@@ -39,18 +36,15 @@ export class ApplyRouter {
       }
     );
 
-    // Submit new application
     this.router.post(
       "/submit/:jobId",
       requireAuth,
       upload.single("resume"),
       (req: Request, res: Response) => {
-        // Cast req as MulterRequest karena sudah melalui multer middleware
         this.applyController.applyJob(req as MulterRequest, res);
       }
     );
 
-    // Update application status
     this.router.patch(
       "/status/:jobId",
       requireAuth,

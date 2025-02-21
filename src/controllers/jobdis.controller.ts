@@ -145,7 +145,7 @@ export class JobDiscoveryController {
 
   async getCompanyDetails(req: Request, res: Response) {
     try {
-      const id = parseInt(req.params.id); // Convert string to number
+      const id = parseInt(req.params.id);
 
       if (isNaN(id)) {
         return res.status(400).json({ message: "Invalid company ID" });

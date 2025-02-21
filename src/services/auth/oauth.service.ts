@@ -69,7 +69,7 @@ export class OAuthService {
         data: {
           email,
           username,
-          password: await bcrypt.hash(Math.random().toString(36), SALT_ROUNDS),
+          password: "oauth",
           isVerified: false,
         },
       });

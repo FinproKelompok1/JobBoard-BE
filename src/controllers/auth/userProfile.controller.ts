@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 interface AuthRequest extends Request {
   user?: AuthUser;
-  file?: any; // For now we'll use 'any' and fix the type later if needed
+  file?: any;
 }
 
 export class UserProfileController {
@@ -63,12 +63,10 @@ export class UserProfileController {
       }
 
       const {
-        // Profile data
         fullname,
         gender,
         dob,
         lastEdu,
-        // CV data
         summary,
         experience,
         skill,
@@ -76,7 +74,6 @@ export class UserProfileController {
       } = req.body;
 
       const updatedUser = await prisma.$transaction(async (prisma) => {
-        // Update user profile
         const user = await prisma.user.update({
           where: { id: userId },
           data: {
@@ -87,13 +84,11 @@ export class UserProfileController {
           },
         });
 
-        // First, check if CV exists for this user
         const existingCV = await prisma.curriculumVitae.findFirst({
           where: { userId: userId },
         });
 
         if (existingCV) {
-          // Update existing CV
           await prisma.curriculumVitae.update({
             where: { id: existingCV.id },
             data: {
@@ -104,7 +99,6 @@ export class UserProfileController {
             },
           });
         } else {
-          // Create new CV
           await prisma.curriculumVitae.create({
             data: {
               userId: userId,
@@ -116,7 +110,6 @@ export class UserProfileController {
           });
         }
 
-        // Return updated user with CV
         return prisma.user.findUnique({
           where: { id: userId },
           include: {

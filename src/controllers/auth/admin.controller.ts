@@ -41,7 +41,7 @@ export class AdminAuthController {
 
       res.json({
         message: "Login successful",
-        token: token, // kirim token di response body juga
+        token: token,
         admin: {
           id: admin.id,
           email: admin.email,

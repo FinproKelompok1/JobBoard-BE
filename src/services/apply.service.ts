@@ -1,4 +1,3 @@
-// src/services/apply.service.ts
 import { PrismaClient, JobApplication } from "../../prisma/generated/client";
 import { cloudinaryUpload } from "./cloudinary";
 
@@ -12,14 +11,12 @@ export class ApplyService {
     expectedSalary: number
   ): Promise<JobApplication> {
     try {
-      // Debug log untuk input
       console.log("Attempting to create application:", {
         userId,
         jobId,
         salary: expectedSalary,
       });
 
-      // Cek job validity
       const job = await prisma.job.findUnique({
         where: {
           id: jobId,
@@ -40,7 +37,6 @@ export class ApplyService {
         throw new Error("The application deadline has passed");
       }
 
-      // Cek existing application dengan Query yang lebih spesifik
       const applications = await prisma.jobApplication.findMany({
         where: {
           userId: userId,
@@ -50,12 +46,10 @@ export class ApplyService {
         },
       });
 
-      // Debug log untuk applications
       console.log("Existing applications for user:", applications);
 
       const hasApplied = applications.some((app) => app.jobId === jobId);
 
-      // Debug log untuk hasil pengecekan
       console.log("Application check result:", {
         hasApplied,
         checkingJobId: jobId,
@@ -65,7 +59,6 @@ export class ApplyService {
         throw new Error("You have already applied for this job");
       }
 
-      // Proses upload dan create application
       const uploadResult = await cloudinaryUpload(resume, "resumes");
 
       return await prisma.jobApplication.create({
