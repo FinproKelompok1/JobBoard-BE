@@ -114,7 +114,6 @@ export class OAuthService {
       });
     }
 
-    // Add role to the user object
     return { ...user, role: "user" };
   }
 }

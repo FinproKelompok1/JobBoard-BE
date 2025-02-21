@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import prisma from "../prisma";
 import { cloudinaryUpload, cloudinaryRemove } from "../services/cloudinary";
 
-// Add Multer type
 interface MulterRequest extends Request {
   file?: Express.Multer.File;
 }
@@ -123,7 +122,6 @@ export class CompanyController {
 
   async getProfile(req: Request, res: Response) {
     try {
-      // @ts-ignore
       const adminId = req.user?.id;
       if (!adminId) {
         return res.status(401).json({ message: "Unauthorized" });
@@ -159,7 +157,6 @@ export class CompanyController {
 
   async updateProfile(req: MulterRequest, res: Response) {
     try {
-      // @ts-ignore
       const adminId = req.user?.id;
       if (!adminId) {
         return res.status(401).json({ message: "Unauthorized" });
@@ -168,23 +165,19 @@ export class CompanyController {
       const { companyName, email, noHandphone, description } = req.body;
       let logoUrl = undefined;
 
-      // Get current profile to check existing logo
       const currentProfile = await prisma.admin.findUnique({
         where: { id: adminId },
         select: { logo: true },
       });
 
-      // Handle logo upload if file exists
       if (req.file) {
         try {
-          // Upload new image to Cloudinary
           const uploadResult = await cloudinaryUpload(
             req.file,
             "company-logos"
           );
           logoUrl = uploadResult.secure_url;
 
-          // Remove old logo if exists
           if (currentProfile?.logo) {
             await cloudinaryRemove(currentProfile.logo);
           }
