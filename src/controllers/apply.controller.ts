@@ -16,11 +16,25 @@ export class ApplyController {
 
   async applyJob(req: MulterRequest, res: Response) {
     try {
-      const { id: jobId } = req.params;
+      // Get jobId from URL params
+      const jobId = req.params.jobId; // Make sure this matches your route parameter name
       const userId = req.user?.id;
 
+      // Debug log
+      console.log("Application attempt:", {
+        userId,
+        jobId,
+        expectedSalary: req.body.expectedSalary,
+        file: req.file?.originalname,
+      });
+
+      // Validations
       if (!userId) {
         return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      if (!jobId) {
+        return res.status(400).json({ message: "Job ID is required" });
       }
 
       const resume = req.file;
@@ -29,12 +43,14 @@ export class ApplyController {
       }
 
       const expectedSalary = parseInt(req.body.expectedSalary);
-      if (!expectedSalary) {
-        return res.status(400).json({ message: "Expected salary is required" });
+      if (isNaN(expectedSalary) || expectedSalary <= 0) {
+        return res
+          .status(400)
+          .json({ message: "Valid expected salary is required" });
       }
 
       const application = await this.applyService.createApplication(
-        userId,
+        Number(userId),
         jobId,
         resume,
         expectedSalary
@@ -45,6 +61,7 @@ export class ApplyController {
         data: application,
       });
     } catch (error) {
+      console.error("Application submission error:", error);
       if (error instanceof Error) {
         return res.status(400).json({ message: error.message });
       }
@@ -59,9 +76,12 @@ export class ApplyController {
         return res.status(401).json({ message: "Unauthorized" });
       }
 
-      const applications = await this.applyService.getUserApplications(userId);
+      const applications = await this.applyService.getUserApplications(
+        Number(userId)
+      );
       return res.status(200).json({ data: applications });
     } catch (error) {
+      console.error("Get user applications error:", error);
       return res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -73,9 +93,14 @@ export class ApplyController {
       }
 
       const { jobId } = req.params;
+      if (!jobId) {
+        return res.status(400).json({ message: "Job ID is required" });
+      }
+
       const applications = await this.applyService.getJobApplications(jobId);
       return res.status(200).json({ data: applications });
     } catch (error) {
+      console.error("Get job applications error:", error);
       return res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -89,8 +114,25 @@ export class ApplyController {
       const { jobId } = req.params;
       const { userId, status, rejectedReview } = req.body;
 
+      if (!jobId || !userId || !status) {
+        return res
+          .status(400)
+          .json({ message: "JobId, userId and status are required" });
+      }
+
+      // Validate status
+      const validStatuses = [
+        "processed",
+        "interviewed",
+        "accepted",
+        "rejected",
+      ];
+      if (!validStatuses.includes(status)) {
+        return res.status(400).json({ message: "Invalid status value" });
+      }
+
       const application = await this.applyService.updateStatus(
-        userId,
+        Number(userId),
         jobId,
         status,
         rejectedReview
@@ -101,6 +143,80 @@ export class ApplyController {
         data: application,
       });
     } catch (error) {
+      console.error("Update application status error:", error);
+      if (error instanceof Error) {
+        return res.status(400).json({ message: error.message });
+      }
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  async deleteApplication(req: MulterRequest, res: Response) {
+    try {
+      const userId = req.user?.id;
+      const { jobId } = req.params;
+
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      if (!jobId) {
+        return res.status(400).json({ message: "Job ID is required" });
+      }
+
+      await this.applyService.deleteApplication(Number(userId), jobId);
+      return res
+        .status(200)
+        .json({ message: "Application deleted successfully" });
+    } catch (error) {
+      console.error("Delete application error:", error);
+      if (error instanceof Error) {
+        return res.status(400).json({ message: error.message });
+      }
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  async getApplicationStatistics(req: MulterRequest, res: Response) {
+    try {
+      if (req.user?.role !== "admin") {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const { jobId } = req.params;
+      if (!jobId) {
+        return res.status(400).json({ message: "Job ID is required" });
+      }
+
+      const statistics = await this.applyService.getApplicationStatistics(
+        jobId
+      );
+      return res.status(200).json({ data: statistics });
+    } catch (error) {
+      console.error("Get application statistics error:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  async checkApplication(req: MulterRequest, res: Response) {
+    try {
+      const { jobId } = req.params;
+      const { userId } = req.body;
+
+      if (!userId || !jobId) {
+        return res
+          .status(400)
+          .json({ message: "UserId and JobId are required" });
+      }
+
+      const hasApplied = await this.applyService.checkExistingApplication(
+        Number(userId),
+        jobId
+      );
+
+      return res.status(200).json({ hasApplied });
+    } catch (error) {
+      console.error("Error checking application:", error);
       return res.status(500).json({ message: "Internal server error" });
     }
   }
