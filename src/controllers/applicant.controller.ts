@@ -17,7 +17,6 @@ export class ApplicantController {
         max_age,
         last_edu,
       } = req.query;
-      console.log(req.query);
       const filter: Prisma.JobApplicationWhereInput = { jobId: req.params.id };
 
       if (search) {
@@ -81,6 +80,7 @@ export class ApplicantController {
           resume: true,
           status: true,
           rejectedReview: true,
+          selectionTestResult: true,
           user: {
             select: {
               avatar: true,
