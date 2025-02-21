@@ -13,8 +13,16 @@ export class PreselectionRouter {
   }
 
   private initializeRoutes() {
-    this.router.post("/", this.preselectionController.createPreSelection);
+    this.router.post("/", this.preselectionController.createPreselection);
     this.router.get("/:id", this.preselectionController.getPreselection);
+    this.router.get(
+      "/questions/:id",
+      this.preselectionController.getPreselectionQuestions
+    );
+    this.router.post(
+      "/questions/:id",
+      this.preselectionController.submitPreselection
+    );
     this.router.patch(
       "/active/:id",
       checkPreselection,

@@ -5,17 +5,61 @@ import { IReqBody } from "../types/preselection";
 export class PreselectionController {
   async getPreselection(req: Request, res: Response) {
     try {
-      const preselection = await prisma.preSelectionTest.findUnique({
-        where: { id: +req.params.id },
+      const preselection = await prisma.preSelectionTest.findFirst({
+        where: { jobId: req.params.id },
+        select: {
+          id: true,
+          title: true,
+          description: true,
+        },
       });
-      res.status(200).send({ message: preselection });
+      res.status(200).send({ result: preselection });
     } catch (err) {
       console.log(err);
       res.status(400).send(err);
     }
   }
 
-  async createPreSelection(req: Request<{}, {}, IReqBody>, res: Response) {
+  async getPreselectionQuestions(req: Request, res: Response) {
+    try {
+      const questions = await prisma.selectionTestQuestion.findMany({
+        where: {
+          preSelectionTest: { jobId: req.params.id },
+        },
+      });
+      res.status(200).send({ result: questions });
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  }
+
+  async submitPreselection(req: Request, res: Response) {
+    try {
+      const { answer } = req.body;
+      console.log(answer);
+      let totalCorrectAnswer = 0;
+      for (const item of answer) {
+        if (item.selectedOption == item.correctAnswer) {
+          totalCorrectAnswer++;
+        }
+      }
+      const selectionTestResult = (totalCorrectAnswer / answer.length) * 100;
+      console.log(selectionTestResult);
+      await prisma.jobApplication.update({
+        where: { userId_jobId: { jobId: req.params.id, userId: 2 } },
+        data: { selectionTestResult },
+      });
+      res
+        .status(200)
+        .send({ message: "Thank you, your answers was submitted" });
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  }
+
+  async createPreselection(req: Request<{}, {}, IReqBody>, res: Response) {
     try {
       const { title, description, jobId } = req.body;
       const { id: preSelectionTestId } = await prisma.preSelectionTest.create({
