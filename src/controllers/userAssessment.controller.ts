@@ -154,7 +154,6 @@ export class UserAssessmentController {
       const browser = await puppeteer.launch({ headless: true });
       const page = await browser.newPage();
       const authToken = req.headers.authorization || "";
-      console.log("authToken received", authToken);
       await page.setExtraHTTPHeaders({
         Authorization: authToken,
       });

@@ -23,7 +23,11 @@ export class UserProfileController {
       const user = await prisma.user.findUnique({
         where: { id: userId },
         include: {
+          Review: true,
           CurriculumVitae: true,
+          UserAssessment: {
+            include: { certificate: true, assessment: true, User: true },
+          },
           location: true,
           JobApplication: {
             include: {

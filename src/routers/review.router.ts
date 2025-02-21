@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { ReviewController } from "../controllers/review.controller";
+import { requireAuth } from "../middleware/auth.middleware";
 
 export class ReviewRouter {
   private router: Router;
@@ -12,7 +13,20 @@ export class ReviewRouter {
   }
 
   private initializeRoutes() {
-    this.router.post("/:userId/:jobId", this.reviewController.createReview);
+    this.router.post(
+      "/:jobId",
+      requireAuth,
+      this.reviewController.createReview
+    );
+    this.router.get(
+      "/:jobId",
+      requireAuth,
+      this.reviewController.getUserReview
+    );
+    this.router.get(
+      "/company/:adminId",
+      this.reviewController.getCompanyReviews
+    );
   }
 
   getRouter(): Router {

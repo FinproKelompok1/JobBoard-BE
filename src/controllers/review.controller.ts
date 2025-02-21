@@ -1,10 +1,15 @@
 import { Request, Response } from "express";
 import prisma from "../prisma";
+import { AuthUser } from "../types/auth";
+
+interface MulterRequest extends Request {
+  user?: AuthUser;
+}
 
 export class ReviewController {
-  async createReview(req: Request, res: Response) {
+  async createReview(req: MulterRequest, res: Response): Promise<void> {
     try {
-      const userId = +req.params.userId;
+      const userId = req.user?.id!;
       const jobId = req.params.jobId;
 
       const {
@@ -48,7 +53,7 @@ export class ReviewController {
         },
       });
 
-      res.status(201).send({ message: "Review created successfully" });
+      res.status(201).send({ message: "Review submitted successfully" });
     } catch (error) {
       console.error("Error creating review:", error);
       res
@@ -56,20 +61,56 @@ export class ReviewController {
         .send({ message: "Server error: Unable to create review." });
     }
   }
+
+  async getUserReview(req: MulterRequest, res: Response): Promise<void> {
+    try {
+      const userId = req.user?.id!;
+      const jobId = req.params.jobId;
+
+      const userReview = await prisma.review.findUnique({
+        where: { userId_jobId: { userId, jobId } },
+      });
+
+      res.status(200).send({ userReview });
+    } catch (error) {
+      res
+        .status(500)
+        .send({ message: "Server error: Unable to get user review" });
+    }
+  }
+
+  async getCompanyReviews(req: MulterRequest, res: Response): Promise<void> {
+    try {
+      const adminId = +req.params.adminId;
+
+      const company = await prisma.admin.findUnique({
+        where: { id: adminId },
+        select: {
+          companyName: true,
+          Job: {
+            select: {
+              Review: true,
+              title: true,
+            },
+          },
+        },
+      });
+
+      const companyReviews =
+        company?.Job.flatMap((job) =>
+          job.Review.map((review) => ({
+            ...review,
+            jobTitle: job.title,
+          }))
+        ) || [];
+      res.status(200).send({
+        companyReviews,
+        companyName: company?.companyName,
+      });
+    } catch (error) {
+      res
+        .status(500)
+        .send({ message: "Server error: Unable to get company reviews" });
+    }
+  }
 }
-
-// model Review {
-//     userId         Int
-//     jobId          String
-//     review         String
-//     CultureRating  Int
-//     balanceRating  Int
-//     facilityRating Int
-//     careerRating   Int
-//     salary         Int
-//     createdAt      DateTime @default(now())
-//     user           User     @relation(fields: [userId], references: [id])
-//     job            Job      @relation(fields: [jobId], references: [id])
-
-//     @@id([userId, jobId])
-//   }
