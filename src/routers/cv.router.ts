@@ -13,7 +13,7 @@ export class CvRouter {
   }
 
   private initializeRoutes() {
-    this.router.post("/", this.cvController.createCv);
+    this.router.post("/", requireAuth, this.cvController.createCv);
 
     this.router.get("/:username", this.cvController.getUserCv);
     this.router.get(

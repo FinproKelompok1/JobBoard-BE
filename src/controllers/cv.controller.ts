@@ -7,9 +7,9 @@ interface MulterRequest extends Request {
 }
 
 export class CvController {
-  async createCv(req: Request, res: Response) {
+  async createCv(req: MulterRequest, res: Response): Promise<void> {
     try {
-      const userId = 1;
+      const userId = req.user?.id!;
       const { summary, experience, education, skill } = req.body;
 
       await prisma.curriculumVitae.create({
@@ -106,7 +106,7 @@ export class CvController {
         data,
       });
 
-      res.status(200).send({ message: `CV ID ${cvId} updated successfully` });
+      res.status(200).send({ message: `CV updated successfully` });
     } catch (error) {
       console.error("Error updating CV:", error);
       res.status(500).send({ message: "Server error: Unable to update CV." });
