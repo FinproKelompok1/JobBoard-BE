@@ -33,7 +33,13 @@ export class AssessmentController {
           description: true,
           isActive: true,
           AssessmentQuestion: { select: { question: true } },
-          UserAssessment: { select: { User: { select: { username: true } } } },
+          UserAssessment: {
+            select: {
+              User: { select: { username: true } },
+              status: true,
+              id: true,
+            },
+          },
         },
       });
 

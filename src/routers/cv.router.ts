@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { CvController } from "../controllers/cv.controller";
+import { requireAuth } from "../middleware/auth.middleware";
 
 export class CvRouter {
   private router: Router;
@@ -12,10 +13,14 @@ export class CvRouter {
   }
 
   private initializeRoutes() {
-    this.router.post("/", this.cvController.createCv);
+    this.router.post("/", requireAuth, this.cvController.createCv);
 
     this.router.get("/:username", this.cvController.getUserCv);
-    this.router.get("/download/:username", this.cvController.downloadCv);
+    this.router.get(
+      "/download/:username",
+      requireAuth,
+      this.cvController.downloadCv
+    );
     this.router.get("/detail/:cvId", this.cvController.getCvById);
     this.router.patch("/:cvId", this.cvController.updateCv);
   }

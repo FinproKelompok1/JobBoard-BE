@@ -6,7 +6,6 @@ export class CompanyController {
     console.log("CompanyController: getCompanies called");
     try {
       const allAdmins = await prisma.admin.findMany();
-      console.log("All admins in database:", allAdmins);
 
       const companies = await prisma.admin.findMany({
         where: {
@@ -30,8 +29,6 @@ export class CompanyController {
         },
       });
 
-      console.log("Filtered companies:", companies);
-
       const formattedCompanies = companies.map((company) => ({
         id: company.id,
         companyName: company.companyName,
@@ -40,7 +37,6 @@ export class CompanyController {
         jobCount: company._count.Job,
       }));
 
-      console.log("Sending response:", formattedCompanies);
       return res.status(200).json(formattedCompanies);
     } catch (error) {
       console.error("Error in getCompanies:", error);

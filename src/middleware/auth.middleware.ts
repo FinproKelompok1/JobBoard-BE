@@ -18,7 +18,7 @@ export const requireAuth = async (
 ): Promise<void> => {
   try {
     // Log untuk debugging
-    console.log("Headers:", req.headers);
+    // console.log("Headers:", req.headers);
 
     const authHeader = req.headers.authorization;
     if (!authHeader?.startsWith("Bearer ")) {

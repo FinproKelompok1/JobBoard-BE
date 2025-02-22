@@ -1,11 +1,15 @@
 import { Request, Response } from "express";
 import prisma from "../prisma";
 import puppeteer from "puppeteer";
+import { AuthUser } from "../types/auth";
+interface MulterRequest extends Request {
+  user?: AuthUser;
+}
 
 export class CvController {
-  async createCv(req: Request, res: Response) {
+  async createCv(req: MulterRequest, res: Response): Promise<void> {
     try {
-      const userId = 1;
+      const userId = req.user?.id!;
       const { summary, experience, education, skill } = req.body;
 
       await prisma.curriculumVitae.create({
@@ -102,21 +106,32 @@ export class CvController {
         data,
       });
 
-      res.status(200).send({ message: `CV ID ${cvId} updated successfully` });
+      res.status(200).send({ message: `CV updated successfully` });
     } catch (error) {
       console.error("Error updating CV:", error);
       res.status(500).send({ message: "Server error: Unable to update CV." });
     }
   }
 
-  async downloadCv(req: Request, res: Response) {
+  async downloadCv(req: MulterRequest, res: Response): Promise<void> {
     const username = req.params.username;
-    const pageUrl = `${process.env.BASE_URL_FE}/${username}/cv/download`;
+    const pageUrl = `${process.env.BASE_URL_FE}/download/cv/${username}`;
 
     try {
       const browser = await puppeteer.launch({ headless: true });
       const page = await browser.newPage();
-
+      const authToken = req.headers.authorization || "";
+      await page.setExtraHTTPHeaders({
+        Authorization: authToken,
+      });
+      const authCookie = req.headers.cookie; // Get cookies from the request
+      if (authCookie) {
+        const cookies = authCookie.split(";").map((cookie) => {
+          const [name, value] = cookie.trim().split("=");
+          return { name, value, domain: new URL(pageUrl).hostname };
+        });
+        await page.setCookie(...cookies);
+      }
       try {
         await page.goto(pageUrl, { waitUntil: "networkidle2" });
       } catch (err) {
