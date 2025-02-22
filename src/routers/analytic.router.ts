@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { AnalyticController } from "../controllers/analytic.controller";
+import { requireAuth } from "../middlewares/auth.middleware";
 
 export class AnalyticRouter {
   private router: Router;
@@ -12,9 +13,21 @@ export class AnalyticRouter {
   }
 
   private initializeRoutes() {
-    this.router.get("/total-demographics", this.analyticController.getTotalDemographics);
-    this.router.get("/salary-trends", this.analyticController.getSalaryTrends);
-    this.router.get("/applicant-interest", this.analyticController.getApplicantInterest);
+    this.router.get(
+      "/total-demographics",
+      requireAuth,
+      this.analyticController.getTotalDemographics
+    );
+    this.router.get(
+      "/salary-trends",
+      requireAuth,
+      this.analyticController.getSalaryTrends
+    );
+    this.router.get(
+      "/applicant-interest",
+      requireAuth,
+      this.analyticController.getApplicantInterest
+    );
   }
 
   getRoutes(): Router {

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { PreselectionController } from "../controllers/preselection.controller";
 import { checkPreselection } from "../middlewares/checkPreselection";
+import { requireAuth } from "../middlewares/auth.middleware";
 
 export class PreselectionRouter {
   private router: Router;
@@ -21,6 +22,7 @@ export class PreselectionRouter {
     );
     this.router.post(
       "/questions/:id",
+      requireAuth,
       this.preselectionController.submitPreselection
     );
     this.router.patch(

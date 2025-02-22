@@ -5,7 +5,7 @@ import {
   requireAuth,
   requireVerified,
   checkVerificationTimeout,
-} from "../middleware/auth.middleware";
+} from "../middlewares/auth.middleware";
 import { UserAuthController } from "../controllers/auth/user.controller";
 import { AdminAuthController } from "../controllers/auth/admin.controller";
 import { DeveloperAuthController } from "../controllers/auth/developer.controller";

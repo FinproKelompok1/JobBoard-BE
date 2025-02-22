@@ -367,7 +367,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Final Project\\JobBoard-BE\\prisma\\generated\\client",
+      "value": "D:\\purwadhika\\finpro\\finpro-backend\\prisma\\generated\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -389,7 +389,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Final Project\\JobBoard-BE\\prisma\\schema.prisma",
+    "sourceFilePath": "D:\\purwadhika\\finpro\\finpro-backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

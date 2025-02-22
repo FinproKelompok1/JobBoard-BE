@@ -16,7 +16,7 @@ export class ApplyController {
 
   async applyJob(req: MulterRequest, res: Response) {
     try {
-      const { id: jobId } = req.params;
+      const { jobId } = req.params;
       const userId = req.user?.id;
 
       if (!userId) {
