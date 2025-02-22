@@ -6,7 +6,6 @@ export class CompanyController {
     console.log("CompanyController: getCompanies called");
     try {
       const allAdmins = await prisma.admin.findMany();
-      console.log("All admins in database:", allAdmins);
 
       const companies = await prisma.admin.findMany({
         where: {
