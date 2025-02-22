@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { UserTransactionController } from "../controllers/userTransaction.controller";
-import { requireAuth } from "src/middleware/auth.middleware";
 
 export class UserTransactionRouter {
   private router: Router;
