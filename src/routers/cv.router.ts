@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { CvController } from "../controllers/cv.controller";
-import { requireAuth } from "../middleware/auth.middleware";
+import { requireAuth } from "../middlewares/auth.middleware";
 
 export class CvRouter {
   private router: Router;

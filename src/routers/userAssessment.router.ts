@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { UserAssessmentController } from "../controllers/userAssessment.controller";
-import { requireAuth } from "../middleware/auth.middleware";
+import { requireAuth } from "../middlewares/auth.middleware";
 
 export class UserAssessmentRouter {
   private router: Router;
