@@ -10,7 +10,7 @@ export class JobController {
       const limit = 7;
       const { sort = "asc", page = "1", search } = req.query;
       const filter: Prisma.JobWhereInput = {
-        AND: [{ adminId: 2 }, { isActive: true }],
+        AND: [{ adminId: req.user?.id }, { isActive: true }],
       };
       if (search) {
         const isEnumValid = Object.values(JobCategory).includes(
@@ -44,7 +44,7 @@ export class JobController {
 
   async createJob(req: Request, res: Response) {
     try {
-      const adminId = 2;
+      const adminId = req.user?.id;
       if (req.file) {
         const { secure_url } = await cloudinaryUpload(req.file, "jobsBanner");
         req.body.banner = secure_url;
@@ -188,7 +188,7 @@ export class JobController {
   async totalJobs(req: Request, res: Response) {
     try {
       const jobs = await prisma.job.aggregate({
-        where: { adminId: 2, isActive: true },
+        where: { adminId: req.user?.id, isActive: true },
         _count: { _all: true },
       });
       res.status(200).send({ result: jobs._count._all });

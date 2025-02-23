@@ -367,7 +367,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/muhammadwildansapoetro/Documents/Learning/JCWD0508/JobBoard-BE/prisma/generated/client",
+      "value": "D:\\purwadhika\\finpro\\finpro-backend\\prisma\\generated\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -389,7 +389,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/muhammadwildansapoetro/Documents/Learning/JCWD0508/JobBoard-BE/prisma/schema.prisma",
+    "sourceFilePath": "D:\\purwadhika\\finpro\\finpro-backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

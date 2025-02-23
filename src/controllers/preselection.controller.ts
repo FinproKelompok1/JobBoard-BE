@@ -37,7 +37,6 @@ export class PreselectionController {
   async submitPreselection(req: Request, res: Response) {
     try {
       const { answer } = req.body;
-      console.log(answer);
       let totalCorrectAnswer = 0;
       for (const item of answer) {
         if (item.selectedOption == item.correctAnswer) {
@@ -45,9 +44,10 @@ export class PreselectionController {
         }
       }
       const selectionTestResult = (totalCorrectAnswer / answer.length) * 100;
-      console.log(selectionTestResult);
       await prisma.jobApplication.update({
-        where: { userId_jobId: { jobId: req.params.id, userId: 2 } },
+        where: {
+          userId_jobId: { jobId: req.params.id, userId: req.user?.id! },
+        },
         data: { selectionTestResult },
       });
       res

@@ -27,6 +27,7 @@ export const requireAuth = async (
     }
 
     const token = authHeader.split(" ")[1];
+    console.log(token);
     const decoded = jwt.verify(token, JWT_SECRET) as AuthUser;
     req.user = decoded;
     next();

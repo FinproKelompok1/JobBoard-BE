@@ -4,7 +4,7 @@ import prisma from "../prisma";
 export class AnalyticController {
   async getTotalDemographics(req: Request, res: Response) {
     try {
-      const adminId = 2;
+      const adminId = req.user?.id;
       const gender = await prisma.$queryRaw<{ type: string; total: number }[]>`
         SELECT u."gender" AS "type", CAST(COUNT(*) AS INT) AS total
         FROM "JobApplication" ja
@@ -93,7 +93,7 @@ export class AnalyticController {
 
   async getSalaryTrends(req: Request, res: Response) {
     try {
-      const adminId = 2;
+      const adminId = req.user?.id;
       const basedOnJobRole = await prisma.$queryRaw<
         { role: string; avgSalary: number }[]
       >`
@@ -126,7 +126,7 @@ export class AnalyticController {
 
   async getApplicantInterest(req: Request, res: Response) {
     try {
-      const adminId = 2;
+      const adminId = req.user?.id;
       const basedOnJobCategory = await prisma.$queryRaw<
         {
           category: string;

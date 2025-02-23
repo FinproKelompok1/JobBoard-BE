@@ -1,5 +1,5 @@
 import express from "express";
-import { requireAuth } from "../middleware/auth.middleware";
+import { requireAuth } from "../middlewares/auth.middleware";
 import UserProfileController from "../controllers/auth/userProfile.controller";
 import upload from "../config/multer";
 
