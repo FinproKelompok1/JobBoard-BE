@@ -31,7 +31,27 @@ export class TransactionController {
   }
   async getTransactions(req: Request, res: Response) {
     try {
+      const {
+        page = "1",
+        limit = "10",
+        sort = "createdAt",
+        order = "desc",
+        status,
+        email,
+      } = req.query;
+      const pageNumber = parseInt(page as string, 10);
+      const pageSize = parseInt(limit as string, 10);
+      const skip = (pageNumber - 1) * pageSize;
+      const orderBy = { [sort as string]: order === "desc" ? "desc" : "asc" };
+      const where: any = {};
+      if (status) {
+        where.status = status;
+      }
+      if (email) {
+        where.user = { email: { contains: email, mode: "insensitive" } };
+      }
       const transactions = await prisma.transaction.findMany({
+        where,
         select: {
           id: true,
           userId: true,
@@ -43,8 +63,16 @@ export class TransactionController {
           user: { select: { email: true } },
           subscription: { select: { category: true } },
         },
+        skip,
+        take: pageSize,
+        orderBy,
       });
-      res.status(200).send({ transactions });
+      const totalTransactions = await prisma.transaction.count({ where });
+      res.status(200).send({
+        transactions,
+        totalPages: Math.ceil(totalTransactions / pageSize),
+        currentPage: pageNumber,
+      });
     } catch (error) {
       res.status(500).send({
         message: "Server error: Unable to retrieve transactions.",
