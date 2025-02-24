@@ -25,6 +25,7 @@ export class UserProfileController {
         include: {
           Review: true,
           CurriculumVitae: true,
+          UserSubscription: true,
           UserAssessment: {
             include: { certificate: true, assessment: true, User: true },
           },
