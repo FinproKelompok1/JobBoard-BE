@@ -1,6 +1,7 @@
-// src/services/apply.service.ts
 import { PrismaClient, JobApplication } from "../../prisma/generated/client";
 import { cloudinaryUpload } from "./cloudinary";
+import { Request } from "express";
+import { Multer } from "multer";
 
 const prisma = new PrismaClient();
 
@@ -12,15 +13,20 @@ export class ApplyService {
     expectedSalary: number
   ): Promise<JobApplication> {
     try {
-      // Debug log untuk input
-      console.log("Attempting to create application:", {
+      console.log("Service received:", {
         userId,
         jobId,
+        resumeName: resume.originalname,
         salary: expectedSalary,
       });
 
-      // Cek job validity
-      const job = await prisma.job.findUnique({
+      // Validate all required fields
+      if (!userId || !jobId || !resume || !expectedSalary) {
+        throw new Error("All fields are required");
+      }
+
+      // Check if job exists and is active
+      const job = await prisma.job.findFirst({
         where: {
           id: jobId,
           isActive: true,
@@ -40,44 +46,33 @@ export class ApplyService {
         throw new Error("The application deadline has passed");
       }
 
-      // Cek existing application dengan Query yang lebih spesifik
-      const applications = await prisma.jobApplication.findMany({
+      // Check for existing application using findFirst
+      const existingApplication = await prisma.jobApplication.findFirst({
         where: {
-          userId: userId,
-        },
-        select: {
-          jobId: true,
+          AND: [{ userId: userId }, { jobId: jobId }],
         },
       });
 
-      // Debug log untuk applications
-      console.log("Existing applications for user:", applications);
-
-      const hasApplied = applications.some((app) => app.jobId === jobId);
-
-      // Debug log untuk hasil pengecekan
-      console.log("Application check result:", {
-        hasApplied,
-        checkingJobId: jobId,
-      });
-
-      if (hasApplied) {
+      if (existingApplication) {
         throw new Error("You have already applied for this job");
       }
 
-      // Proses upload dan create application
+      // Upload resume
       const uploadResult = await cloudinaryUpload(resume, "resumes");
 
-      return await prisma.jobApplication.create({
+      // Create application
+      const newApplication = await prisma.jobApplication.create({
         data: {
-          userId,
-          jobId,
+          userId: userId,
+          jobId: jobId,
           resume: uploadResult.secure_url,
-          expectedSalary,
+          expectedSalary: expectedSalary,
           isTaken: false,
           status: "processed",
         },
       });
+
+      return newApplication;
     } catch (error) {
       console.error("Application creation error:", error);
       throw error;
@@ -101,6 +96,7 @@ export class ApplyService {
         },
       });
     } catch (error) {
+      console.error("Error fetching user applications:", error);
       throw error;
     }
   }
@@ -124,6 +120,7 @@ export class ApplyService {
         },
       });
     } catch (error) {
+      console.error("Error fetching job applications:", error);
       throw error;
     }
   }
@@ -135,6 +132,16 @@ export class ApplyService {
     rejectedReview?: string
   ): Promise<JobApplication> {
     try {
+      const existingApplication = await prisma.jobApplication.findFirst({
+        where: {
+          AND: [{ userId: userId }, { jobId: jobId }],
+        },
+      });
+
+      if (!existingApplication) {
+        throw new Error("Application not found");
+      }
+
       return await prisma.jobApplication.update({
         where: {
           userId_jobId: {
@@ -148,6 +155,88 @@ export class ApplyService {
         },
       });
     } catch (error) {
+      console.error("Error updating application status:", error);
+      throw error;
+    }
+  }
+
+  async deleteApplication(
+    userId: number,
+    jobId: string
+  ): Promise<JobApplication> {
+    try {
+      const existingApplication = await prisma.jobApplication.findFirst({
+        where: {
+          AND: [{ userId: userId }, { jobId: jobId }],
+        },
+      });
+
+      if (!existingApplication) {
+        throw new Error("Application not found");
+      }
+
+      return await prisma.jobApplication.delete({
+        where: {
+          userId_jobId: {
+            userId,
+            jobId,
+          },
+        },
+      });
+    } catch (error) {
+      console.error("Error deleting application:", error);
+      throw error;
+    }
+  }
+
+  async getApplicationStatistics(jobId: string): Promise<{
+    total: number;
+    processed: number;
+    interviewed: number;
+    accepted: number;
+    rejected: number;
+  }> {
+    try {
+      const applications = await prisma.jobApplication.findMany({
+        where: { jobId },
+        select: {
+          status: true,
+        },
+      });
+
+      const statistics = {
+        total: applications.length,
+        processed: applications.filter((app) => app.status === "processed")
+          .length,
+        interviewed: applications.filter((app) => app.status === "interviewed")
+          .length,
+        accepted: applications.filter((app) => app.status === "accepted")
+          .length,
+        rejected: applications.filter((app) => app.status === "rejected")
+          .length,
+      };
+
+      return statistics;
+    } catch (error) {
+      console.error("Error getting application statistics:", error);
+      throw error;
+    }
+  }
+
+  async checkExistingApplication(
+    userId: number,
+    jobId: string
+  ): Promise<boolean> {
+    try {
+      const application = await prisma.jobApplication.findFirst({
+        where: {
+          AND: [{ userId: userId }, { jobId: jobId }],
+        },
+      });
+
+      return !!application;
+    } catch (error) {
+      console.error("Error checking application:", error);
       throw error;
     }
   }

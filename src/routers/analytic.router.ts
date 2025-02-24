@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { AnalyticController } from "../controllers/analytic.controller";
-import { requireAuth } from "../middlewares/auth.middleware";
+import { requireAuth } from "../middlewares/auth";
 
 export class AnalyticRouter {
   private router: Router;

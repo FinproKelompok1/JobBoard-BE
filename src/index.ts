@@ -28,6 +28,9 @@ import { JobDiscoveryRouter } from "./routers/jobdis.router";
 import { ApplyRouter } from "./routers/apply.router";
 import { UserTransactionRouter } from "./routers/userTransaction.router";
 import { ReviewRouter } from "./routers/review.router";
+import passwordRoutes from "./routers/password.router";
+
+dotenv.config();
 
 const PORT: number = 8000;
 const app: Application = express();
@@ -38,7 +41,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   session({
-    secret: "your-secret-key", // Ganti dengan key yang lebih aman
+    secret: "your-secret-key",
     resave: false,
     saveUninitialized: true,
   })
@@ -76,6 +79,7 @@ app.get("/api", (req: Request, res: Response) => {
 });
 
 app.use("/api/auth", authRoutes, userProfileRoutes);
+app.use("/api/password", passwordRoutes);
 app.use("/api/jobs", jobRouter.getRoutes());
 app.use("/api/applicants", applicantRouter.getRoutes());
 app.use("/api/jobs", jobRouter.getRoutes());

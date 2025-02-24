@@ -69,7 +69,7 @@ export class OAuthService {
         data: {
           email,
           username,
-          password: await bcrypt.hash(Math.random().toString(36), SALT_ROUNDS),
+          password: "oauth",
           isVerified: false,
         },
       });
@@ -114,7 +114,6 @@ export class OAuthService {
       });
     }
 
-    // Add role to the user object
     return { ...user, role: "user" };
   }
 }

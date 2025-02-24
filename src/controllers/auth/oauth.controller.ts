@@ -20,12 +20,11 @@ export class OAuthController {
         { expiresIn: "24h" }
       );
 
-      // Set the HTTP-only cookie
       res.cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "lax", // Changed to lax for OAuth redirects
-        maxAge: 24 * 60 * 60 * 1000, // 24 hours
+        sameSite: "lax",
+        maxAge: 24 * 60 * 60 * 1000,
         path: "/",
       });
 

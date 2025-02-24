@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { PreselectionController } from "../controllers/preselection.controller";
 import { checkPreselection } from "../middlewares/checkPreselection";
-import { requireAuth } from "../middlewares/auth.middleware";
+import { requireAuth } from "../middlewares/auth";
 
 export class PreselectionRouter {
   private router: Router;

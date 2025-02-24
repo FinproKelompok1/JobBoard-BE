@@ -1,10 +1,9 @@
 import { Router, Request, Response } from "express";
 import { ApplyController } from "../controllers/apply.controller";
-import { requireAuth } from "../middlewares/auth.middleware";
+import { requireAuth } from "../middlewares/auth";
 import upload from "../config/multer";
 import { AuthUser } from "../types/auth";
 
-// Definisikan interface MulterRequest
 interface MulterRequest extends Request {
   file: Express.Multer.File;
   user?: AuthUser;
@@ -21,7 +20,7 @@ export class ApplyRouter {
   }
 
   private initializeRoutes(): void {
-    // Get user's submitted applications
+    // Get user's applications
     this.router.get(
       "/submitted",
       requireAuth,
@@ -30,7 +29,7 @@ export class ApplyRouter {
       }
     );
 
-    // Get all applications for a specific job posting
+    // Get all applications for a job
     this.router.get(
       "/job/:jobId",
       requireAuth,
@@ -39,13 +38,20 @@ export class ApplyRouter {
       }
     );
 
-    // Submit new application
+    this.router.post(
+      "/check/:jobId",
+      requireAuth,
+      (req: Request, res: Response) => {
+        this.applyController.checkApplication(req, res);
+      }
+    );
+
+    // Submit application
     this.router.post(
       "/submit/:jobId",
       requireAuth,
       upload.single("resume"),
       (req: Request, res: Response) => {
-        // Cast req as MulterRequest karena sudah melalui multer middleware
         this.applyController.applyJob(req as MulterRequest, res);
       }
     );
@@ -56,6 +62,24 @@ export class ApplyRouter {
       requireAuth,
       (req: Request, res: Response) => {
         this.applyController.updateApplicationStatus(req, res);
+      }
+    );
+
+    // Get application statistics
+    this.router.get(
+      "/statistics/:jobId",
+      requireAuth,
+      (req: Request, res: Response) => {
+        this.applyController.getApplicationStatistics(req, res);
+      }
+    );
+
+    // Delete application
+    this.router.delete(
+      "/:jobId",
+      requireAuth,
+      (req: Request, res: Response) => {
+        this.applyController.deleteApplication(req, res);
       }
     );
   }

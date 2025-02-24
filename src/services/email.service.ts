@@ -34,7 +34,7 @@ export class EmailService {
   }
 
   async sendVerificationEmail(email: string, token: string, name: string) {
-    const verificationUrl = `${process.env.PUBLIC_BASE_URL_FE}/auth/verify?token=${token}`;
+    const verificationUrl = `${process.env.BASE_URL_FE}/auth/verify?token=${token}`;
 
     const html = await this.compileTemplate("verification", {
       name,
@@ -59,6 +59,27 @@ export class EmailService {
       from: `TalentBridge <${process.env.MAIL_USER}>`,
       to: email,
       subject: "TalentBridge Developer 2FA Setup",
+      html,
+    });
+  }
+
+  async sendPasswordResetEmail(
+    email: string,
+    token: string,
+    name: string,
+    isCompany: boolean
+  ) {
+    const resetUrl = `${process.env.BASE_URL_FE}/auth/reset-password?token=${token}&isCompany=${isCompany}`;
+
+    const html = await this.compileTemplate("reset-password", {
+      name,
+      resetUrl,
+    });
+
+    await this.transporter.sendMail({
+      from: `TalentBridge <${process.env.MAIL_USER}>`,
+      to: email,
+      subject: "Reset your TalentBridge password",
       html,
     });
   }

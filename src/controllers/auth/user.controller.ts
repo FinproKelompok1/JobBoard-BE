@@ -12,7 +12,6 @@ interface OAuthProfile {
   _json: any;
 }
 
-// Custom Request type for OAuth
 interface OAuthRequest extends Omit<Request, "user"> {
   user?: OAuthProfile;
   provider?: "google" | "facebook";
