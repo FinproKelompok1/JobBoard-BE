@@ -1,6 +1,6 @@
 import express from "express";
 import { PasswordController } from "../controllers/auth/password.controller";
-import { requireAuth } from "../middleware/auth.middleware";
+import { requireAuth } from "../middlewares/auth";
 
 const router = express.Router();
 const passwordController = new PasswordController();

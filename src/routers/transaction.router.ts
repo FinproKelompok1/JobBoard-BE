@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { TransactionController } from "../controllers/transaction.controller";
+import { requireAuth } from "../middlewares/auth";
 
 export class TransactionRouter {
   private transactionController: TransactionController;
@@ -13,9 +14,14 @@ export class TransactionRouter {
 
   private initialiazeRoutes() {
     this.router.get("/", this.transactionController.getTransactions);
-    this.router.post("/", this.transactionController.createTransaction);
+    this.router.post(
+      "/",
+      requireAuth,
+      this.transactionController.createTransaction
+    );
     this.router.post(
       "/payment",
+      requireAuth,
       this.transactionController.getTransactionToken
     );
     this.router.post(

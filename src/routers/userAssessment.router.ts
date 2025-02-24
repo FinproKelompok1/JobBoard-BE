@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { UserAssessmentController } from "../controllers/userAssessment.controller";
+import { requireAuth } from "../middlewares/auth";
 
 export class UserAssessmentRouter {
   private router: Router;
@@ -13,11 +14,16 @@ export class UserAssessmentRouter {
 
   private initializeRoutes() {
     this.router.post(
-      "/:assessmentId",
+      "/",
+      requireAuth,
       this.userAssessmentController.createUserAssessment
     );
     this.router.get(
-      "/:userAssessmentId",
+      "/:username",
+      this.userAssessmentController.getUserAssessments
+    );
+    this.router.get(
+      "/detail/:userAssessmentId",
       this.userAssessmentController.getUserAssessmentById
     );
     this.router.patch(
@@ -26,6 +32,7 @@ export class UserAssessmentRouter {
     );
     this.router.get(
       "/download/:username/:userAssessmentId",
+      requireAuth,
       this.userAssessmentController.downloadCertificate
     );
   }

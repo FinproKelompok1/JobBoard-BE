@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { CompanyController } from "../controllers/company.controller";
-import { requireAuth } from "../middleware/auth.middleware";
+import { requireAuth } from "../middlewares/auth";
 import multer from "multer";
 
 const storage = multer.memoryStorage();

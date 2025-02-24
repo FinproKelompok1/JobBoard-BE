@@ -53,7 +53,7 @@ export class DeveloperAuthService {
     if (!secret) {
       throw new Error("2FA not set up");
     }
-    console.log(otpToken);
+
     const isValidToken = authenticator.verify({
       token: otpToken,
       secret: secret,

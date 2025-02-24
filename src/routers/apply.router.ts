@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { ApplyController } from "../controllers/apply.controller";
-import { requireAuth } from "../middleware/auth.middleware";
+import { requireAuth } from "../middlewares/auth";
 import upload from "../config/multer";
 import { AuthUser } from "../types/auth";
 
