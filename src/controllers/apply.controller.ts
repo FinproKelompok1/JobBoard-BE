@@ -200,13 +200,16 @@ export class ApplyController {
 
   async checkApplication(req: MulterRequest, res: Response) {
     try {
+      const userId = req.user?.id;
       const { jobId } = req.params;
-      const { userId } = req.body;
+
+      console.log("Checking application for:", { userId, jobId });
 
       if (!userId || !jobId) {
-        return res
-          .status(400)
-          .json({ message: "UserId and JobId are required" });
+        return res.status(400).json({
+          hasApplied: false,
+          message: "Unauthorized or invalid job ID",
+        });
       }
 
       const hasApplied = await this.applyService.checkExistingApplication(
@@ -214,10 +217,18 @@ export class ApplyController {
         jobId
       );
 
-      return res.status(200).json({ hasApplied });
+      console.log("Application check result:", hasApplied);
+
+      return res.status(200).json({
+        hasApplied,
+        message: "Application check successful",
+      });
     } catch (error) {
       console.error("Error checking application:", error);
-      return res.status(500).json({ message: "Internal server error" });
+      return res.status(500).json({
+        hasApplied: false,
+        message: "Internal server error",
+      });
     }
   }
 }

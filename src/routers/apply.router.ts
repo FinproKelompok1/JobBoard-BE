@@ -20,6 +20,7 @@ export class ApplyRouter {
   }
 
   private initializeRoutes(): void {
+    // Get user's applications
     this.router.get(
       "/submitted",
       requireAuth,
@@ -28,6 +29,7 @@ export class ApplyRouter {
       }
     );
 
+    // Get all applications for a job
     this.router.get(
       "/job/:jobId",
       requireAuth,
@@ -37,6 +39,15 @@ export class ApplyRouter {
     );
 
     this.router.post(
+      "/check/:jobId",
+      requireAuth,
+      (req: Request, res: Response) => {
+        this.applyController.checkApplication(req, res);
+      }
+    );
+
+    // Submit application
+    this.router.post(
       "/submit/:jobId",
       requireAuth,
       upload.single("resume"),
@@ -45,11 +56,30 @@ export class ApplyRouter {
       }
     );
 
+    // Update application status
     this.router.patch(
       "/status/:jobId",
       requireAuth,
       (req: Request, res: Response) => {
         this.applyController.updateApplicationStatus(req, res);
+      }
+    );
+
+    // Get application statistics
+    this.router.get(
+      "/statistics/:jobId",
+      requireAuth,
+      (req: Request, res: Response) => {
+        this.applyController.getApplicationStatistics(req, res);
+      }
+    );
+
+    // Delete application
+    this.router.delete(
+      "/:jobId",
+      requireAuth,
+      (req: Request, res: Response) => {
+        this.applyController.deleteApplication(req, res);
       }
     );
   }

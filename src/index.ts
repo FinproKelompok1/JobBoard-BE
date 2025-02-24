@@ -25,6 +25,7 @@ import { UserAssessmentRouter } from "./routers/userAssessment.router";
 import { CompanyRouter } from "./routers/company.router";
 import { JobDiscoveryRouter } from "./routers/jobdis.router";
 import { ApplyRouter } from "./routers/apply.router";
+import passwordRoutes from "./routers/password.router";
 
 dotenv.config();
 
@@ -73,6 +74,7 @@ app.get("/api", (req: Request, res: Response) => {
 });
 
 app.use("/api/auth", authRoutes, userProfileRoutes);
+app.use("/api/password", passwordRoutes);
 app.use("/api/jobs", jobRouter.getRoutes());
 app.use("/api/applicants", applicantRouter.getRoutes());
 app.use("/api/jobs", jobRouter.getRoutes());

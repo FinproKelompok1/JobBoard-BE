@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import prisma from "../prisma";
 import { cloudinaryUpload, cloudinaryRemove } from "../services/cloudinary";
+import { AuthUser } from "../types/auth";
 
-interface MulterRequest extends Request {
-  file?: Express.Multer.File;
+interface CustomRequest extends Request {
+  user?: AuthUser;
+  file?: any;
 }
 
 export class CompanyController {
@@ -120,7 +122,7 @@ export class CompanyController {
     }
   }
 
-  async getProfile(req: Request, res: Response) {
+  async getProfile(req: CustomRequest, res: Response) {
     try {
       const adminId = req.user?.id;
       if (!adminId) {
@@ -155,14 +157,15 @@ export class CompanyController {
     }
   }
 
-  async updateProfile(req: MulterRequest, res: Response) {
+  async updateProfile(req: CustomRequest, res: Response) {
     try {
       const adminId = req.user?.id;
       if (!adminId) {
         return res.status(401).json({ message: "Unauthorized" });
       }
 
-      const { companyName, email, noHandphone, description } = req.body;
+      const { companyName, email, noHandphone, description, city, province } =
+        req.body;
       let logoUrl = undefined;
 
       const currentProfile = await prisma.admin.findUnique({
@@ -187,6 +190,30 @@ export class CompanyController {
         }
       }
 
+      // Create location if city and province are provided
+      let location;
+      if (city && province) {
+        location = await prisma.location.create({
+          data: {
+            city,
+            province,
+            latitude: -6.2, // Default Jakarta coordinates
+            longitude: 106.816666,
+          },
+        });
+
+        // Update active jobs with new location
+        await prisma.job.updateMany({
+          where: {
+            adminId: adminId,
+            isActive: true,
+          },
+          data: {
+            locationId: location.id,
+          },
+        });
+      }
+
       const updatedProfile = await prisma.admin.update({
         where: {
           id: adminId,
@@ -197,6 +224,13 @@ export class CompanyController {
           noHandphone,
           description,
           ...(logoUrl && { logo: logoUrl }),
+        },
+        include: {
+          Job: {
+            include: {
+              location: true,
+            },
+          },
         },
       });
 

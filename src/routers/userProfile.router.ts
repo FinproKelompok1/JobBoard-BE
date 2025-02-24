@@ -24,4 +24,16 @@ router.post(
   UserProfileController.uploadProfileImage.bind(UserProfileController)
 );
 
+router.put(
+  "/change-password",
+  requireAuth,
+  UserProfileController.changePassword
+);
+
+router.put(
+  "/applications/:jobId/take",
+  requireAuth,
+  UserProfileController.takeJob.bind(UserProfileController)
+);
+
 export default router;

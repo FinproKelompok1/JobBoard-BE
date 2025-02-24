@@ -2,8 +2,13 @@ import { Request, Response } from "express";
 import { PrismaClient } from "../../../prisma/generated/client";
 import { cloudinaryUpload, cloudinaryRemove } from "../../services/cloudinary";
 import { AuthUser } from "../../types/auth";
+import { EmailService } from "../../services/email.service";
+import jwt from "jsonwebtoken";
+import axios from "axios";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
+const emailService = new EmailService();
 
 interface AuthRequest extends Request {
   user?: AuthUser;
@@ -67,6 +72,8 @@ export class UserProfileController {
         gender,
         dob,
         lastEdu,
+        province,
+        city,
         summary,
         experience,
         skill,
@@ -74,6 +81,52 @@ export class UserProfileController {
       } = req.body;
 
       const updatedUser = await prisma.$transaction(async (prisma) => {
+        // Find or create the location
+        let location = await prisma.location.findFirst({
+          where: {
+            AND: [{ city }, { province }],
+          },
+        });
+
+        if (!location && city && province) {
+          try {
+            // Fetch coordinates from OpenCage
+            const query = `${city}+${province}+Indonesia`;
+            const { data } = await axios.get(
+              `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
+                query
+              )}&key=bcf87dd591a44c57b21a10bed03f5daa`
+            );
+
+            if (!data.results || data.results.length === 0) {
+              throw new Error("No location data found");
+            }
+
+            const { lat, lng } = data.results[0].geometry;
+            console.log("Coordinates:", { lat, lng });
+
+            location = await prisma.location.create({
+              data: {
+                city,
+                province,
+                latitude: parseFloat(lat.toString()),
+                longitude: parseFloat(lng.toString()),
+              },
+            });
+          } catch (error) {
+            console.error("Error fetching coordinates:", error);
+            location = await prisma.location.create({
+              data: {
+                city,
+                province,
+                latitude: 0,
+                longitude: 0,
+              },
+            });
+          }
+        }
+
+        // Update user with the location
         const user = await prisma.user.update({
           where: { id: userId },
           data: {
@@ -81,40 +134,49 @@ export class UserProfileController {
             gender,
             dob: dob ? new Date(dob) : undefined,
             lastEdu,
+            domicileId: location?.id || null,
+          },
+          include: {
+            location: true,
+            CurriculumVitae: true,
           },
         });
 
-        const existingCV = await prisma.curriculumVitae.findFirst({
-          where: { userId: userId },
-        });
+        // Handle CV update if provided
+        if (summary || experience || skill || education) {
+          const existingCV = await prisma.curriculumVitae.findFirst({
+            where: { userId: userId },
+          });
 
-        if (existingCV) {
-          await prisma.curriculumVitae.update({
-            where: { id: existingCV.id },
-            data: {
-              summary: summary || "",
-              experience: experience || "",
-              skill: skill || "",
-              education: education || "",
-            },
-          });
-        } else {
-          await prisma.curriculumVitae.create({
-            data: {
-              userId: userId,
-              summary: summary || "",
-              experience: experience || "",
-              skill: skill || "",
-              education: education || "",
-            },
-          });
+          if (existingCV) {
+            await prisma.curriculumVitae.update({
+              where: { id: existingCV.id },
+              data: {
+                summary: summary || "",
+                experience: experience || "",
+                skill: skill || "",
+                education: education || "",
+              },
+            });
+          } else {
+            await prisma.curriculumVitae.create({
+              data: {
+                userId: userId,
+                summary: summary || "",
+                experience: experience || "",
+                skill: skill || "",
+                education: education || "",
+              },
+            });
+          }
         }
 
+        // Get updated user with CV
         return prisma.user.findUnique({
           where: { id: userId },
           include: {
-            CurriculumVitae: true,
             location: true,
+            CurriculumVitae: true,
           },
         });
       });
@@ -172,6 +234,217 @@ export class UserProfileController {
     } catch (error) {
       console.error("Error uploading image:", error);
       res.status(500).json({ message: "Failed to upload image" });
+    }
+  }
+
+  async changePassword(req: AuthRequest, res: Response): Promise<void> {
+    try {
+      const userId = req.user?.id;
+
+      if (!userId) {
+        res.status(401).json({ message: "Unauthorized" });
+        return;
+      }
+
+      const { currentPassword, newPassword } = req.body;
+
+      // Validate input
+      if (!currentPassword || !newPassword) {
+        res
+          .status(400)
+          .json({ message: "Both current and new password are required" });
+        return;
+      }
+
+      // Get user with password
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { password: true },
+      });
+
+      if (!user) {
+        res.status(404).json({ message: "User not found" });
+        return;
+      }
+
+      // Verify current password
+      const isPasswordValid = await bcrypt.compare(
+        currentPassword,
+        user.password
+      );
+      if (!isPasswordValid) {
+        res.status(400).json({ message: "Current password is incorrect" });
+        return;
+      }
+
+      // Hash new password
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      // Update password
+      await prisma.user.update({
+        where: { id: userId },
+        data: { password: hashedPassword },
+      });
+
+      res.status(200).json({
+        success: true,
+        message: "Password changed successfully",
+      });
+    } catch (error) {
+      console.error("Error changing password:", error);
+      res.status(500).json({ message: "Failed to change password" });
+    }
+  }
+
+  async takeJob(req: AuthRequest, res: Response): Promise<void> {
+    try {
+      const { jobId } = req.params;
+      const userId = req.user?.id;
+
+      if (!userId) {
+        res.status(401).json({ message: "Unauthorized" });
+        return;
+      }
+
+      await prisma.jobApplication.update({
+        where: {
+          userId_jobId: {
+            userId,
+            jobId,
+          },
+        },
+        data: {
+          isTaken: true,
+        },
+      });
+
+      res.status(200).json({
+        success: true,
+        message: "Job successfully taken",
+      });
+    } catch (error) {
+      console.error("Error taking job:", error);
+      res.status(500).json({ message: "Failed to take job" });
+    }
+  }
+
+  async changeEmail(req: AuthRequest, res: Response): Promise<void> {
+    try {
+      const userId = req.user?.id;
+      if (!userId) {
+        res.status(401).json({ message: "Unauthorized" });
+        return;
+      }
+
+      const { newEmail, password } = req.body;
+
+      // Validate input
+      if (!newEmail || !password) {
+        res.status(400).json({ message: "Email and password are required" });
+        return;
+      }
+
+      // Check if email is already in use
+      const existingUser = await prisma.user.findUnique({
+        where: { email: newEmail },
+      });
+
+      if (existingUser) {
+        res.status(400).json({ message: "Email is already in use" });
+        return;
+      }
+
+      // Get current user and verify password
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+
+      if (!user) {
+        res.status(404).json({ message: "User not found" });
+        return;
+      }
+
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        res.status(400).json({ message: "Current password is incorrect" });
+        return;
+      }
+
+      // Generate verification token
+      const token = jwt.sign(
+        {
+          userId,
+          newEmail,
+          type: "email_change",
+        },
+        process.env.JWT_SECRET!,
+        { expiresIn: "1h" }
+      );
+
+      // Send verification email
+      const emailService = new EmailService();
+      await emailService.sendVerificationEmail(
+        newEmail,
+        token,
+        user.fullname || user.username
+      );
+
+      res.status(200).json({
+        success: true,
+        message:
+          "Verification email sent. Please check your new email to complete the change.",
+      });
+    } catch (error) {
+      console.error("Error changing email:", error);
+      res.status(500).json({ message: "Failed to change email" });
+    }
+  }
+
+  async verifyEmailChange(req: Request, res: Response): Promise<void> {
+    try {
+      const { token } = req.query;
+
+      if (!token || typeof token !== "string") {
+        res.status(400).json({ message: "Invalid token" });
+        return;
+      }
+
+      // Verify token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+        userId: number;
+        newEmail: string;
+        type: string;
+      };
+
+      if (decoded.type !== "email_change") {
+        res.status(400).json({ message: "Invalid token type" });
+        return;
+      }
+
+      // Update user email
+      await prisma.user.update({
+        where: { id: decoded.userId },
+        data: {
+          email: decoded.newEmail,
+          isVerified: true,
+        },
+      });
+
+      res.status(200).json({
+        success: true,
+        message: "Email changed successfully",
+      });
+    } catch (error) {
+      if (error instanceof jwt.TokenExpiredError) {
+        res.status(400).json({ message: "Token has expired" });
+        return;
+      }
+      if (error instanceof jwt.JsonWebTokenError) {
+        res.status(400).json({ message: "Invalid token" });
+        return;
+      }
+      console.error("Error verifying email change:", error);
+      res.status(500).json({ message: "Failed to verify email change" });
     }
   }
 }
