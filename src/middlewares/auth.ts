@@ -17,8 +17,7 @@ export const requireAuth = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    // Log untuk debugging
-    // console.log("Headers:", req.headers);
+    console.log("Headers:", req.headers);
 
     const authHeader = req.headers.authorization;
     if (!authHeader?.startsWith("Bearer ")) {
@@ -27,7 +26,6 @@ export const requireAuth = async (
     }
 
     const token = authHeader.split(" ")[1];
-    console.log(token);
     const decoded = jwt.verify(token, JWT_SECRET) as AuthUser;
     req.user = decoded;
     next();
@@ -62,21 +60,6 @@ export const requireVerified = async (
     res.status(500).json({ message: "Server error" });
   }
 };
-
-// export const requireDeveloper = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     if (!req.user || req.user.role !== "developer") {
-//       return res.status(403).json({ message: "Developer access required" });
-//     }
-//     next();
-//   } catch (error) {
-//     res.status(403).json({ message: "Developer access required" });
-//   }
-// };
 
 export const checkVerificationTimeout = async (
   req: Request,

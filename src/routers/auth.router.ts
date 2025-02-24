@@ -5,7 +5,7 @@ import {
   requireAuth,
   requireVerified,
   checkVerificationTimeout,
-} from "../middlewares/auth.middleware";
+} from "../middlewares/auth";
 import { UserAuthController } from "../controllers/auth/user.controller";
 import { AdminAuthController } from "../controllers/auth/admin.controller";
 import { DeveloperAuthController } from "../controllers/auth/developer.controller";
@@ -15,12 +15,10 @@ const JWT_SECRET = process.env.JWT_SECRET!;
 const prisma = new PrismaClient();
 const router = express.Router();
 
-// Initialize controllers
 const userController = new UserAuthController();
 const adminController = new AdminAuthController();
 const developerController = new DeveloperAuthController();
 
-// User Authentication Routes
 router.post("/register/user", userController.register as RequestHandler);
 
 router.post(
@@ -29,16 +27,10 @@ router.post(
   userController.login as RequestHandler
 );
 
-// Admin Authentication Routes
 router.post("/register/admin", adminController.register as RequestHandler);
 
-router.post(
-  "/login/admin",
-  // requireVerified as RequestHandler,
-  adminController.login as RequestHandler
-);
+router.post("/login/admin", adminController.login as RequestHandler);
 
-// Email Verification Route
 router.get(
   "/verify",
   checkVerificationTimeout as RequestHandler,
@@ -58,7 +50,6 @@ router.get(
   }
 );
 
-// OAuth routes
 router.get(
   "/google",
   passport.authenticate("google", {
@@ -91,7 +82,6 @@ router.get(
   OAuthController.handleCallback as RequestHandler
 );
 
-// Developer routes
 router.post(
   "/developer/login",
   developerController.login.bind(developerController) as RequestHandler
@@ -99,11 +89,9 @@ router.post(
 
 router.post(
   "/developer/2fa/setup",
-  // requireAuth as RequestHandler,
   developerController.setup2FA.bind(developerController) as RequestHandler
 );
 
-// Logout route
 router.post("/logout", requireAuth as RequestHandler, (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
@@ -192,7 +180,6 @@ router.post(
   }
 );
 
-// OAuth failure route
 router.get("/auth/failure", OAuthController.handleFailure as RequestHandler);
 
 export default router;

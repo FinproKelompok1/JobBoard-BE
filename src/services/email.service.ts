@@ -62,4 +62,25 @@ export class EmailService {
       html,
     });
   }
+
+  async sendPasswordResetEmail(
+    email: string,
+    token: string,
+    name: string,
+    isCompany: boolean
+  ) {
+    const resetUrl = `${process.env.BASE_URL_FE}/auth/reset-password?token=${token}&isCompany=${isCompany}`;
+
+    const html = await this.compileTemplate("reset-password", {
+      name,
+      resetUrl,
+    });
+
+    await this.transporter.sendMail({
+      from: `TalentBridge <${process.env.MAIL_USER}>`,
+      to: email,
+      subject: "Reset your TalentBridge password",
+      html,
+    });
+  }
 }

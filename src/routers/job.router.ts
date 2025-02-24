@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { JobController } from "../controllers/job.controller";
 import { upload } from "../index";
-import { requireAuth } from "../middlewares/auth.middleware";
+import { requireAuth } from "../middlewares/auth";
 
 export class JobRouter {
   private router: Router;

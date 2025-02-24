@@ -26,7 +26,6 @@ passport.deserializeUser(async (id: number, done) => {
   }
 });
 
-// Configure Google Strategy
 passport.use(
   new GoogleStrategy(
     {
@@ -69,7 +68,6 @@ passport.use(
   )
 );
 
-// Configure Facebook Strategy
 passport.use(
   new FacebookStrategy(
     {
