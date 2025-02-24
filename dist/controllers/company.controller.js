@@ -20,7 +20,6 @@ class CompanyController {
             console.log("CompanyController: getCompanies called");
             try {
                 const allAdmins = yield prisma_1.default.admin.findMany();
-                console.log("All admins in database:", allAdmins);
                 const companies = yield prisma_1.default.admin.findMany({
                     where: {
                         isVerified: true,
