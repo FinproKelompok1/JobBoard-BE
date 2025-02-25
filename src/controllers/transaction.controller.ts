@@ -103,9 +103,11 @@ export class TransactionController {
       });
     }
   }
-  async getTransactionToken(req: Request, res: Response): Promise<void> {
+  async getTransactionToken(req: MulterRequest, res: Response): Promise<void> {
     try {
       const { order_id, gross_amount } = req.body;
+      console.log("order id:", order_id);
+      console.log("gross ampunt:", gross_amount);
       const activeTransaction = await prisma.transaction.findUnique({
         where: { id: order_id },
         select: {
@@ -115,16 +117,19 @@ export class TransactionController {
           createdAt: true,
         },
       });
-      if (activeTransaction!.status === "cancel")
+      if (!activeTransaction) throw new Error("Transaction not found");
+      if (activeTransaction.status === "cancel")
         throw new Error("Transaction has been canceled");
       const subscription = await prisma.subscription.findUnique({
-        where: { id: activeTransaction?.subscriptionId },
+        where: { id: activeTransaction.subscriptionId },
         select: { category: true },
       });
       const user = await prisma.user.findUnique({
-        where: { id: req.user?.id! },
+        where: { id: req.user?.id },
         select: { fullname: true, email: true },
       });
+      if (!user) throw new Error("User not found");
+      console.log("User Data:", user);
       const snap = new midtransClient.Snap({
         isProduction: false,
         serverKey: `${process.env.MIDTRANS_SERVER_KEY}`,
@@ -136,31 +141,38 @@ export class TransactionController {
       const parameter = {
         transaction_details: {
           order_id: order_id,
-          gross_amount: gross_amount,
+          gross_amount: activeTransaction.amount,
         },
         customer_details: {
-          first_name: user!.fullname,
+          first_name: user?.fullname || "First Name",
           email: user!.email,
         },
         item_details: [
           {
-            id: activeTransaction!.subscriptionId,
-            price: activeTransaction!.amount,
+            id: activeTransaction.subscriptionId,
+            price: activeTransaction.amount,
             quantity: 1,
             name: subscriptionCategory,
           },
         ],
         custom_expiry: {
-          order_time: activeTransaction!.createdAt,
+          order_time: activeTransaction.createdAt,
           expiry_duration: 1,
           unit: "day",
         },
       };
+      console.log("Midtrans API Request Payload:", parameter);
+
       const transaction = await snap.createTransaction(parameter);
+      console.log("transaction from API:", transaction);
+
       res.status(201).send({ transactionToken: transaction.token });
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Error getting transaction token:", error);
       res.status(500).send({
-        message: "Server error: Unable to create transaction token.",
+        message:
+          error.message || "Server error: Unable to create transaction token.",
+        details: error.response ? error.response.data : error,
       });
     }
   }

@@ -8,18 +8,31 @@ interface MulterRequest extends Request {
 export class UserAssessmentController {
   async createUserAssessment(req: MulterRequest, res: Response): Promise<void> {
     try {
-      const userId = req.user?.id!;
+      const userId = req.user?.id;
+      if (!userId) {
+        throw { message: "User ID is required." };
+      }
       const { assessmentId } = req.body;
       const userSubscription = await prisma.userSubscription.findFirst({
         where: {
           userId: userId,
           isActive: true,
-          subscription: { category: "standard" },
         },
         include: { subscription: true },
       });
-      if (userSubscription?.assessmentCount! >= 2)
-        throw { message: "You has reached the maximum assessment limit." };
+      if (!userSubscription) {
+        throw { message: "No active standard subscription found." };
+      }
+      const subscriptionCategory = userSubscription.subscription.category;
+      if (
+        subscriptionCategory === "standard" &&
+        userSubscription.assessmentCount! >= 2
+      ) {
+        throw {
+          message:
+            "You have reached the maximum assessment limit for a Standard subscription.",
+        };
+      }
       const endTime = new Date();
       endTime.setMinutes(endTime.getMinutes() + 30);
       const { id } = await prisma.userAssessment.create({
@@ -29,7 +42,7 @@ export class UserAssessmentController {
         where: {
           userId_subscriptionId: {
             userId: userId,
-            subscriptionId: userSubscription?.subscriptionId!,
+            subscriptionId: userSubscription.subscriptionId,
           },
         },
         data: { assessmentCount: { increment: 1 } },
