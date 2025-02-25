@@ -17,8 +17,6 @@ export const requireAuth = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    console.log("Headers:", req.headers);
-
     const authHeader = req.headers.authorization;
     if (!authHeader?.startsWith("Bearer ")) {
       res.status(401).json({ message: "Authentication required" });
@@ -30,7 +28,6 @@ export const requireAuth = async (
     req.user = decoded;
     next();
   } catch (error) {
-    console.error("Auth Error:", error);
     res.status(401).json({ message: "Invalid token" });
   }
 };

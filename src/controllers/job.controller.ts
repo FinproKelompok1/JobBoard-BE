@@ -37,7 +37,6 @@ export class JobController {
       });
       res.status(200).send({ result: { page, totalPage, jobs } });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }
@@ -81,7 +80,6 @@ export class JobController {
       });
       res.status(200).send({ message: "Your job has been added" });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }
@@ -104,7 +102,6 @@ export class JobController {
       });
       res.status(200).send({ result: job });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }
@@ -149,7 +146,6 @@ export class JobController {
       await prisma.job.update({ data: req.body, where: { id: req.params.id } });
       res.status(200).send({ message: "your job jas been edited" });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }
@@ -162,7 +158,6 @@ export class JobController {
       });
       res.status(200).send({ message: "Your job has been deleted" });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }
@@ -180,7 +175,6 @@ export class JobController {
         }`,
       });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }
@@ -193,7 +187,6 @@ export class JobController {
       });
       res.status(200).send({ result: jobs._count._all });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }

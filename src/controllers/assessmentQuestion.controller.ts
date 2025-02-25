@@ -24,7 +24,6 @@ export class AssessmentQuestionController {
 
       res.status(201).send({ message: "Question created successfully" });
     } catch (error) {
-      console.error("Error creating question:", error);
       res
         .status(500)
         .send({ message: "Server error: Unable to create question." });
@@ -61,7 +60,6 @@ export class AssessmentQuestionController {
         message: `Assessment question ID ${assessmentQuestionId} updated successfully`,
       });
     } catch (error) {
-      console.error("Error updating assessment question:", error);
       res.status(500).send({
         message: "Server error: Unable to assessment question.",
       });

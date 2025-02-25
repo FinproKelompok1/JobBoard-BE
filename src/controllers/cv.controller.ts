@@ -24,7 +24,6 @@ export class CvController {
 
       res.status(201).send({ message: "CV created successfully" });
     } catch (error) {
-      console.error("Error generating CV:", error);
       res.status(500).send({ message: "Server error: Unable to generate CV." });
     }
   }
@@ -51,7 +50,6 @@ export class CvController {
       });
       res.status(200).send({ userCv });
     } catch (error) {
-      console.log("Error retrieving user CV:", error);
       res
         .status(500)
         .send({ message: "Server error: Unable to retrieve user CV." });
@@ -74,7 +72,6 @@ export class CvController {
 
       res.status(200).send({ cv });
     } catch (error) {
-      console.error("Error retrieving CV by ID:", error);
       res.status(500).send({ message: "Server error: Unable to retrieve CV." });
     }
   }
@@ -108,7 +105,6 @@ export class CvController {
 
       res.status(200).send({ message: `CV updated successfully` });
     } catch (error) {
-      console.error("Error updating CV:", error);
       res.status(500).send({ message: "Server error: Unable to update CV." });
     }
   }
@@ -135,7 +131,6 @@ export class CvController {
       try {
         await page.goto(pageUrl, { waitUntil: "networkidle2" });
       } catch (err) {
-        console.error("Failed to load page:", err);
         res.status(500).send({ message: "Failed to generate CV PDF" });
         return;
       }
@@ -161,7 +156,6 @@ export class CvController {
       res.setHeader("Content-Length", pdf.length);
       res.status(200).end(pdf);
     } catch (error) {
-      console.error("Error downloading CV:", error);
       res.status(500).send({ message: "Server error: Unable to download CV." });
     }
   }

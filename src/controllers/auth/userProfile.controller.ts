@@ -52,7 +52,6 @@ export class UserProfileController {
         data: user,
       });
     } catch (error) {
-      console.error("Error fetching profile:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -101,8 +100,6 @@ export class UserProfileController {
             }
 
             const { lat, lng } = data.results[0].geometry;
-            console.log("Coordinates:", { lat, lng });
-
             location = await prisma.location.create({
               data: {
                 city,
@@ -112,7 +109,6 @@ export class UserProfileController {
               },
             });
           } catch (error) {
-            console.error("Error fetching coordinates:", error);
             location = await prisma.location.create({
               data: {
                 city,
@@ -181,7 +177,6 @@ export class UserProfileController {
         data: updatedUser,
       });
     } catch (error) {
-      console.error("Error updating profile:", error);
       res.status(500).json({ message: "Failed to update profile" });
     }
   }
@@ -227,7 +222,6 @@ export class UserProfileController {
         data: updatedUser,
       });
     } catch (error) {
-      console.error("Error uploading image:", error);
       res.status(500).json({ message: "Failed to upload image" });
     }
   }
@@ -293,7 +287,6 @@ export class UserProfileController {
           "Verification email sent. Please check your new email to complete the change.",
       });
     } catch (error) {
-      console.error("Error changing email:", error);
       res.status(500).json({ message: "Failed to change email" });
     }
   }
@@ -301,10 +294,8 @@ export class UserProfileController {
   async verifyEmailChange(req: Request, res: Response): Promise<void> {
     try {
       const { token } = req.query;
-      console.log("Received verification request with token:", token);
 
       if (!token || typeof token !== "string") {
-        console.log("Invalid token format");
         res.status(400).json({ message: "Invalid token" });
         return;
       }
@@ -314,15 +305,12 @@ export class UserProfileController {
         newEmail: string;
         type: string;
       };
-      console.log("Decoded token:", decoded);
 
       if (decoded.type !== "email_change") {
-        console.log("Invalid token type:", decoded.type);
         res.status(400).json({ message: "Invalid token type" });
         return;
       }
 
-      console.log("Updating email for user:", decoded.userId);
       const updatedUser = await prisma.user.update({
         where: { id: decoded.userId },
         data: {
@@ -330,7 +318,6 @@ export class UserProfileController {
           isVerified: true,
         },
       });
-      console.log("User updated successfully:", updatedUser);
 
       res.status(200).json({
         success: true,
@@ -338,7 +325,6 @@ export class UserProfileController {
         user: updatedUser,
       });
     } catch (error) {
-      console.error("Full error details:", error);
       if (error instanceof jwt.TokenExpiredError) {
         res.status(400).json({ message: "Token has expired" });
         return;
@@ -400,7 +386,6 @@ export class UserProfileController {
         message: "Password changed successfully",
       });
     } catch (error) {
-      console.error("Error changing password:", error);
       res.status(500).json({ message: "Failed to change password" });
     }
   }
@@ -432,7 +417,6 @@ export class UserProfileController {
         message: "Job successfully taken",
       });
     } catch (error) {
-      console.error("Error taking job:", error);
       res.status(500).json({ message: "Failed to take job" });
     }
   }

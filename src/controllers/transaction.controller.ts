@@ -106,8 +106,6 @@ export class TransactionController {
   async getTransactionToken(req: MulterRequest, res: Response): Promise<void> {
     try {
       const { order_id, gross_amount } = req.body;
-      console.log("order id:", order_id);
-      console.log("gross ampunt:", gross_amount);
       const activeTransaction = await prisma.transaction.findUnique({
         where: { id: order_id },
         select: {
@@ -129,7 +127,6 @@ export class TransactionController {
         select: { fullname: true, email: true },
       });
       if (!user) throw new Error("User not found");
-      console.log("User Data:", user);
       const snap = new midtransClient.Snap({
         isProduction: false,
         serverKey: `${process.env.MIDTRANS_SERVER_KEY}`,
@@ -161,14 +158,9 @@ export class TransactionController {
           unit: "day",
         },
       };
-      console.log("Midtrans API Request Payload:", parameter);
-
       const transaction = await snap.createTransaction(parameter);
-      console.log("transaction from API:", transaction);
-
       res.status(201).send({ transactionToken: transaction.token });
     } catch (error: any) {
-      console.error("Error getting transaction token:", error);
       res.status(500).send({
         message:
           error.message || "Server error: Unable to create transaction token.",

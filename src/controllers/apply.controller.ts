@@ -19,13 +19,6 @@ export class ApplyController {
       const jobId = req.params.jobId;
       const userId = req.user?.id;
 
-      console.log("Application attempt:", {
-        userId,
-        jobId,
-        expectedSalary: req.body.expectedSalary,
-        file: req.file?.originalname,
-      });
-
       if (!userId) {
         return res.status(401).json({ message: "Unauthorized" });
       }
@@ -58,7 +51,6 @@ export class ApplyController {
         data: application,
       });
     } catch (error) {
-      console.error("Application submission error:", error);
       if (error instanceof Error) {
         return res.status(400).json({ message: error.message });
       }
@@ -78,7 +70,6 @@ export class ApplyController {
       );
       return res.status(200).json({ data: applications });
     } catch (error) {
-      console.error("Get user applications error:", error);
       return res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -97,7 +88,6 @@ export class ApplyController {
       const applications = await this.applyService.getJobApplications(jobId);
       return res.status(200).json({ data: applications });
     } catch (error) {
-      console.error("Get job applications error:", error);
       return res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -139,7 +129,6 @@ export class ApplyController {
         data: application,
       });
     } catch (error) {
-      console.error("Update application status error:", error);
       if (error instanceof Error) {
         return res.status(400).json({ message: error.message });
       }
@@ -165,7 +154,6 @@ export class ApplyController {
         .status(200)
         .json({ message: "Application deleted successfully" });
     } catch (error) {
-      console.error("Delete application error:", error);
       if (error instanceof Error) {
         return res.status(400).json({ message: error.message });
       }
@@ -189,7 +177,6 @@ export class ApplyController {
       );
       return res.status(200).json({ data: statistics });
     } catch (error) {
-      console.error("Get application statistics error:", error);
       return res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -198,8 +185,6 @@ export class ApplyController {
     try {
       const userId = req.user?.id;
       const { jobId } = req.params;
-
-      console.log("Checking application for:", { userId, jobId });
 
       if (!userId || !jobId) {
         return res.status(400).json({
@@ -213,14 +198,11 @@ export class ApplyController {
         jobId
       );
 
-      console.log("Application check result:", hasApplied);
-
       return res.status(200).json({
         hasApplied,
         message: "Application check successful",
       });
     } catch (error) {
-      console.error("Error checking application:", error);
       return res.status(500).json({
         hasApplied: false,
         message: "Internal server error",

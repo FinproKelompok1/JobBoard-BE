@@ -4,8 +4,6 @@ import prisma from "../prisma";
 import { sendInvoiceEmail } from "./invoiceEmail";
 
 cron.schedule("0 0 * * * *", async () => {
-  console.log(`Running subscription check job at ${new Date()}`);
-
   const startOfTomorrow = dayjs().add(1, "day").startOf("day").toDate();
   const endOfTomorrow = dayjs().add(1, "day").endOf("day").toDate();
 
@@ -23,13 +21,6 @@ cron.schedule("0 0 * * * *", async () => {
       },
     });
 
-    expiringSubscription.forEach((item) => {
-      console.log(
-        `Subscription user ID ${item.userId} and subscription ID ${item.subscriptionId} ends at:`,
-        item.endDate
-      );
-    });
-
     for (const subscription of expiringSubscription) {
       try {
         await sendInvoiceEmail({
@@ -37,9 +28,6 @@ cron.schedule("0 0 * * * *", async () => {
           username: subscription.user.username,
           fullname: subscription.user.fullname!,
         });
-        console.log(
-          `Invoice sent to ${subscription.user.email} at ${new Date()}`
-        );
       } catch (emailError) {
         console.error(
           `Failed to send email to ${subscription.user.email}:`,

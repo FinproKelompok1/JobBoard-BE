@@ -13,7 +13,6 @@ export class SubscriptionController {
 
       res.status(201).send({ message: "Subscription created successfully" });
     } catch (error) {
-      console.log("Error create subscription:", error);
       res
         .status(500)
         .send({ message: "Server error: Unable to create subscription." });
@@ -34,7 +33,6 @@ export class SubscriptionController {
 
       res.status(200).send({ subscriptions });
     } catch (error) {
-      console.error("Error retrieving subscriptions:", error);
       res.status(500).send({
         message: "Server error: Unable to retrieve subscriptions.",
       });
@@ -51,7 +49,6 @@ export class SubscriptionController {
 
       res.status(200).send({ subscription });
     } catch (error) {
-      console.error("Error retrieving subscription by ID:", error);
       res.status(500).send({
         message: "Server error: Unable to retrieve subscription by ID.",
       });
@@ -87,7 +84,6 @@ export class SubscriptionController {
         message: `Subscription ID ${subscriptionIdid} updated successfully`,
       });
     } catch (error) {
-      console.error("Error updating subscription:", error);
       res.status(500).send({
         message: "Server error: Unable to update subscription.",
       });
@@ -104,7 +100,6 @@ export class SubscriptionController {
         .status(200)
         .send({ message: `Subscription ID ${id} deleted successfully` });
     } catch (error) {
-      console.error("Error deleting subscription:", error);
       res.status(500).send({
         message: "Server error: Unable to delete subscription.",
       });
@@ -136,7 +131,6 @@ export class SubscriptionController {
         .status(200)
         .send({ subscriptionUsers: subscription?.UserSubscription });
     } catch (error) {
-      console.error("Error retrieving subscription users:", error);
       res.status(500).send({
         message: "Server error: Unable to retrieve subscription users.",
       });

@@ -94,7 +94,6 @@ export class ApplicantController {
       });
       res.status(200).send({ result: { page, totalPage, applicants } });
     } catch (err) {
-      console.log(err);
       res.status(200).send(err);
     }
   }
@@ -102,7 +101,6 @@ export class ApplicantController {
   async setApplicantStatus(req: Request, res: Response) {
     try {
       const { userId, jobId, status } = req.body;
-      console.log(req.body);
       await prisma.jobApplication.update({
         where: {
           userId_jobId: {
@@ -116,7 +114,6 @@ export class ApplicantController {
         .status(200)
         .send({ message: "Your applicant status has been updated" });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }
@@ -131,7 +128,6 @@ export class ApplicantController {
       });
       res.status(200).send({ result: total._count._all });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }
@@ -146,7 +142,6 @@ export class ApplicantController {
       });
       res.status(200).send({ message: "Your review has been set" });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }

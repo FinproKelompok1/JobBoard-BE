@@ -36,8 +36,6 @@ passport.use(
     },
     async (req, accessToken, refreshToken, profile, done) => {
       try {
-        console.log("Google OAuth callback received:", { profile });
-
         const email = profile.emails?.[0]?.value;
         if (!email) {
           return done(new Error("No email provided from Google"));
@@ -61,7 +59,6 @@ passport.use(
         const authUser: AuthUser = { ...user, role: "user" };
         return done(null, authUser);
       } catch (error) {
-        console.error("Google OAuth error:", error);
         return done(error);
       }
     }
@@ -79,8 +76,6 @@ passport.use(
     },
     async (req, accessToken, refreshToken, profile, done) => {
       try {
-        console.log("Facebook OAuth callback received:", { profile });
-
         const email = profile.emails?.[0]?.value;
         if (!email) {
           return done(new Error("No email provided from Facebook"));
@@ -104,7 +99,6 @@ passport.use(
         const authUser: AuthUser = { ...user, role: "user" };
         return done(null, authUser);
       } catch (error) {
-        console.error("Facebook OAuth error:", error);
         return done(error);
       }
     }

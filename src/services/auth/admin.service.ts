@@ -49,10 +49,6 @@ export class AdminAuthService {
     if (!admin.isVerified) {
       const lastUpdated = new Date(admin.updatedAt);
       const now = new Date();
-
-      console.log(admin);
-
-      // Cek apakah sudah lebih dari 15 menit sejak terakhir diperbarui
       if (now.getTime() - lastUpdated.getTime() > 15 * 60 * 1000) {
         const verificationToken = jwt.sign(
           { email, type: "admin" },
@@ -62,7 +58,6 @@ export class AdminAuthService {
           }
         );
 
-        console.log("Send Email Lagi");
         await emailService.sendVerificationEmail(
           email,
           verificationToken,

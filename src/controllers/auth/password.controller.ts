@@ -59,7 +59,6 @@ export class PasswordController {
           "If an account exists with this email, you will receive password reset instructions.",
       });
     } catch (error: any) {
-      console.error("Forgot password error:", error);
       res.status(500).json({
         message:
           error.message || "An error occurred while processing your request.",
@@ -119,7 +118,6 @@ export class PasswordController {
         return;
       }
 
-      console.error("Reset password error:", error);
       res.status(400).json({
         message: error.message || "Failed to reset password",
       });
@@ -179,7 +177,6 @@ export class PasswordController {
         message: "Password changed successfully",
       });
     } catch (error: any) {
-      console.error("Change password error:", error);
       res.status(400).json({
         message: error.message || "Failed to change password",
       });
