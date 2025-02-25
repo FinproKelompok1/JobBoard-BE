@@ -36,4 +36,15 @@ router.put(
   UserProfileController.takeJob.bind(UserProfileController)
 );
 
+router.put(
+  "/change-email",
+  requireAuth,
+  UserProfileController.changeEmail.bind(UserProfileController)
+);
+
+router.get(
+  "/verify-email-change",
+  UserProfileController.verifyEmailChange.bind(UserProfileController)
+);
+
 export default router;

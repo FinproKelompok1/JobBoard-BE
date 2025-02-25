@@ -35,7 +35,6 @@ export class EmailService {
 
   async sendVerificationEmail(email: string, token: string, name: string) {
     const verificationUrl = `${process.env.BASE_URL_FE}/auth/verify?token=${token}`;
-
     const html = await this.compileTemplate("verification", {
       name,
       verificationUrl,
@@ -45,6 +44,25 @@ export class EmailService {
       from: `TalentBridge <${process.env.MAIL_USER}>`,
       to: email,
       subject: "Verify your TalentBridge account",
+      html,
+    });
+  }
+
+  async sendEmailChangeVerification(
+    email: string,
+    token: string,
+    name: string
+  ) {
+    const verificationUrl = `${process.env.BASE_URL_FE}/auth/verify-email-change?token=${token}`;
+    const html = await this.compileTemplate("email-change", {
+      name,
+      verificationUrl,
+    });
+
+    await this.transporter.sendMail({
+      from: `TalentBridge <${process.env.MAIL_USER}>`,
+      to: email,
+      subject: "Verify your new email address - TalentBridge",
       html,
     });
   }
@@ -67,20 +85,26 @@ export class EmailService {
     email: string,
     token: string,
     name: string,
-    isCompany: boolean
+    isAdmin: boolean = false
   ) {
-    const resetUrl = `${process.env.BASE_URL_FE}/auth/reset-password?token=${token}&isCompany=${isCompany}`;
+    try {
+      const resetUrl = `${process.env.BASE_URL_FE}/auth/reset-password?token=${token}`;
 
-    const html = await this.compileTemplate("reset-password", {
-      name,
-      resetUrl,
-    });
+      const html = await this.compileTemplate("reset-password", {
+        name,
+        resetUrl,
+        isAdmin,
+      });
 
-    await this.transporter.sendMail({
-      from: `TalentBridge <${process.env.MAIL_USER}>`,
-      to: email,
-      subject: "Reset your TalentBridge password",
-      html,
-    });
+      await this.transporter.sendMail({
+        from: `TalentBridge <${process.env.MAIL_USER}>`,
+        to: email,
+        subject: "Reset your TalentBridge password",
+        html,
+      });
+    } catch (error) {
+      console.error("Error sending password reset email:", error);
+      throw new Error("Failed to send password reset email");
+    }
   }
 }

@@ -10,7 +10,6 @@ router.post("/reset-password", passwordController.resetPassword);
 router.put("/change-password", requireAuth, passwordController.changePassword);
 
 export default router;
-// src/services/password.service.ts
 import { PrismaClient } from "@prisma/client";
 import { EmailService } from "../email.service";
 import bcrypt from "bcrypt";
@@ -21,7 +20,6 @@ const emailService = new EmailService();
 
 export class PasswordService {
   async forgotPassword(email: string, isCompany: boolean) {
-    // Find user or admin
     const user = isCompany
       ? await prisma.admin.findUnique({ where: { email } })
       : await prisma.user.findUnique({ where: { email } });
@@ -33,7 +31,6 @@ export class PasswordService {
       };
     }
 
-    // Generate reset token
     const resetToken = jwt.sign(
       {
         id: user.id,
@@ -43,7 +40,6 @@ export class PasswordService {
       { expiresIn: "1h" }
     );
 
-    // Send reset email
     await emailService.sendPasswordResetEmail(
       email,
       resetToken,
@@ -61,7 +57,6 @@ export class PasswordService {
 
   async resetPassword(token: string, newPassword: string, isCompany: boolean) {
     try {
-      // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
         id: number;
         type: string;
@@ -74,10 +69,8 @@ export class PasswordService {
         throw new Error("Invalid reset token");
       }
 
-      // Hash new password
       const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-      // Update password
       if (isCompany) {
         await prisma.admin.update({
           where: { id: decoded.id },
@@ -108,7 +101,6 @@ export class PasswordService {
     newPassword: string,
     isCompany: boolean
   ) {
-    // Find user or admin
     const user = isCompany
       ? await prisma.admin.findUnique({ where: { id: userId } })
       : await prisma.user.findUnique({ where: { id: userId } });
@@ -117,7 +109,6 @@ export class PasswordService {
       throw new Error("User not found");
     }
 
-    // Verify current password
     const isPasswordValid = await bcrypt.compare(
       currentPassword,
       user.password
@@ -126,7 +117,6 @@ export class PasswordService {
       throw new Error("Current password is incorrect");
     }
 
-    // Hash and update new password
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     if (isCompany) {

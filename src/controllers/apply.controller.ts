@@ -16,11 +16,9 @@ export class ApplyController {
 
   async applyJob(req: MulterRequest, res: Response) {
     try {
-      // Get jobId from URL params
-      const jobId = req.params.jobId; // Make sure this matches your route parameter name
+      const jobId = req.params.jobId;
       const userId = req.user?.id;
 
-      // Debug log
       console.log("Application attempt:", {
         userId,
         jobId,
@@ -28,7 +26,6 @@ export class ApplyController {
         file: req.file?.originalname,
       });
 
-      // Validations
       if (!userId) {
         return res.status(401).json({ message: "Unauthorized" });
       }
@@ -120,7 +117,6 @@ export class ApplyController {
           .json({ message: "JobId, userId and status are required" });
       }
 
-      // Validate status
       const validStatuses = [
         "processed",
         "interviewed",

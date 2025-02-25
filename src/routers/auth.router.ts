@@ -9,8 +9,10 @@ import {
 import { UserAuthController } from "../controllers/auth/user.controller";
 import { AdminAuthController } from "../controllers/auth/admin.controller";
 import { DeveloperAuthController } from "../controllers/auth/developer.controller";
+import UserProfileController from "../controllers/auth/userProfile.controller";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "../../prisma/generated/client";
+
 const JWT_SECRET = process.env.JWT_SECRET!;
 const prisma = new PrismaClient();
 const router = express.Router();
@@ -180,6 +182,32 @@ router.post(
   }
 );
 
-router.get("/auth/failure", OAuthController.handleFailure as RequestHandler);
+router.put(
+  "/change-email",
+  requireAuth as RequestHandler,
+  UserProfileController.changeEmail.bind(UserProfileController)
+);
+
+router.get(
+  "/verify-email-change",
+  UserProfileController.verifyEmailChange.bind(UserProfileController)
+);
+
+router.put(
+  "/admin/change-email",
+  requireAuth as RequestHandler,
+  adminController.changeEmail.bind(adminController) as RequestHandler
+);
+
+router.get(
+  "/admin/verify-email-change",
+  adminController.verifyEmailChange.bind(adminController) as RequestHandler
+);
+
+router.put(
+  "/admin/update-email",
+  requireAuth as RequestHandler,
+  adminController.updateEmail.bind(adminController) as RequestHandler
+);
 
 export default router;

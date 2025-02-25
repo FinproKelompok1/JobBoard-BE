@@ -5,20 +5,81 @@ import { JobCategory, Prisma } from "../../prisma/generated/client";
 export class JobDiscoveryController {
   async discoverJobs(req: Request, res: Response) {
     try {
-      const { city, province } = req.query;
+      const {
+        city,
+        province,
+        search,
+        category,
+        page = "1",
+        limit = "6",
+        sort = "createdAt",
+        order = "desc",
+      } = req.query;
 
-      const allJobs = await prisma.job.findMany({
-        include: {
-          location: true,
-        },
-      });
+      const pageNumber = parseInt(page as string);
+      const limitNumber = parseInt(limit as string);
 
-      const jobsWithLocation = await prisma.job.findMany({
-        where: {
-          location: {
-            city: city as string,
-          },
-        },
+      if (
+        isNaN(pageNumber) ||
+        isNaN(limitNumber) ||
+        pageNumber < 1 ||
+        limitNumber < 1
+      ) {
+        return res.status(400).json({
+          message: "Invalid pagination parameters",
+        });
+      }
+
+      const skip = (pageNumber - 1) * limitNumber;
+
+      const whereClause: any = {
+        isActive: true,
+        isPublished: true,
+      };
+
+      if (city) {
+        whereClause.location = {
+          city: city as string,
+        };
+
+        if (province) {
+          whereClause.location.province = province as string;
+        }
+      }
+
+      if (search) {
+        whereClause.OR = [
+          { title: { contains: search as string, mode: "insensitive" } },
+          { role: { contains: search as string, mode: "insensitive" } },
+          { description: { contains: search as string, mode: "insensitive" } },
+        ];
+      }
+
+      if (category) {
+        whereClause.category = category as string;
+      }
+
+      const allowedSortFields = [
+        "createdAt",
+        "updatedAt",
+        "salary",
+        "title",
+        "role",
+      ];
+      const sortField = allowedSortFields.includes(sort as string)
+        ? (sort as string)
+        : "createdAt";
+
+      const sortOrder =
+        (order as string)?.toLowerCase() === "asc" ? "asc" : "desc";
+
+      const orderBy: any = {};
+      orderBy[sortField] = sortOrder;
+
+      const totalCount = await prisma.job.count({ where: whereClause });
+
+      const jobs = await prisma.job.findMany({
+        where: whereClause,
         include: {
           location: true,
           admin: {
@@ -29,21 +90,37 @@ export class JobDiscoveryController {
             },
           },
         },
+        orderBy: orderBy,
+        skip: skip,
+        take: limitNumber,
       });
 
-      const locations = await prisma.location.findMany({
-        where: {
-          city: city as string,
-        },
-      });
+      const totalPages = Math.ceil(totalCount / limitNumber);
 
       return res.status(200).json({
-        result: jobsWithLocation,
+        result: jobs,
+        pagination: {
+          currentPage: pageNumber,
+          totalPages: totalPages,
+          totalItems: totalCount,
+          itemsPerPage: limitNumber,
+          hasNextPage: pageNumber < totalPages,
+          hasPrevPage: pageNumber > 1,
+        },
         debug: {
-          totalJobs: allJobs.length,
-          matchingJobs: jobsWithLocation.length,
-          matchingLocations: locations.length,
-          queryParams: { city, province },
+          totalJobs: totalCount,
+          matchingJobs: jobs.length,
+          queryParams: {
+            city,
+            province,
+            search,
+            category,
+            page,
+            limit,
+            sort,
+            order,
+          },
+          appliedSort: { field: sortField, direction: sortOrder },
         },
       });
     } catch (error) {
@@ -130,6 +207,9 @@ export class JobDiscoveryController {
           },
         },
         take: 3,
+        orderBy: {
+          createdAt: "desc",
+        },
       });
 
       return res.status(200).json({ result: relatedJobs });
@@ -159,6 +239,9 @@ export class JobDiscoveryController {
             },
             include: {
               location: true,
+            },
+            orderBy: {
+              createdAt: "desc",
             },
           },
         },

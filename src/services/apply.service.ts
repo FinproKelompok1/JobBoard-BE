@@ -20,12 +20,10 @@ export class ApplyService {
         salary: expectedSalary,
       });
 
-      // Validate all required fields
       if (!userId || !jobId || !resume || !expectedSalary) {
         throw new Error("All fields are required");
       }
 
-      // Check if job exists and is active
       const job = await prisma.job.findFirst({
         where: {
           id: jobId,
@@ -46,7 +44,6 @@ export class ApplyService {
         throw new Error("The application deadline has passed");
       }
 
-      // Check for existing application using findFirst
       const existingApplication = await prisma.jobApplication.findFirst({
         where: {
           AND: [{ userId: userId }, { jobId: jobId }],
@@ -57,10 +54,8 @@ export class ApplyService {
         throw new Error("You have already applied for this job");
       }
 
-      // Upload resume
       const uploadResult = await cloudinaryUpload(resume, "resumes");
 
-      // Create application
       const newApplication = await prisma.jobApplication.create({
         data: {
           userId: userId,
