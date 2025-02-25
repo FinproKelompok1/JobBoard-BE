@@ -40,7 +40,6 @@ export const sendInvoiceEmail = async ({
 
   try {
     await transaporter.sendMail(mailOptions);
-    console.log(`Invoice sent to ${email} at ${new Date()}`);
   } catch (error) {
     console.log(`Error sending invoice to ${email}: ${error}`);
   }

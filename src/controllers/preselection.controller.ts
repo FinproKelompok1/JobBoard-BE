@@ -15,7 +15,6 @@ export class PreselectionController {
       });
       res.status(200).send({ result: preselection });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }
@@ -29,7 +28,6 @@ export class PreselectionController {
       });
       res.status(200).send({ result: questions });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }
@@ -54,7 +52,6 @@ export class PreselectionController {
         .status(200)
         .send({ message: "Thank you, your answers was submitted" });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }
@@ -76,7 +73,6 @@ export class PreselectionController {
       });
       res.status(200).send({ message: "Test successfully created" });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }
@@ -95,7 +91,6 @@ export class PreselectionController {
         }`,
       });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }

@@ -17,7 +17,6 @@ export class AssessmentController {
         .status(201)
         .send({ message: "Assessment created successfully", assessmentId: id });
     } catch (error) {
-      console.error("Error creating assessment:", error);
       res
         .status(500)
         .send({ message: "Server error: Unable to create assessment." });
@@ -45,7 +44,6 @@ export class AssessmentController {
 
       res.status(200).send({ assessments });
     } catch (error) {
-      console.error("Error retrieving assessments:", error);
       res
         .status(500)
         .send({ message: "Server error: Unable to retrieve assessments." });
@@ -62,7 +60,6 @@ export class AssessmentController {
 
       res.status(200).send({ assessment });
     } catch (error) {
-      console.error("Error retrieving assessments:", error);
       res
         .status(500)
         .send({ message: "Server error: Unable to retrieve assessments." });
@@ -86,7 +83,6 @@ export class AssessmentController {
         totalQuestions,
       });
     } catch (error) {
-      console.error("Error retrieving questions:", error);
       res
         .status(500)
         .send({ message: "Server error: Unable to retrieve questions." });
@@ -106,7 +102,6 @@ export class AssessmentController {
         .status(200)
         .send({ message: "Assessment status updated successfully" });
     } catch (error) {
-      console.error("Error updating assessment status:", error);
       res
         .status(500)
         .send({ message: "Server error: Unable to update assessment status." });

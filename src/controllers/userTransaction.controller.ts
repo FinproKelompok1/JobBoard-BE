@@ -28,7 +28,6 @@ export class UserTransactionController {
 
       res.status(200).send({ userTransactions });
     } catch (error) {
-      console.error("Error retrieving user transaction:", error);
       res
         .status(500)
         .send({ message: "Server error: Unable to retrieve user transaction" });

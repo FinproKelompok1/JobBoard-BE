@@ -18,7 +18,6 @@ export class ScheduleController {
       });
       res.status(200).send({ result: startTime });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }
@@ -61,7 +60,6 @@ export class ScheduleController {
       });
       res.status(200).send({ message: "Your schedule has been set" });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }
@@ -117,7 +115,6 @@ export class ScheduleController {
       });
       res.status(200).send({ message: "Your interview has been rescheduled" });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }
@@ -164,7 +161,6 @@ export class ScheduleController {
       });
       res.status(200).send({ message: "Your schedule has been deleted" });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }

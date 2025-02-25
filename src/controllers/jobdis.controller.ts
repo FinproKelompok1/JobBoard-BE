@@ -124,7 +124,6 @@ export class JobDiscoveryController {
         },
       });
     } catch (error) {
-      console.error("Error in discoverJobs:", error);
       return res.status(500).json({
         message: "Failed to fetch jobs",
         error: process.env.NODE_ENV === "development" ? error : undefined,
@@ -159,7 +158,6 @@ export class JobDiscoveryController {
 
       return res.status(200).json({ result: job });
     } catch (error) {
-      console.error("Error in getJobById:", error);
       return res.status(500).json({ message: "Failed to fetch job details" });
     }
   }
@@ -214,7 +212,6 @@ export class JobDiscoveryController {
 
       return res.status(200).json({ result: relatedJobs });
     } catch (error) {
-      console.error("Error in getRelatedJobs:", error);
       return res.status(500).json({ message: "Failed to fetch related jobs" });
     }
   }
@@ -253,7 +250,6 @@ export class JobDiscoveryController {
 
       return res.status(200).json(company);
     } catch (error) {
-      console.error("Error in getCompanyDetails:", error);
       return res
         .status(500)
         .json({ message: "Failed to fetch company details" });

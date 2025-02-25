@@ -103,7 +103,6 @@ export class EmailService {
         html,
       });
     } catch (error) {
-      console.error("Error sending password reset email:", error);
       throw new Error("Failed to send password reset email");
     }
   }

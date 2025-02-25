@@ -13,13 +13,6 @@ export class ApplyService {
     expectedSalary: number
   ): Promise<JobApplication> {
     try {
-      console.log("Service received:", {
-        userId,
-        jobId,
-        resumeName: resume.originalname,
-        salary: expectedSalary,
-      });
-
       if (!userId || !jobId || !resume || !expectedSalary) {
         throw new Error("All fields are required");
       }
@@ -69,7 +62,6 @@ export class ApplyService {
 
       return newApplication;
     } catch (error) {
-      console.error("Application creation error:", error);
       throw error;
     }
   }
@@ -91,7 +83,6 @@ export class ApplyService {
         },
       });
     } catch (error) {
-      console.error("Error fetching user applications:", error);
       throw error;
     }
   }
@@ -115,7 +106,6 @@ export class ApplyService {
         },
       });
     } catch (error) {
-      console.error("Error fetching job applications:", error);
       throw error;
     }
   }
@@ -150,7 +140,6 @@ export class ApplyService {
         },
       });
     } catch (error) {
-      console.error("Error updating application status:", error);
       throw error;
     }
   }
@@ -179,7 +168,6 @@ export class ApplyService {
         },
       });
     } catch (error) {
-      console.error("Error deleting application:", error);
       throw error;
     }
   }
@@ -213,7 +201,6 @@ export class ApplyService {
 
       return statistics;
     } catch (error) {
-      console.error("Error getting application statistics:", error);
       throw error;
     }
   }
@@ -231,7 +218,6 @@ export class ApplyService {
 
       return !!application;
     } catch (error) {
-      console.error("Error checking application:", error);
       throw error;
     }
   }

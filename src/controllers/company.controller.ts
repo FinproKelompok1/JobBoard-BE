@@ -82,7 +82,6 @@ export class CompanyController {
         },
       });
     } catch (error) {
-      console.error("Error in getCompanies:", error);
       return res.status(500).json({
         message: "Failed to fetch companies",
         error: process.env.NODE_ENV === "development" ? error : undefined,
@@ -136,7 +135,6 @@ export class CompanyController {
 
       return res.json(response);
     } catch (error) {
-      console.error("Error in getCompanyById:", error);
       return res.status(500).json({
         message: "Failed to fetch company details",
       });
@@ -173,7 +171,6 @@ export class CompanyController {
 
       return res.json(profile);
     } catch (error) {
-      console.error("Error in getProfile:", error);
       return res.status(500).json({ message: "Failed to fetch profile" });
     }
   }
@@ -206,7 +203,6 @@ export class CompanyController {
             await cloudinaryRemove(currentProfile.logo);
           }
         } catch (error) {
-          console.error("Error uploading logo:", error);
           return res.status(500).json({ message: "Failed to upload logo" });
         }
       }
@@ -255,7 +251,6 @@ export class CompanyController {
 
       return res.json(updatedProfile);
     } catch (error) {
-      console.error("Error in updateProfile:", error);
       return res.status(500).json({ message: "Failed to update profile" });
     }
   }

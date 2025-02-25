@@ -25,7 +25,6 @@ export class UserSubscriptionController {
 
       res.status(200).send({ userSubscription: user?.UserSubscription });
     } catch (error) {
-      console.error("Error retrieving user subscription:", error);
       res.status(500).send({
         message: "Server error: Unable to retrieve user subscription.",
       });

@@ -55,7 +55,6 @@ export class ReviewController {
 
       res.status(201).send({ message: "Review submitted successfully" });
     } catch (error) {
-      console.error("Error creating review:", error);
       res
         .status(500)
         .send({ message: "Server error: Unable to create review." });

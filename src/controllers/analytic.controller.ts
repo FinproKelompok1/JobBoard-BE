@@ -86,7 +86,6 @@ export class AnalyticController {
         },
       });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }
@@ -119,7 +118,6 @@ export class AnalyticController {
 
       res.status(200).send({ result: { basedOnJobRole, basedOnJobLocation } });
     } catch (err) {
-      console.log(err);
       res.status(200).send(err);
     }
   }
@@ -159,7 +157,6 @@ export class AnalyticController {
         .status(200)
         .send({ result: { basedOnJobCategory, basedOnExpectedSalary } });
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   }

@@ -65,8 +65,6 @@ export class UserAuthController {
         { expiresIn: "24h" }
       );
 
-      console.log("Setting cookie with token:", token);
-
       res.cookie("token", token, {
         httpOnly: false,
         secure: false,
@@ -75,8 +73,6 @@ export class UserAuthController {
         domain: "localhost",
         maxAge: 24 * 60 * 60 * 1000,
       });
-
-      console.log("Cookies set in response:", res.getHeader("Set-Cookie"));
 
       res.json({
         message: "Login successful",
@@ -160,7 +156,6 @@ export class UserAuthController {
 
       res.redirect("/dashboard");
     } catch (error: any) {
-      console.error("OAuth error:", error);
       res.redirect(`/login?error=${encodeURIComponent(error.message)}`);
     }
   }

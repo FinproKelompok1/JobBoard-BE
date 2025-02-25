@@ -181,7 +181,6 @@ export class UserAssessmentController {
       try {
         await page.goto(pageUrl, { waitUntil: "networkidle2" });
       } catch (error) {
-        console.error("Failed to load page:", error);
         res.status(500).send({ message: "Failed to generate certificate" });
         return;
       }
@@ -199,7 +198,6 @@ export class UserAssessmentController {
       res.setHeader("Content-Length", pdf.length);
       res.status(200).end(pdf);
     } catch (error) {
-      console.error("Error downloading certificate:", error);
       res.status(500).send({ message: "Failed to download certificate" });
     }
   }

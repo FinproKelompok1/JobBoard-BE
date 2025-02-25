@@ -31,7 +31,6 @@ export class OAuthController {
       res.json({ user, token });
       // res.redirect(`${process.env.NEXT_PUBLIC_BASE_URL_FE}/dashboard`);
     } catch (error) {
-      console.error("OAuth error:", error);
       res.redirect(
         `${process.env.BASE_URL_FE}/login?error=${encodeURIComponent(
           "Authentication failed"
