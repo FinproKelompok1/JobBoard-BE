@@ -11,10 +11,24 @@ interface CustomRequest extends Request {
 export class CompanyController {
   async getCompanies(req: Request, res: Response) {
     try {
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 10;
+      const skip = (page - 1) * limit;
+
+      const totalCompanies = await prisma.admin.count({
+        where: {
+          isVerified: true,
+        },
+      });
+
+      const totalPages = Math.ceil(totalCompanies / limit);
+
       const companies = await prisma.admin.findMany({
         where: {
           isVerified: true,
         },
+        skip: skip,
+        take: limit,
         select: {
           id: true,
           companyName: true,
@@ -58,7 +72,15 @@ export class CompanyController {
         })),
       }));
 
-      return res.status(200).json(formattedCompanies);
+      return res.status(200).json({
+        data: formattedCompanies,
+        meta: {
+          page,
+          limit,
+          totalItems: totalCompanies,
+          totalPages,
+        },
+      });
     } catch (error) {
       console.error("Error in getCompanies:", error);
       return res.status(500).json({
@@ -67,7 +89,6 @@ export class CompanyController {
       });
     }
   }
-
   async getCompanyById(req: Request, res: Response) {
     try {
       const { id } = req.params;
@@ -190,19 +211,17 @@ export class CompanyController {
         }
       }
 
-      // Create location if city and province are provided
       let location;
       if (city && province) {
         location = await prisma.location.create({
           data: {
             city,
             province,
-            latitude: -6.2, // Default Jakarta coordinates
+            latitude: -6.2,
             longitude: 106.816666,
           },
         });
 
-        // Update active jobs with new location
         await prisma.job.updateMany({
           where: {
             adminId: adminId,

@@ -28,11 +28,7 @@ export class UserProfileController {
       const user = await prisma.user.findUnique({
         where: { id: userId },
         include: {
-          Review: true,
           CurriculumVitae: true,
-          UserAssessment: {
-            include: { certificate: true, assessment: true, User: true },
-          },
           location: true,
           JobApplication: {
             include: {
@@ -85,7 +81,6 @@ export class UserProfileController {
       } = req.body;
 
       const updatedUser = await prisma.$transaction(async (prisma) => {
-        // Find or create the location
         let location = await prisma.location.findFirst({
           where: {
             AND: [{ city }, { province }],
@@ -94,7 +89,6 @@ export class UserProfileController {
 
         if (!location && city && province) {
           try {
-            // Fetch coordinates from OpenCage
             const query = `${city}+${province}+Indonesia`;
             const { data } = await axios.get(
               `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
@@ -130,7 +124,6 @@ export class UserProfileController {
           }
         }
 
-        // Update user with the location
         const user = await prisma.user.update({
           where: { id: userId },
           data: {
@@ -146,7 +139,6 @@ export class UserProfileController {
           },
         });
 
-        // Handle CV update if provided
         if (summary || experience || skill || education) {
           const existingCV = await prisma.curriculumVitae.findFirst({
             where: { userId: userId },
@@ -175,7 +167,6 @@ export class UserProfileController {
           }
         }
 
-        // Get updated user with CV
         return prisma.user.findUnique({
           where: { id: userId },
           include: {
@@ -241,6 +232,125 @@ export class UserProfileController {
     }
   }
 
+  async changeEmail(req: AuthRequest, res: Response): Promise<void> {
+    try {
+      const userId = req.user?.id;
+      if (!userId) {
+        res.status(401).json({ message: "Unauthorized" });
+        return;
+      }
+
+      const { newEmail, password } = req.body;
+
+      if (!newEmail || !password) {
+        res.status(400).json({ message: "Email and password are required" });
+        return;
+      }
+
+      const existingUser = await prisma.user.findUnique({
+        where: { email: newEmail },
+      });
+
+      if (existingUser) {
+        res.status(400).json({ message: "Email is already in use" });
+        return;
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+
+      if (!user) {
+        res.status(404).json({ message: "User not found" });
+        return;
+      }
+
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        res.status(400).json({ message: "Current password is incorrect" });
+        return;
+      }
+
+      const token = jwt.sign(
+        {
+          userId,
+          newEmail,
+          type: "email_change",
+        },
+        process.env.JWT_SECRET!,
+        { expiresIn: "1h" }
+      );
+
+      await emailService.sendEmailChangeVerification(
+        newEmail,
+        token,
+        user.fullname || user.username
+      );
+
+      res.status(200).json({
+        success: true,
+        message:
+          "Verification email sent. Please check your new email to complete the change.",
+      });
+    } catch (error) {
+      console.error("Error changing email:", error);
+      res.status(500).json({ message: "Failed to change email" });
+    }
+  }
+
+  async verifyEmailChange(req: Request, res: Response): Promise<void> {
+    try {
+      const { token } = req.query;
+      console.log("Received verification request with token:", token);
+
+      if (!token || typeof token !== "string") {
+        console.log("Invalid token format");
+        res.status(400).json({ message: "Invalid token" });
+        return;
+      }
+
+      const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+        userId: number;
+        newEmail: string;
+        type: string;
+      };
+      console.log("Decoded token:", decoded);
+
+      if (decoded.type !== "email_change") {
+        console.log("Invalid token type:", decoded.type);
+        res.status(400).json({ message: "Invalid token type" });
+        return;
+      }
+
+      console.log("Updating email for user:", decoded.userId);
+      const updatedUser = await prisma.user.update({
+        where: { id: decoded.userId },
+        data: {
+          email: decoded.newEmail,
+          isVerified: true,
+        },
+      });
+      console.log("User updated successfully:", updatedUser);
+
+      res.status(200).json({
+        success: true,
+        message: "Email changed successfully",
+        user: updatedUser,
+      });
+    } catch (error) {
+      console.error("Full error details:", error);
+      if (error instanceof jwt.TokenExpiredError) {
+        res.status(400).json({ message: "Token has expired" });
+        return;
+      }
+      if (error instanceof jwt.JsonWebTokenError) {
+        res.status(400).json({ message: "Invalid token" });
+        return;
+      }
+      res.status(500).json({ message: "Failed to verify email change" });
+    }
+  }
+
   async changePassword(req: AuthRequest, res: Response): Promise<void> {
     try {
       const userId = req.user?.id;
@@ -252,7 +362,6 @@ export class UserProfileController {
 
       const { currentPassword, newPassword } = req.body;
 
-      // Validate input
       if (!currentPassword || !newPassword) {
         res
           .status(400)
@@ -260,7 +369,6 @@ export class UserProfileController {
         return;
       }
 
-      // Get user with password
       const user = await prisma.user.findUnique({
         where: { id: userId },
         select: { password: true },
@@ -271,7 +379,6 @@ export class UserProfileController {
         return;
       }
 
-      // Verify current password
       const isPasswordValid = await bcrypt.compare(
         currentPassword,
         user.password
@@ -281,10 +388,8 @@ export class UserProfileController {
         return;
       }
 
-      // Hash new password
       const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-      // Update password
       await prisma.user.update({
         where: { id: userId },
         data: { password: hashedPassword },
@@ -329,126 +434,6 @@ export class UserProfileController {
     } catch (error) {
       console.error("Error taking job:", error);
       res.status(500).json({ message: "Failed to take job" });
-    }
-  }
-
-  async changeEmail(req: AuthRequest, res: Response): Promise<void> {
-    try {
-      const userId = req.user?.id;
-      if (!userId) {
-        res.status(401).json({ message: "Unauthorized" });
-        return;
-      }
-
-      const { newEmail, password } = req.body;
-
-      // Validate input
-      if (!newEmail || !password) {
-        res.status(400).json({ message: "Email and password are required" });
-        return;
-      }
-
-      // Check if email is already in use
-      const existingUser = await prisma.user.findUnique({
-        where: { email: newEmail },
-      });
-
-      if (existingUser) {
-        res.status(400).json({ message: "Email is already in use" });
-        return;
-      }
-
-      // Get current user and verify password
-      const user = await prisma.user.findUnique({
-        where: { id: userId },
-      });
-
-      if (!user) {
-        res.status(404).json({ message: "User not found" });
-        return;
-      }
-
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) {
-        res.status(400).json({ message: "Current password is incorrect" });
-        return;
-      }
-
-      // Generate verification token
-      const token = jwt.sign(
-        {
-          userId,
-          newEmail,
-          type: "email_change",
-        },
-        process.env.JWT_SECRET!,
-        { expiresIn: "1h" }
-      );
-
-      // Send verification email
-      const emailService = new EmailService();
-      await emailService.sendVerificationEmail(
-        newEmail,
-        token,
-        user.fullname || user.username
-      );
-
-      res.status(200).json({
-        success: true,
-        message:
-          "Verification email sent. Please check your new email to complete the change.",
-      });
-    } catch (error) {
-      console.error("Error changing email:", error);
-      res.status(500).json({ message: "Failed to change email" });
-    }
-  }
-
-  async verifyEmailChange(req: Request, res: Response): Promise<void> {
-    try {
-      const { token } = req.query;
-
-      if (!token || typeof token !== "string") {
-        res.status(400).json({ message: "Invalid token" });
-        return;
-      }
-
-      // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
-        userId: number;
-        newEmail: string;
-        type: string;
-      };
-
-      if (decoded.type !== "email_change") {
-        res.status(400).json({ message: "Invalid token type" });
-        return;
-      }
-
-      // Update user email
-      await prisma.user.update({
-        where: { id: decoded.userId },
-        data: {
-          email: decoded.newEmail,
-          isVerified: true,
-        },
-      });
-
-      res.status(200).json({
-        success: true,
-        message: "Email changed successfully",
-      });
-    } catch (error) {
-      if (error instanceof jwt.TokenExpiredError) {
-        res.status(400).json({ message: "Token has expired" });
-        return;
-      }
-      if (error instanceof jwt.JsonWebTokenError) {
-        res.status(400).json({ message: "Invalid token" });
-        return;
-      }
-      console.error("Error verifying email change:", error);
-      res.status(500).json({ message: "Failed to verify email change" });
     }
   }
 }

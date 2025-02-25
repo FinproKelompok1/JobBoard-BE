@@ -17,10 +17,8 @@ export class DeveloperAuthService {
   }
 
   async setup2FA() {
-    // Generate a secret for developer
     const secret = authenticator.generateSecret();
 
-    // Instead of storing in database, we'll use environment variable
     process.env.DEVELOPER_2FA_SECRET = secret;
     const otpauth = authenticator.keyuri(
       process.env.DEVELOPER_EMAIL!,
@@ -48,7 +46,6 @@ export class DeveloperAuthService {
       throw new Error("Invalid credentials");
     }
 
-    // Verify 2FA token using environment variable
     const secret = process.env.DEVELOPER_2FA_SECRET;
     if (!secret) {
       throw new Error("2FA not set up");

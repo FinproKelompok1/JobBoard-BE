@@ -366,7 +366,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\purwadhika\\finpro\\finpro-backend\\prisma\\generated\\client",
+      "value": "C:\\Final Project\\JobBoard-BE\\prisma\\generated\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -375,7 +375,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin-arm64",
+        "value": "windows",
         "native": true
       },
       {
@@ -388,7 +388,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\purwadhika\\finpro\\finpro-backend\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Final Project\\JobBoard-BE\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
