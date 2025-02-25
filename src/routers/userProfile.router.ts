@@ -11,6 +11,12 @@ router.get(
   UserProfileController.getUserProfile.bind(UserProfileController)
 );
 
+router.get(
+  "/check-completion",
+  requireAuth,
+  UserProfileController.isProfileComplete.bind(UserProfileController)
+);
+
 router.put(
   "/:userId",
   requireAuth,

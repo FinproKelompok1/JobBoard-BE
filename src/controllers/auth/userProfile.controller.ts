@@ -436,6 +436,56 @@ export class UserProfileController {
       res.status(500).json({ message: "Failed to take job" });
     }
   }
+
+  async isProfileComplete(req: AuthRequest, res: Response): Promise<void> {
+    try {
+      const userId = req.user?.id;
+
+      if (!userId) {
+        res.status(401).json({ message: "Unauthorized" });
+        return;
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: {
+          gender: true,
+          dob: true,
+          lastEdu: true,
+          domicileId: true,
+          location: true,
+        },
+      });
+
+      if (!user) {
+        res.status(404).json({ message: "User not found" });
+        return;
+      }
+
+      const isComplete = Boolean(
+        user.gender && user.dob && user.lastEdu && user.domicileId
+      );
+
+      const missingFields = {
+        gender: !user.gender,
+        dob: !user.dob,
+        lastEdu: !user.lastEdu,
+        domicileId: !user.domicileId,
+      };
+
+      res.status(200).json({
+        success: true,
+        data: {
+          isComplete,
+          missingFields,
+          locationInfo: user.location,
+        },
+      });
+    } catch (error) {
+      console.error("Error checking profile completion:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
 }
 
 export default new UserProfileController();
