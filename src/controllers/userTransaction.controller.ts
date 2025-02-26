@@ -6,7 +6,7 @@ interface MulterRequest extends Request {
 }
 
 export class UserTransactionController {
-  async getUserTransaction(req: Request, res: Response): Promise<void> {
+  async getUserTransaction(req: MulterRequest, res: Response): Promise<void> {
     try {
       const {
         page = "1",
