@@ -1,32 +1,52 @@
 import { Request, Response } from "express";
 import prisma from "../prisma";
+import { AuthUser } from "src/types/auth";
+interface MulterRequest extends Request {
+  user?: AuthUser;
+}
 
 export class UserTransactionController {
   async getUserTransaction(req: Request, res: Response): Promise<void> {
     try {
-      const username = req.params.username;
-
-      if (!username) {
-        res.status(400).json({ message: "User parameter is required" });
-        return;
+      const {
+        page = "1",
+        limit = "10",
+        sort = "createdAt",
+        order = "desc",
+        status,
+      } = req.query;
+      const pageNumber = parseInt(page as string, 10);
+      const pageSize = parseInt(limit as string, 10);
+      const skip = (pageNumber - 1) * pageSize;
+      const orderBy = { [sort as string]: order === "desc" ? "desc" : "asc" };
+      const where: any = {};
+      if (status) {
+        where.status = status;
       }
-
-      const user = await prisma.user.findUnique({
-        where: { username },
-        select: { id: true },
-      });
-
-      if (!user) {
-        res.status(404).json({ message: "User not found" });
-        return;
-      }
-
       const userTransactions = await prisma.transaction.findMany({
-        where: { userId: user.id },
-        include: { subscription: { select: { category: true } } },
+        where: { userId: req.user?.id, ...where },
+        select: {
+          id: true,
+          userId: true,
+          subscriptionId: true,
+          amount: true,
+          status: true,
+          createdAt: true,
+          updatedAt: true,
+          user: { select: { email: true } },
+          subscription: { select: { category: true } },
+        },
+        skip,
+        take: pageSize,
+        orderBy,
       });
 
-      res.status(200).send({ userTransactions });
+      const totalTransactions = await prisma.transaction.count({ where });
+      res.status(200).send({
+        userTransactions,
+        totalPages: Math.ceil(totalTransactions / pageSize),
+        currentPage: pageNumber,
+      });
     } catch (error) {
       res
         .status(500)

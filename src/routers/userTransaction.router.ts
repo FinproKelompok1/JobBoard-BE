@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { UserTransactionController } from "../controllers/userTransaction.controller";
+import { requireAuth } from "../middlewares/auth";
 
 export class UserTransactionRouter {
   private router: Router;
@@ -13,7 +14,8 @@ export class UserTransactionRouter {
 
   private initialiazeRoutes() {
     this.router.get(
-      "/:username",
+      "/",
+      requireAuth,
       this.userTransactionController.getUserTransaction
     );
   }
