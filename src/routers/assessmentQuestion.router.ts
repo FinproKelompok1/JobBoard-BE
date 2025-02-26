@@ -13,7 +13,7 @@ export class AssessmentQuestionRouter {
 
   private initializeRoutes() {
     this.router.post(
-      "/",
+      "/:assessmentId",
       this.assessmentQuestionController.createAssessmentQuestion
     );
 
