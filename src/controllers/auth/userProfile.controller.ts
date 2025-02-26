@@ -39,6 +39,11 @@ export class UserProfileController {
               },
             },
           },
+          Review: true,
+          UserSubscription: true,
+          UserAssessment: {
+            include: { certificate: true, assessment: true, User: true },
+          },
         },
       });
 
