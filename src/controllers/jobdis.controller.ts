@@ -9,12 +9,16 @@ export class JobDiscoveryController {
         city,
         province,
         search,
+        searchTerm,
         category,
         page = "1",
         limit = "6",
         sort = "createdAt",
         order = "desc",
       } = req.query;
+
+      // Gunakan searchTerm jika search tidak ada
+      const searchQuery = search || searchTerm;
 
       const pageNumber = parseInt(page as string);
       const limitNumber = parseInt(limit as string);
@@ -47,11 +51,16 @@ export class JobDiscoveryController {
         }
       }
 
-      if (search) {
+      if (searchQuery) {
         whereClause.OR = [
-          { title: { contains: search as string, mode: "insensitive" } },
-          { role: { contains: search as string, mode: "insensitive" } },
-          { description: { contains: search as string, mode: "insensitive" } },
+          { title: { contains: searchQuery as string, mode: "insensitive" } },
+          { role: { contains: searchQuery as string, mode: "insensitive" } },
+          {
+            description: {
+              contains: searchQuery as string,
+              mode: "insensitive",
+            },
+          },
         ];
       }
 
@@ -113,7 +122,7 @@ export class JobDiscoveryController {
           queryParams: {
             city,
             province,
-            search,
+            searchQuery,
             category,
             page,
             limit,
