@@ -41,7 +41,9 @@ export class UserTransactionController {
         orderBy,
       });
 
-      const totalTransactions = await prisma.transaction.count({ where });
+      const totalTransactions = await prisma.transaction.count({
+        where: { userId: req.user?.id, ...where },
+      });
       res.status(200).send({
         userTransactions,
         totalPages: Math.ceil(totalTransactions / pageSize),
