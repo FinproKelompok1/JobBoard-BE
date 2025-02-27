@@ -84,6 +84,7 @@ export class ApplicantController {
           user: {
             select: {
               avatar: true,
+              username: true,
               fullname: true,
               email: true,
               dob: true,
@@ -141,6 +142,47 @@ export class ApplicantController {
         data: { rejectedReview: req.body.rejectedReview },
       });
       res.status(200).send({ message: "Your review has been set" });
+    } catch (err) {
+      res.status(400).send(err);
+    }
+  }
+
+  async getApplicantDetail(req: Request, res: Response) {
+    try {
+      const applicant = await prisma.user.findUnique({
+        where: { username: req.params.username },
+        include: {
+          CurriculumVitae: true,
+          location: true,
+          JobApplication: {
+            include: {
+              job: {
+                include: {
+                  admin: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      if (!applicant) {
+        res.status(404).json({ message: "applicant not found" });
+        return;
+      }
+
+      const adminAuthenticated = applicant.JobApplication.find(
+        (item) => item.job.adminId === req.user?.id
+      );
+
+      if (!adminAuthenticated) {
+        res
+          .status(404)
+          .json({ message: "unauthenticated to access this profile" });
+        return;
+      }
+
+      res.status(200).send({ result: applicant });
     } catch (err) {
       res.status(400).send(err);
     }
