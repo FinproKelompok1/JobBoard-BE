@@ -1,6 +1,5 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import { Strategy as FacebookStrategy } from "passport-facebook";
 import { PrismaClient } from "../../prisma/generated/client";
 import { AuthUser } from "../types/auth";
 import bcrypt from "bcrypt";
@@ -48,46 +47,6 @@ passport.use(
             data: {
               email,
               username: `google_${profile.id}`,
-              password: HASHED_OAUTH_PASSWORD,
-              isVerified: true,
-              avatar: profile.photos?.[0]?.value || "",
-              fullname: profile.displayName || null,
-            },
-          });
-        }
-
-        const authUser: AuthUser = { ...user, role: "user" };
-        return done(null, authUser);
-      } catch (error) {
-        return done(error);
-      }
-    }
-  )
-);
-
-passport.use(
-  new FacebookStrategy(
-    {
-      clientID: process.env.FACEBOOK_APP_ID!,
-      clientSecret: process.env.FACEBOOK_APP_SECRET!,
-      callbackURL: `${process.env.BASE_URL_BE}/auth/google/callback`,
-      profileFields: ["id", "emails", "name", "photos"],
-      passReqToCallback: true,
-    },
-    async (req, accessToken, refreshToken, profile, done) => {
-      try {
-        const email = profile.emails?.[0]?.value;
-        if (!email) {
-          return done(new Error("No email provided from Facebook"));
-        }
-
-        let user = await prisma.user.findUnique({ where: { email } });
-
-        if (!user) {
-          user = await prisma.user.create({
-            data: {
-              email,
-              username: `fb_${profile.id}`,
               password: HASHED_OAUTH_PASSWORD,
               isVerified: true,
               avatar: profile.photos?.[0]?.value || "",

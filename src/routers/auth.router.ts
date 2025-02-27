@@ -70,22 +70,6 @@ router.get(
   OAuthController.handleCallback
 );
 
-router.get(
-  "/facebook",
-  passport.authenticate("facebook", {
-    scope: ["email"],
-  }) as RequestHandler
-);
-
-router.get(
-  "/facebook/callback",
-  passport.authenticate("facebook", {
-    failureRedirect: `${process.env.BASE_URL_FE}/login?error=facebook_auth_failed`,
-    session: true,
-  }) as RequestHandler,
-  OAuthController.handleCallback as RequestHandler
-);
-
 router.post(
   "/developer/login",
   developerController.login.bind(developerController) as RequestHandler
