@@ -14,10 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OAuthService = void 0;
 const client_1 = require("../../../prisma/generated/client");
-const bcrypt_1 = __importDefault(require("bcrypt"));
 const passport_1 = __importDefault(require("passport"));
 const passport_google_oauth20_1 = require("passport-google-oauth20");
-const passport_facebook_1 = require("passport-facebook");
 const prisma = new client_1.PrismaClient();
 const SALT_ROUNDS = 10;
 class OAuthService {
@@ -29,20 +27,6 @@ class OAuthService {
         }, (accessToken, refreshToken, profile, done) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = yield this.handleGoogleLogin(profile);
-                done(null, user);
-            }
-            catch (error) {
-                done(error);
-            }
-        })));
-        passport_1.default.use(new passport_facebook_1.Strategy({
-            clientID: process.env.FACEBOOK_APP_ID,
-            clientSecret: process.env.FACEBOOK_APP_SECRET,
-            callbackURL: `${process.env.BASE_URL_FE}/auth/facebook/callback`,
-            profileFields: ["id", "emails", "name"],
-        }, (accessToken, refreshToken, profile, done) => __awaiter(this, void 0, void 0, function* () {
-            try {
-                const user = yield this.handleFacebookLogin(profile);
                 done(null, user);
             }
             catch (error) {
@@ -92,26 +76,6 @@ class OAuthService {
                 }
             }
             throw new Error("No user or admin found");
-        });
-    }
-    static handleFacebookLogin(profile) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const email = profile.emails[0].value;
-            let user = yield prisma.user.findUnique({ where: { email } });
-            if (!user) {
-                const username = `fb_${profile.id}_${Math.random()
-                    .toString(36)
-                    .slice(2, 5)}`;
-                user = yield prisma.user.create({
-                    data: {
-                        email,
-                        username,
-                        password: yield bcrypt_1.default.hash(Math.random().toString(36), SALT_ROUNDS),
-                        isVerified: true,
-                    },
-                });
-            }
-            return Object.assign(Object.assign({}, user), { role: "user" });
         });
     }
 }

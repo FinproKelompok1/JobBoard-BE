@@ -58,13 +58,6 @@ router.get("/google/callback", pasport_1.default.authenticate("google", {
     failureRedirect: `${process.env.BASE_URL_FE}/login?error=google_auth_failed`,
     session: true,
 }), oauth_controller_1.OAuthController.handleCallback);
-router.get("/facebook", pasport_1.default.authenticate("facebook", {
-    scope: ["email"],
-}));
-router.get("/facebook/callback", pasport_1.default.authenticate("facebook", {
-    failureRedirect: `${process.env.BASE_URL_FE}/login?error=facebook_auth_failed`,
-    session: true,
-}), oauth_controller_1.OAuthController.handleCallback);
 router.post("/developer/login", developerController.login.bind(developerController));
 router.post("/developer/2fa/setup", developerController.setup2FA.bind(developerController));
 router.post("/logout", auth_1.requireAuth, (req, res) => {

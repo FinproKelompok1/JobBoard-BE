@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const passport_1 = __importDefault(require("passport"));
 const passport_google_oauth20_1 = require("passport-google-oauth20");
-const passport_facebook_1 = require("passport-facebook");
 const client_1 = require("../../prisma/generated/client");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const prisma = new client_1.PrismaClient();
@@ -54,39 +53,6 @@ passport_1.default.use(new passport_google_oauth20_1.Strategy({
                 data: {
                     email,
                     username: `google_${profile.id}`,
-                    password: HASHED_OAUTH_PASSWORD,
-                    isVerified: true,
-                    avatar: ((_d = (_c = profile.photos) === null || _c === void 0 ? void 0 : _c[0]) === null || _d === void 0 ? void 0 : _d.value) || "",
-                    fullname: profile.displayName || null,
-                },
-            });
-        }
-        const authUser = Object.assign(Object.assign({}, user), { role: "user" });
-        return done(null, authUser);
-    }
-    catch (error) {
-        return done(error);
-    }
-})));
-passport_1.default.use(new passport_facebook_1.Strategy({
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: `${process.env.BASE_URL_BE}/auth/google/callback`,
-    profileFields: ["id", "emails", "name", "photos"],
-    passReqToCallback: true,
-}, (req, accessToken, refreshToken, profile, done) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c, _d;
-    try {
-        const email = (_b = (_a = profile.emails) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.value;
-        if (!email) {
-            return done(new Error("No email provided from Facebook"));
-        }
-        let user = yield prisma.user.findUnique({ where: { email } });
-        if (!user) {
-            user = yield prisma.user.create({
-                data: {
-                    email,
-                    username: `fb_${profile.id}`,
                     password: HASHED_OAUTH_PASSWORD,
                     isVerified: true,
                     avatar: ((_d = (_c = profile.photos) === null || _c === void 0 ? void 0 : _c[0]) === null || _d === void 0 ? void 0 : _d.value) || "",
