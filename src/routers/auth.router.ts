@@ -10,7 +10,7 @@ import { UserAuthController } from "../controllers/auth/user.controller";
 import { AdminAuthController } from "../controllers/auth/admin.controller";
 import { DeveloperAuthController } from "../controllers/auth/developer.controller";
 import UserProfileController from "../controllers/auth/userProfile.controller";
-import { OAuthCheckController } from "../controllers/auth/oauth-check.controller"; // Import controller baru
+import { OAuthCheckController } from "../controllers/auth/oauth-check.controller";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "../../prisma/generated/client";
 
@@ -21,7 +21,7 @@ const router = express.Router();
 const userController = new UserAuthController();
 const adminController = new AdminAuthController();
 const developerController = new DeveloperAuthController();
-const oauthCheckController = new OAuthCheckController(); // Instance controller baru
+const oauthCheckController = new OAuthCheckController();
 
 router.post("/register/user", userController.register as RequestHandler);
 
@@ -212,8 +212,6 @@ router.put(
   adminController.updateEmail.bind(adminController) as RequestHandler
 );
 
-// Endpoint baru untuk memeriksa apakah user adalah OAuth user
-// Menggunakan handler dengan wrapper untuk menghindari error tipe
 router.get("/check-oauth-user", (req, res, next) => {
   oauthCheckController.checkOAuthUser(req, res).catch(next);
 });

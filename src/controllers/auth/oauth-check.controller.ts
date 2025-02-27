@@ -1,11 +1,8 @@
-// File: /src/controllers/auth/oauth-check.controller.ts
-
 import { Request, Response } from "express";
 import { PrismaClient } from "../../../prisma/generated/client";
 
 const prisma = new PrismaClient();
 
-// Konstanta untuk identifikasi OAuth user
 const OAUTH_IDENTIFIERS = ["OAUTH_USER_NOT_FOR_LOGIN", "oauth"];
 
 export class OAuthCheckController {
@@ -21,7 +18,6 @@ export class OAuthCheckController {
         return res.status(400).json({ message: "Valid userType is required" });
       }
 
-      // Ambil user berdasarkan userType
       let user;
       if (userType === "admin") {
         user = await prisma.admin.findUnique({
@@ -36,15 +32,11 @@ export class OAuthCheckController {
       }
 
       if (!user) {
-        // Jika user tidak ditemukan, return false
         return res.json({ isOauthUser: false });
       }
 
-      // Cek apakah password mengandung indikator OAuth
       const isOauthUser =
-        // Cek langsung dengan identifikasi OAuth
         OAUTH_IDENTIFIERS.includes(user.password) ||
-        // Cek pola username yang menunjukkan OAuth user
         user.password.startsWith("fb_") ||
         user.password.startsWith("google_");
 

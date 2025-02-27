@@ -72,6 +72,7 @@ class ApplicantController {
                         user: {
                             select: {
                                 avatar: true,
+                                username: true,
                                 fullname: true,
                                 email: true,
                                 dob: true,
@@ -135,6 +136,43 @@ class ApplicantController {
                     data: { rejectedReview: req.body.rejectedReview },
                 });
                 res.status(200).send({ message: "Your review has been set" });
+            }
+            catch (err) {
+                res.status(400).send(err);
+            }
+        });
+    }
+    getApplicantDetail(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const applicant = yield prisma_1.default.user.findUnique({
+                    where: { username: req.params.username },
+                    include: {
+                        CurriculumVitae: true,
+                        location: true,
+                        JobApplication: {
+                            include: {
+                                job: {
+                                    include: {
+                                        admin: true,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                });
+                if (!applicant) {
+                    res.status(404).json({ message: "applicant not found" });
+                    return;
+                }
+                const adminAuthenticated = applicant.JobApplication.find((item) => { var _a; return item.job.adminId === ((_a = req.user) === null || _a === void 0 ? void 0 : _a.id); });
+                if (!adminAuthenticated) {
+                    res
+                        .status(404)
+                        .json({ message: "unauthenticated to access this profile" });
+                    return;
+                }
+                res.status(200).send({ result: applicant });
             }
             catch (err) {
                 res.status(400).send(err);

@@ -9,6 +9,7 @@ const userProfile_controller_1 = __importDefault(require("../controllers/auth/us
 const multer_1 = __importDefault(require("../config/multer"));
 const router = express_1.default.Router();
 router.get("/me", auth_1.requireAuth, userProfile_controller_1.default.getUserProfile.bind(userProfile_controller_1.default));
+router.get("/check-completion", auth_1.requireAuth, userProfile_controller_1.default.isProfileComplete.bind(userProfile_controller_1.default));
 router.put("/:userId", auth_1.requireAuth, userProfile_controller_1.default.updateUserProfile.bind(userProfile_controller_1.default));
 router.post("/upload-image", auth_1.requireAuth, multer_1.default.single("image"), userProfile_controller_1.default.uploadProfileImage.bind(userProfile_controller_1.default));
 router.put("/change-password", auth_1.requireAuth, userProfile_controller_1.default.changePassword);
