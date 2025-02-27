@@ -18,7 +18,9 @@ class JobDiscoveryController {
     discoverJobs(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { city, province, search, category, page = "1", limit = "6", sort = "createdAt", order = "desc", } = req.query;
+                const { city, province, search, searchTerm, category, page = "1", limit = "6", sort = "createdAt", order = "desc", } = req.query;
+                // Gunakan searchTerm jika search tidak ada
+                const searchQuery = search || searchTerm;
                 const pageNumber = parseInt(page);
                 const limitNumber = parseInt(limit);
                 if (isNaN(pageNumber) ||
@@ -42,11 +44,16 @@ class JobDiscoveryController {
                         whereClause.location.province = province;
                     }
                 }
-                if (search) {
+                if (searchQuery) {
                     whereClause.OR = [
-                        { title: { contains: search, mode: "insensitive" } },
-                        { role: { contains: search, mode: "insensitive" } },
-                        { description: { contains: search, mode: "insensitive" } },
+                        { title: { contains: searchQuery, mode: "insensitive" } },
+                        { role: { contains: searchQuery, mode: "insensitive" } },
+                        {
+                            description: {
+                                contains: searchQuery,
+                                mode: "insensitive",
+                            },
+                        },
                     ];
                 }
                 if (category) {
@@ -99,7 +106,7 @@ class JobDiscoveryController {
                         queryParams: {
                             city,
                             province,
-                            search,
+                            searchQuery,
                             category,
                             page,
                             limit,
