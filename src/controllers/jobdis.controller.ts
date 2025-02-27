@@ -17,7 +17,6 @@ export class JobDiscoveryController {
         order = "desc",
       } = req.query;
 
-      // Gunakan searchTerm jika search tidak ada
       const searchQuery = search || searchTerm;
 
       const pageNumber = parseInt(page as string);
