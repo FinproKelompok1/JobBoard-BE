@@ -17,25 +17,42 @@ const prisma_1 = __importDefault(require("../prisma"));
 class UserTransactionController {
     getUserTransaction(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
             try {
-                const username = req.params.username;
-                if (!username) {
-                    res.status(400).json({ message: "User parameter is required" });
-                    return;
-                }
-                const user = yield prisma_1.default.user.findUnique({
-                    where: { username },
-                    select: { id: true },
-                });
-                if (!user) {
-                    res.status(404).json({ message: "User not found" });
-                    return;
+                const { page = "1", limit = "10", sort = "createdAt", order = "desc", status, } = req.query;
+                const pageNumber = parseInt(page, 10);
+                const pageSize = parseInt(limit, 10);
+                const skip = (pageNumber - 1) * pageSize;
+                const orderBy = { [sort]: order === "desc" ? "desc" : "asc" };
+                const where = {};
+                if (status) {
+                    where.status = status;
                 }
                 const userTransactions = yield prisma_1.default.transaction.findMany({
-                    where: { userId: user.id },
-                    include: { subscription: { select: { category: true } } },
+                    where: Object.assign({ userId: (_a = req.user) === null || _a === void 0 ? void 0 : _a.id }, where),
+                    select: {
+                        id: true,
+                        userId: true,
+                        subscriptionId: true,
+                        amount: true,
+                        status: true,
+                        createdAt: true,
+                        updatedAt: true,
+                        user: { select: { email: true } },
+                        subscription: { select: { category: true } },
+                    },
+                    skip,
+                    take: pageSize,
+                    orderBy,
                 });
-                res.status(200).send({ userTransactions });
+                const totalTransactions = yield prisma_1.default.transaction.count({
+                    where: Object.assign({ userId: (_b = req.user) === null || _b === void 0 ? void 0 : _b.id }, where),
+                });
+                res.status(200).send({
+                    userTransactions,
+                    totalPages: Math.ceil(totalTransactions / pageSize),
+                    currentPage: pageNumber,
+                });
             }
             catch (error) {
                 res

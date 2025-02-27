@@ -45,6 +45,11 @@ class UserProfileController {
                                 },
                             },
                         },
+                        Review: true,
+                        UserSubscription: true,
+                        UserAssessment: {
+                            include: { certificate: true, assessment: true, User: true },
+                        },
                     },
                 });
                 if (!user) {
@@ -365,6 +370,51 @@ class UserProfileController {
             }
             catch (error) {
                 res.status(500).json({ message: "Failed to take job" });
+            }
+        });
+    }
+    isProfileComplete(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a;
+            try {
+                const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+                if (!userId) {
+                    res.status(401).json({ message: "Unauthorized" });
+                    return;
+                }
+                const user = yield prisma.user.findUnique({
+                    where: { id: userId },
+                    select: {
+                        gender: true,
+                        dob: true,
+                        lastEdu: true,
+                        domicileId: true,
+                        location: true,
+                    },
+                });
+                if (!user) {
+                    res.status(404).json({ message: "User not found" });
+                    return;
+                }
+                const isComplete = Boolean(user.gender && user.dob && user.lastEdu && user.domicileId);
+                const missingFields = {
+                    gender: !user.gender,
+                    dob: !user.dob,
+                    lastEdu: !user.lastEdu,
+                    domicileId: !user.domicileId,
+                };
+                res.status(200).json({
+                    success: true,
+                    data: {
+                        isComplete,
+                        missingFields,
+                        locationInfo: user.location,
+                    },
+                });
+            }
+            catch (error) {
+                console.error("Error checking profile completion:", error);
+                res.status(500).json({ message: "Internal server error" });
             }
         });
     }

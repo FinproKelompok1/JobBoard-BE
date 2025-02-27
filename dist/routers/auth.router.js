@@ -20,6 +20,7 @@ const user_controller_1 = require("../controllers/auth/user.controller");
 const admin_controller_1 = require("../controllers/auth/admin.controller");
 const developer_controller_1 = require("../controllers/auth/developer.controller");
 const userProfile_controller_1 = __importDefault(require("../controllers/auth/userProfile.controller"));
+const oauth_check_controller_1 = require("../controllers/auth/oauth-check.controller");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const client_1 = require("../../prisma/generated/client");
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -28,6 +29,7 @@ const router = express_1.default.Router();
 const userController = new user_controller_1.UserAuthController();
 const adminController = new admin_controller_1.AdminAuthController();
 const developerController = new developer_controller_1.DeveloperAuthController();
+const oauthCheckController = new oauth_check_controller_1.OAuthCheckController();
 router.post("/register/user", userController.register);
 router.post("/login/user", auth_1.requireVerified, userController.login);
 router.post("/register/admin", adminController.register);
@@ -135,4 +137,7 @@ router.get("/verify-email-change", userProfile_controller_1.default.verifyEmailC
 router.put("/admin/change-email", auth_1.requireAuth, adminController.changeEmail.bind(adminController));
 router.get("/admin/verify-email-change", adminController.verifyEmailChange.bind(adminController));
 router.put("/admin/update-email", auth_1.requireAuth, adminController.updateEmail.bind(adminController));
+router.get("/check-oauth-user", (req, res, next) => {
+    oauthCheckController.checkOAuthUser(req, res).catch(next);
+});
 exports.default = router;

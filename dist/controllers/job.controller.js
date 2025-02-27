@@ -113,6 +113,7 @@ class JobController {
                         category: true,
                         description: true,
                         tags: true,
+                        isTestActive: true,
                         location: { select: { city: true, province: true } },
                     },
                 });

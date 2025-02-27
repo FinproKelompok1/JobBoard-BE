@@ -10,7 +10,7 @@ class AssessmentQuestionRouter {
         this.initializeRoutes();
     }
     initializeRoutes() {
-        this.router.post("/", this.assessmentQuestionController.createAssessmentQuestion);
+        this.router.post("/:assessmentId", this.assessmentQuestionController.createAssessmentQuestion);
         this.router.patch("/:assessmentQuestionId", this.assessmentQuestionController.editAssessmentQuestion);
     }
     getRouter() {
