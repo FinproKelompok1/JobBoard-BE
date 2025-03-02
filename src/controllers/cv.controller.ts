@@ -115,7 +115,7 @@ export class CvController {
 
     try {
       const browser = await puppeteer.launch({
-        headless: true,
+        headless: "new" as any,
         args: ["--no-sandbox", "--disable-setuid-sandbox"],
       });
       const page = await browser.newPage();
@@ -159,6 +159,7 @@ export class CvController {
       res.setHeader("Content-Length", pdf.length);
       res.status(200).end(pdf);
     } catch (error) {
+      console.error("Error generating CV PDF:", error);
       res.status(500).send({ message: "Server error: Unable to download CV." });
     }
   }
