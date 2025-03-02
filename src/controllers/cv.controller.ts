@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../prisma";
-import puppeteer from "puppeteer";
+import chromium from "@sparticuz/chromium";
+import puppeteer from "puppeteer-core";
 import { AuthUser } from "../types/auth";
 interface MulterRequest extends Request {
   user?: AuthUser;
@@ -114,43 +115,59 @@ export class CvController {
     const pageUrl = `${process.env.BASE_URL_FE}/download/cv/${username}`;
 
     try {
+      console.log("🔍 Checking Chromium Path...");
+      const executablePath = await chromium.executablePath();
+      console.log("✅ Chromium Path:", executablePath);
+
+      if (!executablePath) {
+        console.error("❌ Error: Chromium executablePath is undefined!");
+        res.status(500).send({ message: "Chromium not found!" });
+        return;
+      }
+
+      // ✅ Modify Puppeteer launch settings for Vercel
       const browser = await puppeteer.launch({
-        headless: "new" as any,
-        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+        args: [...chromium.args, "--no-sandbox", "--disable-gpu"],
+        defaultViewport: chromium.defaultViewport,
+        executablePath,
+        headless: chromium.headless === "true" || true, // Ensure headless mode
       });
+
+      console.log("✅ Puppeteer Launched");
       const page = await browser.newPage();
+      console.log("🌍 Navigating to:", pageUrl);
+
+      // Set Headers and Cookies
       const authToken = req.headers.authorization || "";
-      await page.setExtraHTTPHeaders({
-        Authorization: authToken,
-      });
-      const authCookie = req.headers.cookie; // Get cookies from the request
+      await page.setExtraHTTPHeaders({ Authorization: authToken });
+
+      const authCookie = req.headers.cookie;
       if (authCookie) {
+        console.log("🍪 Setting Cookies");
         const cookies = authCookie.split(";").map((cookie) => {
           const [name, value] = cookie.trim().split("=");
           return { name, value, domain: new URL(pageUrl).hostname };
         });
         await page.setCookie(...cookies);
       }
-      try {
-        await page.goto(pageUrl, { waitUntil: "networkidle2" });
-      } catch (err) {
-        res.status(500).send({ message: "Failed to generate CV PDF" });
-        return;
-      }
 
+      // Navigate to page
+      await page.goto(pageUrl, { waitUntil: "networkidle2", timeout: 10000 });
+
+      console.log("✅ Page Loaded Successfully");
+
+      // Generate PDF
+      console.log("📄 Generating PDF...");
       const pdf = await page.pdf({
-        format: "A4",
+        format: "a4",
         printBackground: true,
-        margin: {
-          top: "15mm",
-          right: "20mm",
-          bottom: "15mm",
-          left: "20mm",
-        },
+        margin: { top: "10mm", right: "10mm", bottom: "10mm", left: "10mm" },
       });
 
+      console.log("✅ PDF Generated Successfully");
       await browser.close();
 
+      // Send PDF response
       res.setHeader("Content-Type", "application/pdf");
       res.setHeader(
         "Content-Disposition",
@@ -159,7 +176,7 @@ export class CvController {
       res.setHeader("Content-Length", pdf.length);
       res.status(200).end(pdf);
     } catch (error) {
-      console.error("Error generating CV PDF:", error);
+      console.error("❌ Server error:", error);
       res.status(500).send({ message: "Server error: Unable to download CV." });
     }
   }

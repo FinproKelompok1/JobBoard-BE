@@ -159,12 +159,13 @@ export class TransactionController {
         },
       };
       const transaction = await snap.createTransaction(parameter);
-      res.status(201).send({ transactionToken: transaction.token });
+      res.status(201).json({ transactionToken: transaction.token });
     } catch (error: any) {
-      res.status(500).send({
+      console.error("Transaction Token Error:", error); // Log the full error
+      res.status(500).json({
         message:
           error.message || "Server error: Unable to create transaction token.",
-        details: error.response ? error.response.data : error,
+        details: error.response?.data || "No additional details available.",
       });
     }
   }

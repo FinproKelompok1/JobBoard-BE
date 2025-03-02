@@ -14,7 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CvController = void 0;
 const prisma_1 = __importDefault(require("../prisma"));
-const puppeteer_1 = __importDefault(require("puppeteer"));
+const chromium_1 = __importDefault(require("@sparticuz/chromium"));
+const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
 class CvController {
     createCv(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -123,48 +124,56 @@ class CvController {
             const username = req.params.username;
             const pageUrl = `${process.env.BASE_URL_FE}/download/cv/${username}`;
             try {
-                const browser = yield puppeteer_1.default.launch({
-                    headless: "new",
-                    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+                console.log("🔍 Checking Chromium Path...");
+                const executablePath = yield chromium_1.default.executablePath();
+                console.log("✅ Chromium Path:", executablePath);
+                if (!executablePath) {
+                    console.error("❌ Error: Chromium executablePath is undefined!");
+                    res.status(500).send({ message: "Chromium not found!" });
+                    return;
+                }
+                // ✅ Modify Puppeteer launch settings for Vercel
+                const browser = yield puppeteer_core_1.default.launch({
+                    args: [...chromium_1.default.args, "--no-sandbox", "--disable-gpu"],
+                    defaultViewport: chromium_1.default.defaultViewport,
+                    executablePath,
+                    headless: chromium_1.default.headless === "true" || true, // Ensure headless mode
                 });
+                console.log("✅ Puppeteer Launched");
                 const page = yield browser.newPage();
+                console.log("🌍 Navigating to:", pageUrl);
+                // Set Headers and Cookies
                 const authToken = req.headers.authorization || "";
-                yield page.setExtraHTTPHeaders({
-                    Authorization: authToken,
-                });
-                const authCookie = req.headers.cookie; // Get cookies from the request
+                yield page.setExtraHTTPHeaders({ Authorization: authToken });
+                const authCookie = req.headers.cookie;
                 if (authCookie) {
+                    console.log("🍪 Setting Cookies");
                     const cookies = authCookie.split(";").map((cookie) => {
                         const [name, value] = cookie.trim().split("=");
                         return { name, value, domain: new URL(pageUrl).hostname };
                     });
                     yield page.setCookie(...cookies);
                 }
-                try {
-                    yield page.goto(pageUrl, { waitUntil: "networkidle2" });
-                }
-                catch (err) {
-                    res.status(500).send({ message: "Failed to generate CV PDF" });
-                    return;
-                }
+                // Navigate to page
+                yield page.goto(pageUrl, { waitUntil: "networkidle2", timeout: 10000 });
+                console.log("✅ Page Loaded Successfully");
+                // Generate PDF
+                console.log("📄 Generating PDF...");
                 const pdf = yield page.pdf({
-                    format: "A4",
+                    format: "a4",
                     printBackground: true,
-                    margin: {
-                        top: "15mm",
-                        right: "20mm",
-                        bottom: "15mm",
-                        left: "20mm",
-                    },
+                    margin: { top: "10mm", right: "10mm", bottom: "10mm", left: "10mm" },
                 });
+                console.log("✅ PDF Generated Successfully");
                 yield browser.close();
+                // Send PDF response
                 res.setHeader("Content-Type", "application/pdf");
                 res.setHeader("Content-Disposition", `attachment; filename=${username}.pdf`);
                 res.setHeader("Content-Length", pdf.length);
                 res.status(200).end(pdf);
             }
             catch (error) {
-                console.error("Error generating CV PDF:", error);
+                console.error("❌ Server error:", error);
                 res.status(500).send({ message: "Server error: Unable to download CV." });
             }
         });

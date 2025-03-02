@@ -118,7 +118,7 @@ class TransactionController {
     }
     getTransactionToken(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a;
+            var _a, _b;
             try {
                 const { order_id, gross_amount } = req.body;
                 const activeTransaction = yield prisma_1.default.transaction.findUnique({
@@ -175,12 +175,13 @@ class TransactionController {
                     },
                 };
                 const transaction = yield snap.createTransaction(parameter);
-                res.status(201).send({ transactionToken: transaction.token });
+                res.status(201).json({ transactionToken: transaction.token });
             }
             catch (error) {
-                res.status(500).send({
+                console.error("Transaction Token Error:", error); // Log the full error
+                res.status(500).json({
                     message: error.message || "Server error: Unable to create transaction token.",
-                    details: error.response ? error.response.data : error,
+                    details: ((_b = error.response) === null || _b === void 0 ? void 0 : _b.data) || "No additional details available.",
                 });
             }
         });

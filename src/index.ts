@@ -50,6 +50,8 @@ app.use(
   cors({
     origin: process.env.BASE_URL_FE!,
     credentials: true,
+    allowedHeaders: ["Authorization", "Content-Type"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 export const upload = multer({ storage: multer.memoryStorage() });
