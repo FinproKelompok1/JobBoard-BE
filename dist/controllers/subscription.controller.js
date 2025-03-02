@@ -103,13 +103,21 @@ class SubscriptionController {
     deleteSubcription(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const id = req.params.subscriptionId;
-                yield prisma_1.default.subscription.delete({ where: { id: +id } });
+                const id = +req.params.subscriptionId;
+                const subscription = yield prisma_1.default.subscription.findUnique({
+                    where: { id },
+                });
+                if (!subscription) {
+                    res.status(404).json({ message: "Subscription not found" });
+                    return;
+                }
+                yield prisma_1.default.subscription.delete({ where: { id: id } });
                 res
                     .status(200)
-                    .send({ message: `Subscription ID ${id} deleted successfully` });
+                    .json({ message: `Subscription ID ${id} deleted successfully` });
             }
             catch (error) {
+                console.error("Error delete subscription :", error);
                 res.status(500).send({
                     message: "Server error: Unable to delete subscription.",
                 });

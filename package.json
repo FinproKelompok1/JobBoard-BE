@@ -52,6 +52,7 @@
     "@types/passport": "^1.0.17",
     "@types/passport-google-oauth20": "^2.0.16",
     "@types/pdfkit": "^0.13.9",
+    "@types/puppeteer": "^5.4.7",
     "@types/qrcode": "^1.5.5",
     "@types/streamifier": "^0.1.2",
     "prisma": "^6.2.1",

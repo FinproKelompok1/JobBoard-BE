@@ -134,10 +134,13 @@ class JobController {
                 if (req.body.salary) {
                     req.body.salary = Number(req.body.salary);
                 }
-                if (req.body.location) {
+                if (req.body.city || req.body.province) {
                     let location = yield prisma_1.default.location.findFirst({
                         where: { city: req.body.city },
                     });
+                    if (Array.isArray(req.body.province)) {
+                        req.body.province = req.body.province[0];
+                    }
                     if (!location) {
                         const { data } = yield axios_1.default.get(`https://api.opencagedata.com/geocode/v1/json?q=${req.body.city
                             .split(" ")
@@ -154,6 +157,7 @@ class JobController {
                             },
                         });
                     }
+                    req.body.locationId = location.id;
                     delete req.body.city;
                     delete req.body.province;
                 }

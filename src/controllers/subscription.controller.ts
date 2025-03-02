@@ -92,14 +92,24 @@ export class SubscriptionController {
 
   async deleteSubcription(req: Request, res: Response) {
     try {
-      const id = req.params.subscriptionId;
+      const id = +req.params.subscriptionId;
 
-      await prisma.subscription.delete({ where: { id: +id } });
+      const subscription = await prisma.subscription.findUnique({
+        where: { id },
+      });
+
+      if (!subscription) {
+        res.status(404).json({ message: "Subscription not found" });
+        return;
+      }
+
+      await prisma.subscription.delete({ where: { id: id } });
 
       res
         .status(200)
-        .send({ message: `Subscription ID ${id} deleted successfully` });
+        .json({ message: `Subscription ID ${id} deleted successfully` });
     } catch (error) {
+      console.error("Error delete subscription :", error);
       res.status(500).send({
         message: "Server error: Unable to delete subscription.",
       });
