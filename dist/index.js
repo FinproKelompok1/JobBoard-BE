@@ -35,7 +35,6 @@ const apply_router_1 = require("./routers/apply.router");
 const userTransaction_router_1 = require("./routers/userTransaction.router");
 const review_router_1 = require("./routers/review.router");
 const password_router_1 = __importDefault(require("./routers/password.router"));
-dotenv_1.default.config();
 const PORT = 8000;
 const app = (0, express_1.default)();
 oauth_service_1.OAuthService.initialize();

@@ -20,7 +20,7 @@ class ApplicantController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const limit = 7;
-                const { sort = "asc", page = "1", search, min_salary, max_salary, min_age, max_age, last_edu, } = req.query;
+                const { sort = "asc", page = "1", search, min_salary, max_salary, min_age, max_age, last_edu, status, } = req.query;
                 const filter = { jobId: req.params.id };
                 if (search) {
                     filter.user = Object.assign(Object.assign({}, filter.user), { fullname: { contains: search, mode: "insensitive" } });
@@ -50,6 +50,9 @@ class ApplicantController {
                 }
                 if (last_edu) {
                     filter.user = Object.assign(Object.assign({}, filter.user), { lastEdu: last_edu });
+                }
+                if (status) {
+                    filter.status = status;
                 }
                 const totalApplicants = yield prisma_1.default.jobApplication.aggregate({
                     where: filter,

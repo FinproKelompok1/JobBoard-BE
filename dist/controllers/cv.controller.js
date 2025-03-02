@@ -123,7 +123,10 @@ class CvController {
             const username = req.params.username;
             const pageUrl = `${process.env.BASE_URL_FE}/download/cv/${username}`;
             try {
-                const browser = yield puppeteer_1.default.launch({ headless: true });
+                const browser = yield puppeteer_1.default.launch({
+                    headless: true,
+                    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+                });
                 const page = yield browser.newPage();
                 const authToken = req.headers.authorization || "";
                 yield page.setExtraHTTPHeaders({

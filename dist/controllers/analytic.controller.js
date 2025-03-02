@@ -26,7 +26,7 @@ class AnalyticController {
         JOIN "User" u on ja."userId" = u."id"
         JOIN "Job" j on ja."jobId" = j."id"
         JOIN "Admin" a on j."adminId" = a."id"
-        WHERE a."id" = ${adminId}
+        WHERE a."id" = ${adminId} AND j."isActive" = true
         GROUP BY "type"
       `;
                 const ageRaw = yield prisma_1.default.$queryRaw `
@@ -37,7 +37,7 @@ class AnalyticController {
         JOIN "User" u on ja."userId" = u."id"
         JOIN "Job" j on ja."jobId" = j."id"
         JOIN "Admin" a on j."adminId" = a."id"
-        WHERE a."id" = ${adminId}
+        WHERE a."id" = ${adminId} AND j."isActive" = true
         GROUP BY age
       `;
                 const formattedAge = [
@@ -72,7 +72,7 @@ class AnalyticController {
         JOIN "Admin" a on j."adminId" = a."id"
         JOIN "User" u on ja."userId" = u."id"
         JOIN "Location" l ON u."domicileId" = l."id"
-        WHERE a."id" = ${adminId}
+        WHERE a."id" = ${adminId} AND j."isActive" = true
         GROUP BY l.city
       `;
                 const education = yield prisma_1.default.$queryRaw `
@@ -81,7 +81,7 @@ class AnalyticController {
         JOIN "Job" j on ja."jobId" = j."id"
         JOIN "User" u on ja."userId" = u."id"
         JOIN "Admin" a on j."adminId" = a."id"
-        WHERE a."id" = ${adminId}
+        WHERE a."id" = ${adminId} AND j."isActive" = true
         GROUP BY u."lastEdu"
       `;
                 res.status(200).send({
@@ -108,7 +108,7 @@ class AnalyticController {
         FROM "Job" j
         JOIN "Review" r ON j."id" = r."jobId"
         JOIN "Admin" a on j."adminId" = a."id"
-        WHERE a."id" = ${adminId}
+        WHERE a."id" = ${adminId} AND j."isActive" = true
         GROUP BY j.role
       `;
                 const basedOnJobLocation = yield prisma_1.default.$queryRaw `
@@ -117,7 +117,7 @@ class AnalyticController {
         JOIN "Review" r ON j."id" = r."jobId"
         JOIN "Location" l ON j."locationId" = l."id"
         JOIN "Admin" a on j."adminId" = a."id"
-        WHERE a."id" = ${adminId}
+        WHERE a."id" = ${adminId} AND j."isActive" = true
         GROUP BY l.city
       `;
                 res.status(200).send({ result: { basedOnJobRole, basedOnJobLocation } });
@@ -137,7 +137,7 @@ class AnalyticController {
         FROM "JobApplication" ja
         JOIN "Job" j on ja."jobId" = j."id"
         JOIN "Admin" a on j."adminId" = a."id"
-        WHERE a."id" = ${adminId}
+        WHERE a."id" = ${adminId} AND j."isActive" = true
         GROUP BY j.category
       `;
                 const basedOnExpectedSalary = yield prisma_1.default.$queryRaw `
@@ -145,7 +145,7 @@ class AnalyticController {
         FROM "JobApplication" ja
         JOIN "Job" j on ja."jobId" = j."id"
         JOIN "Admin" a on j."adminId" = a."id"
-        WHERE a."id" = ${adminId}
+        WHERE a."id" = ${adminId} AND j."isActive" = true
         GROUP BY j.category
       `;
                 res
