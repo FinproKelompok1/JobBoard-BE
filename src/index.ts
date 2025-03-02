@@ -30,8 +30,6 @@ import { UserTransactionRouter } from "./routers/userTransaction.router";
 import { ReviewRouter } from "./routers/review.router";
 import passwordRoutes from "./routers/password.router";
 
-dotenv.config();
-
 const PORT: number = 8000;
 const app: Application = express();
 

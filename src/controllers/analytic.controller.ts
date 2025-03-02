@@ -11,7 +11,7 @@ export class AnalyticController {
         JOIN "User" u on ja."userId" = u."id"
         JOIN "Job" j on ja."jobId" = j."id"
         JOIN "Admin" a on j."adminId" = a."id"
-        WHERE a."id" = ${adminId}
+        WHERE a."id" = ${adminId} AND j."isActive" = true
         GROUP BY "type"
       `;
 
@@ -23,7 +23,7 @@ export class AnalyticController {
         JOIN "User" u on ja."userId" = u."id"
         JOIN "Job" j on ja."jobId" = j."id"
         JOIN "Admin" a on j."adminId" = a."id"
-        WHERE a."id" = ${adminId}
+        WHERE a."id" = ${adminId} AND j."isActive" = true
         GROUP BY age
       `;
       const formattedAge = [
@@ -57,7 +57,7 @@ export class AnalyticController {
         JOIN "Admin" a on j."adminId" = a."id"
         JOIN "User" u on ja."userId" = u."id"
         JOIN "Location" l ON u."domicileId" = l."id"
-        WHERE a."id" = ${adminId}
+        WHERE a."id" = ${adminId} AND j."isActive" = true
         GROUP BY l.city
       `;
 
@@ -73,7 +73,7 @@ export class AnalyticController {
         JOIN "Job" j on ja."jobId" = j."id"
         JOIN "User" u on ja."userId" = u."id"
         JOIN "Admin" a on j."adminId" = a."id"
-        WHERE a."id" = ${adminId}
+        WHERE a."id" = ${adminId} AND j."isActive" = true
         GROUP BY u."lastEdu"
       `;
 
@@ -100,7 +100,7 @@ export class AnalyticController {
         FROM "Job" j
         JOIN "Review" r ON j."id" = r."jobId"
         JOIN "Admin" a on j."adminId" = a."id"
-        WHERE a."id" = ${adminId}
+        WHERE a."id" = ${adminId} AND j."isActive" = true
         GROUP BY j.role
       `;
 
@@ -112,7 +112,7 @@ export class AnalyticController {
         JOIN "Review" r ON j."id" = r."jobId"
         JOIN "Location" l ON j."locationId" = l."id"
         JOIN "Admin" a on j."adminId" = a."id"
-        WHERE a."id" = ${adminId}
+        WHERE a."id" = ${adminId} AND j."isActive" = true
         GROUP BY l.city
       `;
 
@@ -135,7 +135,7 @@ export class AnalyticController {
         FROM "JobApplication" ja
         JOIN "Job" j on ja."jobId" = j."id"
         JOIN "Admin" a on j."adminId" = a."id"
-        WHERE a."id" = ${adminId}
+        WHERE a."id" = ${adminId} AND j."isActive" = true
         GROUP BY j.category
       `;
 
@@ -149,7 +149,7 @@ export class AnalyticController {
         FROM "JobApplication" ja
         JOIN "Job" j on ja."jobId" = j."id"
         JOIN "Admin" a on j."adminId" = a."id"
-        WHERE a."id" = ${adminId}
+        WHERE a."id" = ${adminId} AND j."isActive" = true
         GROUP BY j.category
       `;
 
