@@ -14,7 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CvController = void 0;
 const prisma_1 = __importDefault(require("../prisma"));
-const puppeteer_1 = __importDefault(require("puppeteer"));
+const chrome_aws_lambda_1 = __importDefault(require("chrome-aws-lambda"));
+const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
 class CvController {
     createCv(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -123,16 +124,18 @@ class CvController {
             const username = req.params.username;
             const pageUrl = `${process.env.BASE_URL_FE}/download/cv/${username}`;
             try {
-                const browser = yield puppeteer_1.default.launch({
-                    headless: "new",
-                    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+                const browser = yield puppeteer_core_1.default.launch({
+                    args: chrome_aws_lambda_1.default.args,
+                    defaultViewport: chrome_aws_lambda_1.default.defaultViewport,
+                    executablePath: yield chrome_aws_lambda_1.default.executablePath,
+                    headless: chrome_aws_lambda_1.default.headless,
                 });
                 const page = yield browser.newPage();
                 const authToken = req.headers.authorization || "";
                 yield page.setExtraHTTPHeaders({
                     Authorization: authToken,
                 });
-                const authCookie = req.headers.cookie; // Get cookies from the request
+                const authCookie = req.headers.cookie;
                 if (authCookie) {
                     const cookies = authCookie.split(";").map((cookie) => {
                         const [name, value] = cookie.trim().split("=");
@@ -148,7 +151,7 @@ class CvController {
                     return;
                 }
                 const pdf = yield page.pdf({
-                    format: "A4",
+                    format: "a4",
                     printBackground: true,
                     margin: {
                         top: "15mm",

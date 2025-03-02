@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../prisma";
-import puppeteer from "puppeteer";
+import chromium from "chrome-aws-lambda";
+import puppeteer from "puppeteer-core";
 import { AuthUser } from "../types/auth";
 interface MulterRequest extends Request {
   user?: AuthUser;
@@ -115,15 +116,17 @@ export class CvController {
 
     try {
       const browser = await puppeteer.launch({
-        headless: "new" as any,
-        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath,
+        headless: chromium.headless,
       });
       const page = await browser.newPage();
       const authToken = req.headers.authorization || "";
       await page.setExtraHTTPHeaders({
         Authorization: authToken,
       });
-      const authCookie = req.headers.cookie; // Get cookies from the request
+      const authCookie = req.headers.cookie;
       if (authCookie) {
         const cookies = authCookie.split(";").map((cookie) => {
           const [name, value] = cookie.trim().split("=");
@@ -139,7 +142,7 @@ export class CvController {
       }
 
       const pdf = await page.pdf({
-        format: "A4",
+        format: "a4",
         printBackground: true,
         margin: {
           top: "15mm",
