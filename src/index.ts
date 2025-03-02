@@ -50,8 +50,8 @@ app.use(
   cors({
     origin: ["https://talentsbridge.vercel.app"],
     credentials: true,
-    allowedHeaders: ["Authorization", "Content-Type"], // Ensure necessary headers are allowed
-    methods: ["GET", "POST", "PUT", "DELETE"], // Allow necessary methods
+    allowedHeaders: ["Authorization", "Content-Type"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 export const upload = multer({ storage: multer.memoryStorage() });

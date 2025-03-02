@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../prisma";
-import puppeteer from "puppeteer";
+import chromium from "@sparticuz/chromium";
+import puppeteer from "puppeteer-core";
 import { AuthUser } from "../types/auth";
 interface MulterRequest extends Request {
   user?: AuthUser;
@@ -163,14 +164,34 @@ export class UserAssessmentController {
     const username = req.params.username;
     const userAssessmentId = req.params.userAssessmentId;
     const pageUrl = `${process.env.BASE_URL_FE}/download/assessment/${username}/${userAssessmentId}/certificate`;
+
     try {
-      const browser = await puppeteer.launch({ headless: true });
+      console.log("🔍 Checking Chromium Path...");
+      const executablePath = await chromium.executablePath();
+      console.log("✅ Chromium Path:", executablePath);
+
+      if (!executablePath) {
+        console.error("❌ Error: Chromium executablePath is undefined!");
+        res.status(500).send({ message: "Chromium not found!" });
+        return;
+      }
+
+      // ✅ Modify Puppeteer launch settings for cloud deployment
+      const browser = await puppeteer.launch({
+        args: [...chromium.args, "--no-sandbox", "--disable-gpu"],
+        defaultViewport: chromium.defaultViewport,
+        executablePath,
+        headless: chromium.headless === "true" || true, // Ensure headless mode
+      });
+
+      console.log("✅ Puppeteer Launched");
+
       const page = await browser.newPage();
       const authToken = req.headers.authorization || "";
-      await page.setExtraHTTPHeaders({
-        Authorization: authToken,
-      });
-      const authCookie = req.headers.cookie; // Get cookies from the request
+      await page.setExtraHTTPHeaders({ Authorization: authToken });
+
+      // ✅ Pass cookies if present
+      const authCookie = req.headers.cookie;
       if (authCookie) {
         const cookies = authCookie.split(";").map((cookie) => {
           const [name, value] = cookie.trim().split("=");
@@ -178,26 +199,28 @@ export class UserAssessmentController {
         });
         await page.setCookie(...cookies);
       }
-      try {
-        await page.goto(pageUrl, { waitUntil: "networkidle2" });
-      } catch (error) {
-        res.status(500).send({ message: "Failed to generate certificate" });
-        return;
-      }
+
+      // ✅ Navigate to the certificate page
+      await page.goto(pageUrl, { waitUntil: "networkidle2" });
+
+      // ✅ Generate and return the PDF
       const pdf = await page.pdf({
-        format: "A4",
+        format: "a4",
         printBackground: true,
         landscape: true,
       });
+
       await browser.close();
+
       res.setHeader("Content-Type", "application/pdf");
       res.setHeader(
         "Content-Disposition",
-        `attachment; filename=${username}.pdf`
+        `attachment; filename=${username}-certificate.pdf`
       );
       res.setHeader("Content-Length", pdf.length);
       res.status(200).end(pdf);
     } catch (error) {
+      console.error("❌ Certificate Download Error:", error);
       res.status(500).send({ message: "Failed to download certificate" });
     }
   }

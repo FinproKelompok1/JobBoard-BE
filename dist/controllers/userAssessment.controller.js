@@ -14,7 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserAssessmentController = void 0;
 const prisma_1 = __importDefault(require("../prisma"));
-const puppeteer_1 = __importDefault(require("puppeteer"));
+const chromium_1 = __importDefault(require("@sparticuz/chromium"));
+const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
 class UserAssessmentController {
     createUserAssessment(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -181,13 +182,27 @@ class UserAssessmentController {
             const userAssessmentId = req.params.userAssessmentId;
             const pageUrl = `${process.env.BASE_URL_FE}/download/assessment/${username}/${userAssessmentId}/certificate`;
             try {
-                const browser = yield puppeteer_1.default.launch({ headless: true });
+                console.log("🔍 Checking Chromium Path...");
+                const executablePath = yield chromium_1.default.executablePath();
+                console.log("✅ Chromium Path:", executablePath);
+                if (!executablePath) {
+                    console.error("❌ Error: Chromium executablePath is undefined!");
+                    res.status(500).send({ message: "Chromium not found!" });
+                    return;
+                }
+                // ✅ Modify Puppeteer launch settings for cloud deployment
+                const browser = yield puppeteer_core_1.default.launch({
+                    args: [...chromium_1.default.args, "--no-sandbox", "--disable-gpu"],
+                    defaultViewport: chromium_1.default.defaultViewport,
+                    executablePath,
+                    headless: chromium_1.default.headless === "true" || true, // Ensure headless mode
+                });
+                console.log("✅ Puppeteer Launched");
                 const page = yield browser.newPage();
                 const authToken = req.headers.authorization || "";
-                yield page.setExtraHTTPHeaders({
-                    Authorization: authToken,
-                });
-                const authCookie = req.headers.cookie; // Get cookies from the request
+                yield page.setExtraHTTPHeaders({ Authorization: authToken });
+                // ✅ Pass cookies if present
+                const authCookie = req.headers.cookie;
                 if (authCookie) {
                     const cookies = authCookie.split(";").map((cookie) => {
                         const [name, value] = cookie.trim().split("=");
@@ -195,25 +210,22 @@ class UserAssessmentController {
                     });
                     yield page.setCookie(...cookies);
                 }
-                try {
-                    yield page.goto(pageUrl, { waitUntil: "networkidle2" });
-                }
-                catch (error) {
-                    res.status(500).send({ message: "Failed to generate certificate" });
-                    return;
-                }
+                // ✅ Navigate to the certificate page
+                yield page.goto(pageUrl, { waitUntil: "networkidle2" });
+                // ✅ Generate and return the PDF
                 const pdf = yield page.pdf({
-                    format: "A4",
+                    format: "a4",
                     printBackground: true,
                     landscape: true,
                 });
                 yield browser.close();
                 res.setHeader("Content-Type", "application/pdf");
-                res.setHeader("Content-Disposition", `attachment; filename=${username}.pdf`);
+                res.setHeader("Content-Disposition", `attachment; filename=${username}-certificate.pdf`);
                 res.setHeader("Content-Length", pdf.length);
                 res.status(200).end(pdf);
             }
             catch (error) {
+                console.error("❌ Certificate Download Error:", error);
                 res.status(500).send({ message: "Failed to download certificate" });
             }
         });
