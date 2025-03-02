@@ -16,6 +16,7 @@ export class ApplicantController {
         min_age,
         max_age,
         last_edu,
+        status,
       } = req.query;
       const filter: Prisma.JobApplicationWhereInput = { jobId: req.params.id };
 
@@ -60,6 +61,10 @@ export class ApplicantController {
           ...(filter.user as Prisma.UserWhereInput),
           lastEdu: last_edu as Prisma.EnumLastEduNullableFilter,
         };
+      }
+
+      if (status) {
+        filter.status = status as Prisma.EnumJobApplicationStatusFilter;
       }
 
       const totalApplicants = await prisma.jobApplication.aggregate({
