@@ -114,7 +114,10 @@ export class CvController {
     const pageUrl = `${process.env.BASE_URL_FE}/download/cv/${username}`;
 
     try {
-      const browser = await puppeteer.launch({ headless: true });
+      const browser = await puppeteer.launch({
+        headless: true,
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      });
       const page = await browser.newPage();
       const authToken = req.headers.authorization || "";
       await page.setExtraHTTPHeaders({
