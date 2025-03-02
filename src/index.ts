@@ -48,7 +48,7 @@ app.use(passport.initialize());
 
 app.use(
   cors({
-    origin: ["https://talentsbridge.vercel.app"],
+    origin: process.env.BASE_URL_FE!,
     credentials: true,
     allowedHeaders: ["Authorization", "Content-Type"],
     methods: ["GET", "POST", "PUT", "DELETE"],
