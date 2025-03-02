@@ -47,8 +47,10 @@ app.use((0, express_session_1.default)({
 }));
 app.use(pasport_1.default.initialize());
 app.use((0, cors_1.default)({
-    origin: process.env.BASE_URL_FE,
+    origin: ["https://talentsbridge.vercel.app"],
     credentials: true,
+    allowedHeaders: ["Authorization", "Content-Type"], // Ensure necessary headers are allowed
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allow necessary methods
 }));
 exports.upload = (0, multer_1.default)({ storage: multer_1.default.memoryStorage() });
 const jobRouter = new job_router_1.JobRouter();

@@ -48,8 +48,10 @@ app.use(passport.initialize());
 
 app.use(
   cors({
-    origin: process.env.BASE_URL_FE!,
+    origin: ["https://talentsbridge.vercel.app"],
     credentials: true,
+    allowedHeaders: ["Authorization", "Content-Type"], // Ensure necessary headers are allowed
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allow necessary methods
   })
 );
 export const upload = multer({ storage: multer.memoryStorage() });
