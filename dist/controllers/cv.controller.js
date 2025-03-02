@@ -127,27 +127,24 @@ class CvController {
                 console.log("🔍 Checking Chromium Path...");
                 const executablePath = yield chromium_1.default.executablePath();
                 console.log("✅ Chromium Path:", executablePath);
-                // Check if executablePath is valid
                 if (!executablePath) {
                     console.error("❌ Error: Chromium executablePath is undefined!");
                     res.status(500).send({ message: "Chromium not found!" });
                     return;
                 }
-                // Launch Puppeteer
+                // ✅ Modify Puppeteer launch settings for Vercel
                 const browser = yield puppeteer_core_1.default.launch({
-                    args: chromium_1.default.args,
+                    args: [...chromium_1.default.args, "--no-sandbox", "--disable-gpu"],
                     defaultViewport: chromium_1.default.defaultViewport,
                     executablePath,
-                    headless: chromium_1.default.headless === "true" || true, // Ensure true
+                    headless: chromium_1.default.headless === "true" || true, // Ensure headless mode
                 });
                 console.log("✅ Puppeteer Launched");
-                // Open new page
                 const page = yield browser.newPage();
                 console.log("🌍 Navigating to:", pageUrl);
-                // Add Authorization header
+                // Set Headers and Cookies
                 const authToken = req.headers.authorization || "";
                 yield page.setExtraHTTPHeaders({ Authorization: authToken });
-                // Add Cookies (if available)
                 const authCookie = req.headers.cookie;
                 if (authCookie) {
                     console.log("🍪 Setting Cookies");
@@ -157,41 +154,23 @@ class CvController {
                     });
                     yield page.setCookie(...cookies);
                 }
-                // Navigate to the page
-                try {
-                    yield page.goto(pageUrl, {
-                        waitUntil: "load",
-                        timeout: 8000,
-                    });
-                    console.log("✅ Page Loaded Successfully");
-                }
-                catch (err) {
-                    console.error("❌ Failed to load page:", err);
-                    yield browser.close();
-                    res.status(500).send({ message: "Failed to generate CV PDF" });
-                    return;
-                }
+                // Navigate to page
+                yield page.goto(pageUrl, { waitUntil: "networkidle2", timeout: 10000 });
+                console.log("✅ Page Loaded Successfully");
                 // Generate PDF
-                try {
-                    console.log("📄 Generating PDF...");
-                    const pdf = yield page.pdf({
-                        format: "a4",
-                        printBackground: true,
-                        margin: { top: "10mm", right: "10mm", bottom: "10mm", left: "10mm" },
-                    });
-                    console.log("✅ PDF Generated Successfully");
-                    yield browser.close();
-                    // Send PDF response
-                    res.setHeader("Content-Type", "application/pdf");
-                    res.setHeader("Content-Disposition", `attachment; filename=${username}.pdf`);
-                    res.setHeader("Content-Length", pdf.length);
-                    res.status(200).end(pdf);
-                }
-                catch (pdfError) {
-                    console.error("❌ Error generating PDF:", pdfError);
-                    yield browser.close();
-                    res.status(500).send({ message: "Failed to generate PDF" });
-                }
+                console.log("📄 Generating PDF...");
+                const pdf = yield page.pdf({
+                    format: "a4",
+                    printBackground: true,
+                    margin: { top: "10mm", right: "10mm", bottom: "10mm", left: "10mm" },
+                });
+                console.log("✅ PDF Generated Successfully");
+                yield browser.close();
+                // Send PDF response
+                res.setHeader("Content-Type", "application/pdf");
+                res.setHeader("Content-Disposition", `attachment; filename=${username}.pdf`);
+                res.setHeader("Content-Length", pdf.length);
+                res.status(200).end(pdf);
             }
             catch (error) {
                 console.error("❌ Server error:", error);

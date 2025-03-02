@@ -119,32 +119,28 @@ export class CvController {
       const executablePath = await chromium.executablePath();
       console.log("✅ Chromium Path:", executablePath);
 
-      // Check if executablePath is valid
       if (!executablePath) {
         console.error("❌ Error: Chromium executablePath is undefined!");
         res.status(500).send({ message: "Chromium not found!" });
         return;
       }
 
-      // Launch Puppeteer
+      // ✅ Modify Puppeteer launch settings for Vercel
       const browser = await puppeteer.launch({
-        args: chromium.args,
+        args: [...chromium.args, "--no-sandbox", "--disable-gpu"],
         defaultViewport: chromium.defaultViewport,
         executablePath,
-        headless: chromium.headless === "true" || true, // Ensure true
+        headless: chromium.headless === "true" || true, // Ensure headless mode
       });
 
       console.log("✅ Puppeteer Launched");
-
-      // Open new page
       const page = await browser.newPage();
       console.log("🌍 Navigating to:", pageUrl);
 
-      // Add Authorization header
+      // Set Headers and Cookies
       const authToken = req.headers.authorization || "";
       await page.setExtraHTTPHeaders({ Authorization: authToken });
 
-      // Add Cookies (if available)
       const authCookie = req.headers.cookie;
       if (authCookie) {
         console.log("🍪 Setting Cookies");
@@ -155,45 +151,30 @@ export class CvController {
         await page.setCookie(...cookies);
       }
 
-      // Navigate to the page
-      try {
-        await page.goto(pageUrl, {
-          waitUntil: "load",
-          timeout: 8000,
-        });
-        console.log("✅ Page Loaded Successfully");
-      } catch (err) {
-        console.error("❌ Failed to load page:", err);
-        await browser.close();
-        res.status(500).send({ message: "Failed to generate CV PDF" });
-        return;
-      }
+      // Navigate to page
+      await page.goto(pageUrl, { waitUntil: "networkidle2", timeout: 10000 });
+
+      console.log("✅ Page Loaded Successfully");
 
       // Generate PDF
-      try {
-        console.log("📄 Generating PDF...");
-        const pdf = await page.pdf({
-          format: "a4",
-          printBackground: true,
-          margin: { top: "10mm", right: "10mm", bottom: "10mm", left: "10mm" },
-        });
-        console.log("✅ PDF Generated Successfully");
+      console.log("📄 Generating PDF...");
+      const pdf = await page.pdf({
+        format: "a4",
+        printBackground: true,
+        margin: { top: "10mm", right: "10mm", bottom: "10mm", left: "10mm" },
+      });
 
-        await browser.close();
+      console.log("✅ PDF Generated Successfully");
+      await browser.close();
 
-        // Send PDF response
-        res.setHeader("Content-Type", "application/pdf");
-        res.setHeader(
-          "Content-Disposition",
-          `attachment; filename=${username}.pdf`
-        );
-        res.setHeader("Content-Length", pdf.length);
-        res.status(200).end(pdf);
-      } catch (pdfError) {
-        console.error("❌ Error generating PDF:", pdfError);
-        await browser.close();
-        res.status(500).send({ message: "Failed to generate PDF" });
-      }
+      // Send PDF response
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename=${username}.pdf`
+      );
+      res.setHeader("Content-Length", pdf.length);
+      res.status(200).end(pdf);
     } catch (error) {
       console.error("❌ Server error:", error);
       res.status(500).send({ message: "Server error: Unable to download CV." });
