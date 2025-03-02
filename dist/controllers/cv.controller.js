@@ -127,9 +127,10 @@ class CvController {
                 const browser = yield puppeteer_core_1.default.launch({
                     args: chrome_aws_lambda_1.default.args,
                     defaultViewport: chrome_aws_lambda_1.default.defaultViewport,
-                    executablePath: yield chrome_aws_lambda_1.default.executablePath,
+                    executablePath: yield chrome_aws_lambda_1.default.executablePath, // Use chrome-aws-lambda's path
                     headless: chrome_aws_lambda_1.default.headless,
                 });
+                console.log("Chromium Path:", yield chrome_aws_lambda_1.default.executablePath);
                 const page = yield browser.newPage();
                 const authToken = req.headers.authorization || "";
                 yield page.setExtraHTTPHeaders({

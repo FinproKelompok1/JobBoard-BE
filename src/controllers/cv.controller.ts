@@ -118,9 +118,12 @@ export class CvController {
       const browser = await puppeteer.launch({
         args: chromium.args,
         defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath,
+        executablePath: await chromium.executablePath, // Use chrome-aws-lambda's path
         headless: chromium.headless,
       });
+
+      console.log("Chromium Path:", await chromium.executablePath);
+
       const page = await browser.newPage();
       const authToken = req.headers.authorization || "";
       await page.setExtraHTTPHeaders({
