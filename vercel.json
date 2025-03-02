@@ -21,7 +21,7 @@
     }
   ],
   "functions": {
-    "api/downloadCv": {
+    "dist/index.js": {
       "maxDuration": 30,
       "memory": 1024
     }
