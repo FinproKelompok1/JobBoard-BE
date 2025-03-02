@@ -160,8 +160,8 @@ class CvController {
                 // Navigate to the page
                 try {
                     yield page.goto(pageUrl, {
-                        waitUntil: "domcontentloaded",
-                        timeout: 10000,
+                        waitUntil: "load",
+                        timeout: 8000,
                     });
                     console.log("✅ Page Loaded Successfully");
                 }
@@ -177,7 +177,7 @@ class CvController {
                     const pdf = yield page.pdf({
                         format: "a4",
                         printBackground: true,
-                        margin: { top: "15mm", right: "20mm", bottom: "15mm", left: "20mm" },
+                        margin: { top: "10mm", right: "10mm", bottom: "10mm", left: "10mm" },
                     });
                     console.log("✅ PDF Generated Successfully");
                     yield browser.close();

@@ -158,8 +158,8 @@ export class CvController {
       // Navigate to the page
       try {
         await page.goto(pageUrl, {
-          waitUntil: "domcontentloaded",
-          timeout: 10000,
+          waitUntil: "load",
+          timeout: 8000,
         });
         console.log("✅ Page Loaded Successfully");
       } catch (err) {
@@ -175,7 +175,7 @@ export class CvController {
         const pdf = await page.pdf({
           format: "a4",
           printBackground: true,
-          margin: { top: "15mm", right: "20mm", bottom: "15mm", left: "20mm" },
+          margin: { top: "10mm", right: "10mm", bottom: "10mm", left: "10mm" },
         });
         console.log("✅ PDF Generated Successfully");
 
