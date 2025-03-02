@@ -159,7 +159,10 @@ class CvController {
                 }
                 // Navigate to the page
                 try {
-                    yield page.goto(pageUrl, { waitUntil: "networkidle2", timeout: 30000 });
+                    yield page.goto(pageUrl, {
+                        waitUntil: "domcontentloaded",
+                        timeout: 10000,
+                    });
                     console.log("✅ Page Loaded Successfully");
                 }
                 catch (err) {

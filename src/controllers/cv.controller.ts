@@ -157,7 +157,10 @@ export class CvController {
 
       // Navigate to the page
       try {
-        await page.goto(pageUrl, { waitUntil: "networkidle2", timeout: 30000 });
+        await page.goto(pageUrl, {
+          waitUntil: "domcontentloaded",
+          timeout: 10000,
+        });
         console.log("✅ Page Loaded Successfully");
       } catch (err) {
         console.error("❌ Failed to load page:", err);
