@@ -124,7 +124,7 @@ class CvController {
             const pageUrl = `${process.env.BASE_URL_FE}/download/cv/${username}`;
             try {
                 const browser = yield puppeteer_1.default.launch({
-                    headless: true,
+                    headless: "new",
                     args: ["--no-sandbox", "--disable-setuid-sandbox"],
                 });
                 const page = yield browser.newPage();
@@ -164,6 +164,7 @@ class CvController {
                 res.status(200).end(pdf);
             }
             catch (error) {
+                console.error("Error generating CV PDF:", error);
                 res.status(500).send({ message: "Server error: Unable to download CV." });
             }
         });
