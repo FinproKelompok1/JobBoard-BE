@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "../prisma";
-import chromium from "chrome-aws-lambda";
+import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
 import { AuthUser } from "../types/auth";
 interface MulterRequest extends Request {
@@ -115,14 +115,19 @@ export class CvController {
     const pageUrl = `${process.env.BASE_URL_FE}/download/cv/${username}`;
 
     try {
+      console.log("🔍 Checking Chromium Path...");
+      const executablePath = await chromium.executablePath(); // ✅ Fixed
+
+      console.log("✅ Chromium Path:", executablePath);
+
       const browser = await puppeteer.launch({
         args: chromium.args,
         defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath, // Use chrome-aws-lambda's path
-        headless: chromium.headless,
+        executablePath, // ✅ Now correctly assigned
+        headless: chromium.headless === "true",
       });
 
-      console.log("Chromium Path:", await chromium.executablePath);
+      console.log("✅ Puppeteer Launched");
 
       const page = await browser.newPage();
       const authToken = req.headers.authorization || "";

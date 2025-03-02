@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CvController = void 0;
 const prisma_1 = __importDefault(require("../prisma"));
-const chrome_aws_lambda_1 = __importDefault(require("chrome-aws-lambda"));
+const chromium_1 = __importDefault(require("@sparticuz/chromium"));
 const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
 class CvController {
     createCv(req, res) {
@@ -124,13 +124,16 @@ class CvController {
             const username = req.params.username;
             const pageUrl = `${process.env.BASE_URL_FE}/download/cv/${username}`;
             try {
+                console.log("🔍 Checking Chromium Path...");
+                const executablePath = yield chromium_1.default.executablePath(); // ✅ Fixed
+                console.log("✅ Chromium Path:", executablePath);
                 const browser = yield puppeteer_core_1.default.launch({
-                    args: chrome_aws_lambda_1.default.args,
-                    defaultViewport: chrome_aws_lambda_1.default.defaultViewport,
-                    executablePath: yield chrome_aws_lambda_1.default.executablePath, // Use chrome-aws-lambda's path
-                    headless: chrome_aws_lambda_1.default.headless,
+                    args: chromium_1.default.args,
+                    defaultViewport: chromium_1.default.defaultViewport,
+                    executablePath, // ✅ Now correctly assigned
+                    headless: chromium_1.default.headless === "true",
                 });
-                console.log("Chromium Path:", yield chrome_aws_lambda_1.default.executablePath);
+                console.log("✅ Puppeteer Launched");
                 const page = yield browser.newPage();
                 const authToken = req.headers.authorization || "";
                 yield page.setExtraHTTPHeaders({
