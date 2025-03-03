@@ -51,7 +51,7 @@ app.use(
     origin: process.env.BASE_URL_FE!,
     credentials: true,
     allowedHeaders: ["Authorization", "Content-Type"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
 );
 export const upload = multer({ storage: multer.memoryStorage() });

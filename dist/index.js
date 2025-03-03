@@ -50,7 +50,7 @@ app.use((0, cors_1.default)({
     origin: process.env.BASE_URL_FE,
     credentials: true,
     allowedHeaders: ["Authorization", "Content-Type"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
 }));
 exports.upload = (0, multer_1.default)({ storage: multer_1.default.memoryStorage() });
 const jobRouter = new job_router_1.JobRouter();
