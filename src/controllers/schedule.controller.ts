@@ -169,6 +169,7 @@ export class ScheduleController {
   async reminderSchedule(req: Request, res: Response) {
     try {
       await interviewReminder();
+      res.status(200).send("Email is sent");
     } catch (err) {
       res.status(400).send(err);
     }
