@@ -17,7 +17,7 @@ export class UserAuthService {
 
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
     const verificationToken = jwt.sign({ email, type: "user" }, JWT_SECRET, {
-      expiresIn: "15m",
+      expiresIn: "1h",
     });
 
     const user = await prisma.user.create({
@@ -41,7 +41,7 @@ export class UserAuthService {
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) throw new Error("Invalid credentials");
     if (!user.isVerified) throw new Error("Email not verified");
-    
+
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) throw new Error("Invalid credentials");
 
