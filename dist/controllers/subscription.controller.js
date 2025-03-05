@@ -14,6 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SubscriptionController = void 0;
 const prisma_1 = __importDefault(require("../prisma"));
+const invoiceEmail_1 = require("../services/invoiceEmail");
+const dayjs_1 = __importDefault(require("dayjs"));
 class SubscriptionController {
     createSubscription(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -153,6 +155,45 @@ class SubscriptionController {
                 res.status(500).send({
                     message: "Server error: Unable to retrieve subscription users.",
                 });
+            }
+        });
+    }
+    sendSubscriptionEmail(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const startOfTomorrow = (0, dayjs_1.default)().add(1, "day").startOf("day").toDate();
+            const endOfTomorrow = (0, dayjs_1.default)().add(1, "day").endOf("day").toDate();
+            try {
+                const expiringSubscription = yield prisma_1.default.userSubscription.findMany({
+                    where: {
+                        endDate: { gte: startOfTomorrow, lt: endOfTomorrow },
+                        isActive: true,
+                    },
+                    include: { user: true },
+                });
+                for (const subscription of expiringSubscription) {
+                    try {
+                        yield (0, invoiceEmail_1.sendInvoiceEmail)({
+                            email: subscription.user.email,
+                            username: subscription.user.username,
+                            fullname: subscription.user.fullname,
+                        });
+                    }
+                    catch (emailError) {
+                        console.error(`Failed to send email to ${subscription.user.email}:`, emailError);
+                    }
+                }
+                const today = new Date();
+                yield prisma_1.default.userSubscription.updateMany({
+                    where: { endDate: { lt: today }, isActive: true },
+                    data: { isActive: false },
+                });
+                res
+                    .status(200)
+                    .json({ message: "Subscription emails sent successfully" });
+            }
+            catch (error) {
+                console.error("Error processing subscriptions:", error);
+                res.status(500).json({ message: "Internal Server Error" });
             }
         });
     }
