@@ -20,7 +20,7 @@ export class AdminAuthService {
 
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
     const verificationToken = jwt.sign({ email, type: "admin" }, JWT_SECRET, {
-      expiresIn: "15m",
+      expiresIn: "1h",
     });
 
     const admin = await prisma.admin.create({
@@ -49,12 +49,12 @@ export class AdminAuthService {
     if (!admin.isVerified) {
       const lastUpdated = new Date(admin.updatedAt);
       const now = new Date();
-      if (now.getTime() - lastUpdated.getTime() > 15 * 60 * 1000) {
+      if (now.getTime() - lastUpdated.getTime() > 60 * 60 * 1000) {
         const verificationToken = jwt.sign(
           { email, type: "admin" },
           JWT_SECRET,
           {
-            expiresIn: "15m",
+            expiresIn: "1h",
           }
         );
 
