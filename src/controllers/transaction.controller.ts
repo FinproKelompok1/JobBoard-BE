@@ -172,59 +172,71 @@ export class TransactionController {
   async updateTransaction(req: Request, res: Response) {
     try {
       const { order_id, transaction_status } = req.body;
+
       await prisma.transaction.update({
         where: { id: order_id },
         data: { status: transaction_status },
       });
+
       if (transaction_status === "settlement") {
         const userTransaction = await prisma.transaction.findUnique({
           where: { id: order_id },
-          select: { subscriptionId: true, updatedAt: true, userId: true },
+          select: { subscriptionId: true, userId: true },
         });
-        const latestSubscription = await prisma.userSubscription.findUnique({
+
+        if (!userTransaction) {
+          res.status(404).send({ message: "Transaction not found" });
+          return;
+        }
+
+        const { userId, subscriptionId } = userTransaction;
+        console.log("Updating subscription for:", { userId, subscriptionId });
+
+        const existingSubscription = await prisma.userSubscription.findFirst({
           where: {
-            userId_subscriptionId: {
-              userId: userTransaction?.userId!,
-              subscriptionId: userTransaction?.subscriptionId!,
-            },
-            isActive: true,
+            userId,
+            subscriptionId,
           },
         });
+
+        console.log("Existing Subscription:", existingSubscription);
+
         let startDate = dayjs();
-        if (
-          latestSubscription &&
-          dayjs(latestSubscription.endDate).isAfter(dayjs())
-        ) {
-          startDate = dayjs(latestSubscription.endDate);
+        if (existingSubscription) {
+          if (existingSubscription.isActive) {
+            startDate = dayjs(existingSubscription.endDate).isAfter(dayjs())
+              ? dayjs(existingSubscription.endDate)
+              : dayjs();
+          }
           await prisma.userSubscription.update({
             where: {
-              userId_subscriptionId: {
-                userId: userTransaction?.userId!,
-                subscriptionId: userTransaction?.subscriptionId!,
-              },
+              userId_subscriptionId: { userId, subscriptionId },
             },
             data: {
               startDate: startDate.toDate(),
               endDate: startDate.add(30, "day").toDate(),
               assessmentCount: 0,
+              isActive: true,
             },
           });
         } else {
-          const endDate = startDate.add(30, "day").toDate();
           await prisma.userSubscription.create({
             data: {
-              userId: userTransaction?.userId!,
-              subscriptionId: userTransaction?.subscriptionId!,
+              userId,
+              subscriptionId,
               startDate: startDate.toDate(),
-              endDate: endDate,
+              endDate: startDate.add(30, "day").toDate(),
+              isActive: true,
             },
           });
         }
       }
+
       res.status(200).send({
         message: "Transaction and User Subscription updated successfully",
       });
     } catch (error) {
+      console.error("Error updating transaction:", error);
       res.status(500).send({
         message: "Server error: Unable to update transaction status.",
       });

@@ -366,7 +366,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Final Project\\JobBoard-BE\\prisma\\generated\\client",
+      "value": "/Users/muhammadwildansapoetro/Documents/Learning/JCWD0508/JobBoard-BE/prisma/generated/client",
       "fromEnvVar": null
     },
     "config": {
@@ -375,7 +375,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
       },
       {
@@ -388,7 +388,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Final Project\\JobBoard-BE\\prisma\\schema.prisma",
+    "sourceFilePath": "/Users/muhammadwildansapoetro/Documents/Learning/JCWD0508/JobBoard-BE/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
