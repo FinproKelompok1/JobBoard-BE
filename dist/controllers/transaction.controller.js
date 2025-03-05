@@ -211,7 +211,6 @@ class TransactionController {
                             subscriptionId,
                         },
                     });
-                    console.log("Existing Subscription:", existingSubscription);
                     let startDate = (0, dayjs_1.default)();
                     if (existingSubscription) {
                         if (existingSubscription.isActive) {

@@ -30,7 +30,7 @@ class UserAuthService {
             }
             const hashedPassword = yield bcrypt_1.default.hash(password, SALT_ROUNDS);
             const verificationToken = jsonwebtoken_1.default.sign({ email, type: "user" }, JWT_SECRET, {
-                expiresIn: "15m",
+                expiresIn: "1h",
             });
             const user = yield prisma.user.create({
                 data: {

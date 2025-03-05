@@ -29,7 +29,7 @@ class AdminAuthService {
                 throw new Error("Email already registered");
             const hashedPassword = yield bcrypt_1.default.hash(password, SALT_ROUNDS);
             const verificationToken = jsonwebtoken_1.default.sign({ email, type: "admin" }, JWT_SECRET, {
-                expiresIn: "15m",
+                expiresIn: "1h",
             });
             const admin = yield prisma.admin.create({
                 data: {
@@ -53,9 +53,9 @@ class AdminAuthService {
             if (!admin.isVerified) {
                 const lastUpdated = new Date(admin.updatedAt);
                 const now = new Date();
-                if (now.getTime() - lastUpdated.getTime() > 15 * 60 * 1000) {
+                if (now.getTime() - lastUpdated.getTime() > 60 * 60 * 1000) {
                     const verificationToken = jsonwebtoken_1.default.sign({ email, type: "admin" }, JWT_SECRET, {
-                        expiresIn: "15m",
+                        expiresIn: "1h",
                     });
                     yield emailService.sendVerificationEmail(email, verificationToken, admin.companyName);
                 }
