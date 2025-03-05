@@ -8,7 +8,7 @@ import passport from "./config/pasport";
 import authRoutes from "./routers/auth.router";
 import { OAuthService } from "../src/services/auth/oauth.service";
 import session from "express-session";
-import "./services/interviewReminderCron";
+// import "./services/interviewReminderCron";
 import "./services/subscriptionCron";
 import userProfileRoutes from "./routers/userProfile.router";
 import { JobRouter } from "./routers/job.router";
