@@ -177,18 +177,15 @@ export class TransactionController {
         where: { id: order_id },
         data: { status: transaction_status },
       });
-
       if (transaction_status === "settlement") {
         const userTransaction = await prisma.transaction.findUnique({
           where: { id: order_id },
           select: { subscriptionId: true, userId: true },
         });
-
         if (!userTransaction) {
           res.status(404).send({ message: "Transaction not found" });
           return;
         }
-
         const { userId, subscriptionId } = userTransaction;
         console.log("Updating subscription for:", { userId, subscriptionId });
 
@@ -198,9 +195,6 @@ export class TransactionController {
             subscriptionId,
           },
         });
-
-        console.log("Existing Subscription:", existingSubscription);
-
         let startDate = dayjs();
         if (existingSubscription) {
           if (existingSubscription.isActive) {
@@ -231,7 +225,6 @@ export class TransactionController {
           });
         }
       }
-
       res.status(200).send({
         message: "Transaction and User Subscription updated successfully",
       });

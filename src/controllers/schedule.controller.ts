@@ -6,6 +6,7 @@ import handlebars from "handlebars";
 import { transporter } from "../services/mailer";
 import { formatDate } from "../helpers/dateFormatter";
 import { formatTime } from "../helpers/timeFormatter";
+import { interviewReminder } from "../services/interviewReminderCron";
 
 export class ScheduleController {
   async getApplicantSchedule(req: Request, res: Response) {
@@ -160,6 +161,15 @@ export class ScheduleController {
         html,
       });
       res.status(200).send({ message: "Your schedule has been deleted" });
+    } catch (err) {
+      res.status(400).send(err);
+    }
+  }
+
+  async reminderSchedule(req: Request, res: Response) {
+    try {
+      await interviewReminder();
+      res.status(200).send("Email is sent");
     } catch (err) {
       res.status(400).send(err);
     }
