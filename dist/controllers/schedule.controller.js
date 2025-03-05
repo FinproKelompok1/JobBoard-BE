@@ -20,6 +20,7 @@ const handlebars_1 = __importDefault(require("handlebars"));
 const mailer_1 = require("../services/mailer");
 const dateFormatter_1 = require("../helpers/dateFormatter");
 const timeFormatter_1 = require("../helpers/timeFormatter");
+const interviewReminderCron_1 = require("../services/interviewReminderCron");
 class ScheduleController {
     getApplicantSchedule(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -155,6 +156,17 @@ class ScheduleController {
                     html,
                 });
                 res.status(200).send({ message: "Your schedule has been deleted" });
+            }
+            catch (err) {
+                res.status(400).send(err);
+            }
+        });
+    }
+    reminderSchedule(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield (0, interviewReminderCron_1.interviewReminder)();
+                res.status(200).send("Email is sent");
             }
             catch (err) {
                 res.status(400).send(err);

@@ -14,7 +14,7 @@ const pasport_1 = __importDefault(require("./config/pasport"));
 const auth_router_1 = __importDefault(require("./routers/auth.router"));
 const oauth_service_1 = require("../src/services/auth/oauth.service");
 const express_session_1 = __importDefault(require("express-session"));
-require("./services/interviewReminderCron");
+// import "./services/interviewReminderCron";
 require("./services/subscriptionCron");
 const userProfile_router_1 = __importDefault(require("./routers/userProfile.router"));
 const job_router_1 = require("./routers/job.router");

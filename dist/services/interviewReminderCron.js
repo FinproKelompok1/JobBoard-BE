@@ -12,13 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const node_cron_1 = __importDefault(require("node-cron"));
+exports.interviewReminder = void 0;
 const dayjs_1 = __importDefault(require("dayjs"));
 const prisma_1 = __importDefault(require("../prisma"));
 const reminderEmail_1 = require("./reminderEmail");
 const dateFormatter_1 = require("../helpers/dateFormatter");
 const timeFormatter_1 = require("../helpers/timeFormatter");
-node_cron_1.default.schedule("0 0 4 * * *", () => __awaiter(void 0, void 0, void 0, function* () {
+const interviewReminder = () => __awaiter(void 0, void 0, void 0, function* () {
     const startOfTomorrow = (0, dayjs_1.default)().add(1, "day").startOf("day").toDate();
     const endOfTomorrow = (0, dayjs_1.default)().add(1, "day").endOf("day").toDate();
     try {
@@ -68,4 +68,5 @@ node_cron_1.default.schedule("0 0 4 * * *", () => __awaiter(void 0, void 0, void
     catch (err) {
         console.error("schedule", err);
     }
-}));
+});
+exports.interviewReminder = interviewReminder;

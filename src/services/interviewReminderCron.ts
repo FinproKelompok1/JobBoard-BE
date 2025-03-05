@@ -1,4 +1,3 @@
-// import cron from "node-cron";
 import dayjs from "dayjs";
 import prisma from "../prisma";
 import { sendRemainderEmail } from "./reminderEmail";
@@ -55,7 +54,3 @@ export const interviewReminder = async () => {
     console.error("schedule", err);
   }
 };
-
-// cron.schedule("0 0 4 * * *", async () => {
-
-// });
