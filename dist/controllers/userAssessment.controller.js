@@ -26,19 +26,20 @@ class UserAssessmentController {
                     throw { message: "User ID is required." };
                 }
                 const { assessmentId } = req.body;
-                const userSubscription = yield prisma_1.default.userSubscription.findFirst({
+                const userSubscriptions = yield prisma_1.default.userSubscription.findMany({
                     where: {
                         userId: userId,
                         isActive: true,
                     },
                     include: { subscription: true },
                 });
-                if (!userSubscription) {
+                if (!userSubscriptions.length) {
                     throw { message: "No active standard subscription found." };
                 }
-                const subscriptionCategory = userSubscription.subscription.category;
-                if (subscriptionCategory === "standard" &&
-                    userSubscription.assessmentCount >= 2) {
+                const hasProfessionalSubscription = userSubscriptions.some((sub) => sub.subscription.category === "professional");
+                const standardSubscription = userSubscriptions.find((sub) => sub.subscription.category === "standard");
+                if (!hasProfessionalSubscription &&
+                    (standardSubscription === null || standardSubscription === void 0 ? void 0 : standardSubscription.assessmentCount) >= 2) {
                     throw {
                         message: "You have reached the maximum assessment limit for a Standard subscription.",
                     };
@@ -48,15 +49,17 @@ class UserAssessmentController {
                 const { id } = yield prisma_1.default.userAssessment.create({
                     data: { userId, assessmentId, endTime },
                 });
-                yield prisma_1.default.userSubscription.update({
-                    where: {
-                        userId_subscriptionId: {
-                            userId: userId,
-                            subscriptionId: userSubscription.subscriptionId,
+                if (!hasProfessionalSubscription && standardSubscription) {
+                    yield prisma_1.default.userSubscription.update({
+                        where: {
+                            userId_subscriptionId: {
+                                userId: userId,
+                                subscriptionId: standardSubscription.subscriptionId,
+                            },
                         },
-                    },
-                    data: { assessmentCount: { increment: 1 } },
-                });
+                        data: { assessmentCount: { increment: 1 } },
+                    });
+                }
                 res.status(201).send({
                     userAssessmentId: id,
                 });

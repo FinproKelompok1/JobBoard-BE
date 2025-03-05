@@ -197,43 +197,48 @@ class TransactionController {
                 if (transaction_status === "settlement") {
                     const userTransaction = yield prisma_1.default.transaction.findUnique({
                         where: { id: order_id },
-                        select: { subscriptionId: true, updatedAt: true, userId: true },
+                        select: { subscriptionId: true, userId: true },
                     });
-                    const latestSubscription = yield prisma_1.default.userSubscription.findUnique({
+                    if (!userTransaction) {
+                        res.status(404).send({ message: "Transaction not found" });
+                        return;
+                    }
+                    const { userId, subscriptionId } = userTransaction;
+                    console.log("Updating subscription for:", { userId, subscriptionId });
+                    const existingSubscription = yield prisma_1.default.userSubscription.findFirst({
                         where: {
-                            userId_subscriptionId: {
-                                userId: userTransaction === null || userTransaction === void 0 ? void 0 : userTransaction.userId,
-                                subscriptionId: userTransaction === null || userTransaction === void 0 ? void 0 : userTransaction.subscriptionId,
-                            },
-                            isActive: true,
+                            userId,
+                            subscriptionId,
                         },
                     });
+                    console.log("Existing Subscription:", existingSubscription);
                     let startDate = (0, dayjs_1.default)();
-                    if (latestSubscription &&
-                        (0, dayjs_1.default)(latestSubscription.endDate).isAfter((0, dayjs_1.default)())) {
-                        startDate = (0, dayjs_1.default)(latestSubscription.endDate);
+                    if (existingSubscription) {
+                        if (existingSubscription.isActive) {
+                            startDate = (0, dayjs_1.default)(existingSubscription.endDate).isAfter((0, dayjs_1.default)())
+                                ? (0, dayjs_1.default)(existingSubscription.endDate)
+                                : (0, dayjs_1.default)();
+                        }
                         yield prisma_1.default.userSubscription.update({
                             where: {
-                                userId_subscriptionId: {
-                                    userId: userTransaction === null || userTransaction === void 0 ? void 0 : userTransaction.userId,
-                                    subscriptionId: userTransaction === null || userTransaction === void 0 ? void 0 : userTransaction.subscriptionId,
-                                },
+                                userId_subscriptionId: { userId, subscriptionId },
                             },
                             data: {
                                 startDate: startDate.toDate(),
                                 endDate: startDate.add(30, "day").toDate(),
                                 assessmentCount: 0,
+                                isActive: true,
                             },
                         });
                     }
                     else {
-                        const endDate = startDate.add(30, "day").toDate();
                         yield prisma_1.default.userSubscription.create({
                             data: {
-                                userId: userTransaction === null || userTransaction === void 0 ? void 0 : userTransaction.userId,
-                                subscriptionId: userTransaction === null || userTransaction === void 0 ? void 0 : userTransaction.subscriptionId,
+                                userId,
+                                subscriptionId,
                                 startDate: startDate.toDate(),
-                                endDate: endDate,
+                                endDate: startDate.add(30, "day").toDate(),
+                                isActive: true,
                             },
                         });
                     }
@@ -243,6 +248,7 @@ class TransactionController {
                 });
             }
             catch (error) {
+                console.error("Error updating transaction:", error);
                 res.status(500).send({
                     message: "Server error: Unable to update transaction status.",
                 });

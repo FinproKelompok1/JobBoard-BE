@@ -1,14 +1,12 @@
-import cron from "node-cron";
 import dayjs from "dayjs";
 import prisma from "../prisma";
 import { sendRemainderEmail } from "./reminderEmail";
 import { formatDate } from "../helpers/dateFormatter";
 import { formatTime } from "../helpers/timeFormatter";
 
-cron.schedule("0 0 4 * * *", async () => {
+export const interviewReminder = async () => {
   const startOfTomorrow = dayjs().add(1, "day").startOf("day").toDate();
   const endOfTomorrow = dayjs().add(1, "day").endOf("day").toDate();
-
   try {
     const interviewRemindered = await prisma.interview.findMany({
       where: {
@@ -55,4 +53,4 @@ cron.schedule("0 0 4 * * *", async () => {
   } catch (err) {
     console.error("schedule", err);
   }
-});
+};

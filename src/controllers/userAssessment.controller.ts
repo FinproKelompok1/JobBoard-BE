@@ -14,20 +14,25 @@ export class UserAssessmentController {
         throw { message: "User ID is required." };
       }
       const { assessmentId } = req.body;
-      const userSubscription = await prisma.userSubscription.findFirst({
+      const userSubscriptions = await prisma.userSubscription.findMany({
         where: {
           userId: userId,
           isActive: true,
         },
         include: { subscription: true },
       });
-      if (!userSubscription) {
+      if (!userSubscriptions.length) {
         throw { message: "No active standard subscription found." };
       }
-      const subscriptionCategory = userSubscription.subscription.category;
+      const hasProfessionalSubscription = userSubscriptions.some(
+        (sub) => sub.subscription.category === "professional"
+      );
+      const standardSubscription = userSubscriptions.find(
+        (sub) => sub.subscription.category === "standard"
+      );
       if (
-        subscriptionCategory === "standard" &&
-        userSubscription.assessmentCount! >= 2
+        !hasProfessionalSubscription &&
+        standardSubscription?.assessmentCount! >= 2
       ) {
         throw {
           message:
@@ -39,16 +44,17 @@ export class UserAssessmentController {
       const { id } = await prisma.userAssessment.create({
         data: { userId, assessmentId, endTime },
       });
-      await prisma.userSubscription.update({
-        where: {
-          userId_subscriptionId: {
-            userId: userId,
-            subscriptionId: userSubscription.subscriptionId,
+      if (!hasProfessionalSubscription && standardSubscription) {
+        await prisma.userSubscription.update({
+          where: {
+            userId_subscriptionId: {
+              userId: userId,
+              subscriptionId: standardSubscription.subscriptionId,
+            },
           },
-        },
-        data: { assessmentCount: { increment: 1 } },
-      });
-
+          data: { assessmentCount: { increment: 1 } },
+        });
+      }
       res.status(201).send({
         userAssessmentId: id,
       });

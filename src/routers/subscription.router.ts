@@ -14,6 +14,10 @@ export class SubscriptionRouter {
   private initialiazeRoutes() {
     this.router.get("/", this.subscriptionController.getSubscriptions);
     this.router.post("/", this.subscriptionController.createSubscription);
+    this.router.post(
+      "/send-subscription-email",
+      this.subscriptionController.sendSubscriptionEmail
+    );
 
     this.router.get(
       "/:subscriptionId",

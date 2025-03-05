@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import prisma from "../prisma";
 import { SubscriptionCategory } from "prisma/generated/client";
+import { sendInvoiceEmail } from "../services/invoiceEmail";
+import dayjs from "dayjs";
 
 export class SubscriptionController {
   async createSubscription(req: Request, res: Response) {
@@ -144,6 +146,49 @@ export class SubscriptionController {
       res.status(500).send({
         message: "Server error: Unable to retrieve subscription users.",
       });
+    }
+  }
+
+  async sendSubscriptionEmail(req: Request, res: Response) {
+    const startOfTomorrow = dayjs().add(1, "day").startOf("day").toDate();
+    const endOfTomorrow = dayjs().add(1, "day").endOf("day").toDate();
+
+    try {
+      const expiringSubscription = await prisma.userSubscription.findMany({
+        where: {
+          endDate: { gte: startOfTomorrow, lt: endOfTomorrow },
+          isActive: true,
+        },
+        include: { user: true },
+      });
+
+      for (const subscription of expiringSubscription) {
+        try {
+          await sendInvoiceEmail({
+            email: subscription.user.email,
+            username: subscription.user.username,
+            fullname: subscription.user.fullname!,
+          });
+        } catch (emailError) {
+          console.error(
+            `Failed to send email to ${subscription.user.email}:`,
+            emailError
+          );
+        }
+      }
+
+      const today = new Date();
+      await prisma.userSubscription.updateMany({
+        where: { endDate: { lt: today }, isActive: true },
+        data: { isActive: false },
+      });
+
+      res
+        .status(200)
+        .json({ message: "Subscription emails sent successfully" });
+    } catch (error) {
+      console.error("Error processing subscriptions:", error);
+      res.status(500).json({ message: "Internal Server Error" });
     }
   }
 }
