@@ -28,7 +28,7 @@ const transaporter = nodemailer_1.default.createTransport({
 });
 const sendInvoiceEmail = (_a) => __awaiter(void 0, [_a], void 0, function* ({ email, username, fullname, }) {
     const link = `${process.env.BASE_URL_FE}/subscription/${username}`;
-    const templatePath = path_1.default.join(__dirname, "../templates", "invoiceEmail.hbs");
+    const templatePath = path_1.default.join(__dirname, "../templates", "invoiceEmail.html");
     const templateSource = fs_1.default.readFileSync(templatePath, "utf-8");
     const compiledTemplate = handlebars_1.default.compile(templateSource);
     const html = compiledTemplate({ fullname, username, link });

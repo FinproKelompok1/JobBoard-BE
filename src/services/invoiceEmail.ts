@@ -26,7 +26,11 @@ export const sendInvoiceEmail = async ({
   fullname,
 }: InvoiceEmailParams) => {
   const link = `${process.env.BASE_URL_FE}/subscription/${username}`;
-  const templatePath = path.join(__dirname, "../templates", "invoiceEmail.hbs");
+  const templatePath = path.join(
+    __dirname,
+    "../templates",
+    "invoiceEmail.html"
+  );
   const templateSource = fs.readFileSync(templatePath, "utf-8");
   const compiledTemplate = handlebars.compile(templateSource);
   const html = compiledTemplate({ fullname, username, link });
