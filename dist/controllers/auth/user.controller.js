@@ -56,10 +56,9 @@ class UserAuthController {
                 }, JWT_SECRET, { expiresIn: "24h" });
                 res.cookie("token", token, {
                     httpOnly: false,
-                    secure: false,
+                    secure: process.env.NODE_ENV === "production",
                     sameSite: "lax",
                     path: "/",
-                    domain: "localhost",
                     maxAge: 24 * 60 * 60 * 1000,
                 });
                 res.json({
