@@ -45,6 +45,7 @@ class UserProfileController {
                                 },
                             },
                         },
+                        Interview: true,
                         Review: true,
                         UserSubscription: true,
                         UserAssessment: {
@@ -56,12 +57,18 @@ class UserProfileController {
                     res.status(404).json({ message: "User not found" });
                     return;
                 }
+                const enhancedApplications = user.JobApplication.map((application) => {
+                    const interviewData = user.Interview.find((interview) => interview.jobId === application.jobId);
+                    return Object.assign(Object.assign({}, application), { interview: interviewData });
+                });
+                const enhancedUser = Object.assign(Object.assign({}, user), { JobApplication: enhancedApplications });
                 res.status(200).json({
                     success: true,
-                    data: user,
+                    data: enhancedUser,
                 });
             }
             catch (error) {
+                console.error("Error fetching user profile:", error);
                 res.status(500).json({ message: "Internal server error" });
             }
         });
